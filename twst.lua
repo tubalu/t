@@ -217,7 +217,7 @@ local a = setmetatable({}, {
 
 local c = a.CoreGui
 local d = a.Players
-local e = a.Workspace
+local wkspce = a.Workspace
 local f = a.RunService
 local g = a.StarterGui
 local h = a.HttpService
@@ -359,7 +359,7 @@ repeat
     wait()
 until k:WaitForChild('Profiles'):FindFirstChild(H.Name)
 -- dungon ids
-local Y = {
+local dungeonIds = {
     [1.1] = 2978696440,
     [1.2] = 4310464656,
     [1.3] = 4310476380,
@@ -391,7 +391,7 @@ local Y = {
     ["HolidayEventDungeon"] = 4526768588
 }
 -- tower ids
-local Z = {
+local towerIds = {
     [1] = 5703353651,
     [2] = 6075085184,
     [3] = 7071564842,
@@ -402,7 +402,7 @@ local Z = {
     [51] = 13988110964
 }
 -- open world 
-local _ = {
+local worldIds = {
     [1] = 4310463616,
     [2] = 4310463940,
     [3] = 4465987684,
@@ -414,7 +414,7 @@ local _ = {
     [9] = 10651517727,
     [10] = 14914684761
 }
-local a1 = {'MoltenEgg', 'OceanEgg', 'CatEgg', 'AlligatorEgg', 'FairyEgg'}
+local eggs = {'MoltenEgg', 'OceanEgg', 'CatEgg', 'AlligatorEgg', 'FairyEgg'}
 local a2 = {'SummonerSummonWeak', 'SummonerSummonStrong', 'CorruptedGreaterTree', 'DavyJones', 'BOSSHogRider',
             'BOSSAnubis', 'BOSSKrakenArm3-Arm#1', 'BOSSKrakenArm3-Arm#2', 'BOSSKrakenArm3-Arm#3',
             'BOSSKrakenArm3-Arm#4', 'BOSSKrakenArm3-Arm#5', 'BOSSKrakenArm3-Arm#6', 'BOSSKrakenArm3-Arm#7',
@@ -1406,19 +1406,7 @@ local function aM()
         end
     end
 end
-local function aN()
-    for aA, aO in pairs(_) do
-        if game.PlaceId ~= aO then
-            if e:WaitForChild('MissionObjects'):FindFirstChild('MissionStart') then
-                for aA, B in pairs(e.MissionObjects.MissionStart:GetDescendants()) do
-                    if B:IsA('TouchTransmitter') and B.Parent then
-                        B.Parent.CFrame = J.CFrame
-                    end
-                end
-            end
-        end
-    end
-end
+
 local function aP()
     if IsAlive() then
         for aA, B in pairs(I:GetChildren()) do
@@ -1518,7 +1506,7 @@ local function bf(bg)
 end
 local function bi(aW)
     local bj = math.huge;
-    for aA, B in pairs(e.Mobs:GetChildren()) do
+    for aA, B in pairs(wkspce.Mobs:GetChildren()) do
         if not table.find(a2, B.Name) then
             if B:FindFirstChild('Collider') and B:FindFirstChild('HealthProperties') and
                 not B:FindFirstChild('NoHealthbar') then
@@ -1530,69 +1518,69 @@ local function bi(aW)
             end
         end
     end
-    if game.PlaceId == Y[1] then
-        if e.Mobs:FindFirstChild('BOSSTreeEnt') and e.Mobs.BOSSTreeEnt.HealthProperties.Health.Value /
-            e.Mobs.BOSSTreeEnt.HealthProperties.MaxHealth.Value * 100 <= 50 then
+    if game.PlaceId == dungeonIds[1] then
+        if wkspce.Mobs:FindFirstChild('BOSSTreeEnt') and wkspce.Mobs.BOSSTreeEnt.HealthProperties.Health.Value /
+            wkspce.Mobs.BOSSTreeEnt.HealthProperties.MaxHealth.Value * 100 <= 50 then
             for A = 1, 3 do
-                local bk = e:WaitForChild('Pillar' .. A)
+                local bk = wkspce:WaitForChild('Pillar' .. A)
                 if bk:FindFirstChild('HealthProperties') and bk.HealthProperties.Health.Value ~= 0 then
                     aW = bk.Base
                 end
             end
         end
     end
-    if game.PlaceId == Y[3.2] then
+    if game.PlaceId == dungeonIds[3.2] then
         if H.PlayerGui.MissionObjective.MissionObjective.Label.Text == 'Destroy the Ice Barricade!' then
-            if e.MissionObjects.IceBarricade:FindFirstChild('HealthProperties') and
-                e.MissionObjects.IceBarricade.HealthProperties.Health.Value ~= 0 then
-                aW = e.MissionObjects.IceBarricade.Part
+            if wkspce.MissionObjects.IceBarricade:FindFirstChild('HealthProperties') and
+                wkspce.MissionObjects.IceBarricade.HealthProperties.Health.Value ~= 0 then
+                aW = wkspce.MissionObjects.IceBarricade.Part
             end
         end
     end
-    if game.PlaceId == Y[3] then
-        if game.PlaceId == Y[3] then
+    if game.PlaceId == dungeonIds[3] then
+        if game.PlaceId == dungeonIds[3] then
             for A = 1, 3 do
-                local bl = e.MissionObjects.SpikeCheckpoints:WaitForChild('Blocker' .. A)
+                local bl = wkspce.MissionObjects.SpikeCheckpoints:WaitForChild('Blocker' .. A)
                 if bl:FindFirstChild('HealthProperties') and bl.HealthProperties.Health.Value ~= 0 then
                     aW = bl.Part
                 end
             end
         end
-        if e.Mobs:FindFirstChild('BOSSWinterfallIceDragon') and e.Mobs.BOSSWinterfallIceDragon.Collider.Position.y > 300 then
+        if wkspce.Mobs:FindFirstChild('BOSSWinterfallIceDragon') and wkspce.Mobs.BOSSWinterfallIceDragon.Collider.Position.y > 300 then
             aW = nil
         end
     end
-    if game.PlaceId == Y[4.1] then
-        if e.MissionObjects.TowerLegs:FindFirstChild('Model') and
-            e.MissionObjects.TowerLegs.Model:FindFirstChild('HealthProperties') then
-            aW = e.MissionObjects.TowerLegs.Model.hitbox
+    if game.PlaceId == dungeonIds[4.1] then
+        if wkspce.MissionObjects.TowerLegs:FindFirstChild('Model') and
+            wkspce.MissionObjects.TowerLegs.Model:FindFirstChild('HealthProperties') then
+            aW = wkspce.MissionObjects.TowerLegs.Model.hitbox
         end
-        if e.Mobs:FindFirstChild('BOSSHogRider') and e.Mobs.BOSSHogRider.Collider.Position.y < 380 then
-            aW = e.Mobs.BOSSHogRider.Collider
+        if wkspce.Mobs:FindFirstChild('BOSSHogRider') and wkspce.Mobs.BOSSHogRider.Collider.Position.y < 380 then
+            aW = wkspce.Mobs.BOSSHogRider.Collider
         end
     end
-    if game.PlaceId == Y[4] then
-        if e.Mobs:FindFirstChild('BOSSAnubis') then
-            if not e.Mobs.BOSSAnubis.MobProperties.Busy:FindFirstChild('Shield') then
-                aW = e.Mobs.BOSSAnubis.Collider
+    if game.PlaceId == dungeonIds[4] then
+        if wkspce.Mobs:FindFirstChild('BOSSAnubis') then
+            if not wkspce.Mobs.BOSSAnubis.MobProperties.Busy:FindFirstChild('Shield') then
+                aW = wkspce.Mobs.BOSSAnubis.Collider
             end
         end
     end
-    if game.PlaceId == Y[5.1] and e.Mobs:FindFirstChild('CorruptedGreaterTree') then
-        if not e:FindFirstChild('GreaterTreeShield') then
-            aW = e.Mobs.CorruptedGreaterTree.Collider
+    if game.PlaceId == dungeonIds[5.1] and wkspce.Mobs:FindFirstChild('CorruptedGreaterTree') then
+        if not wkspce:FindFirstChild('GreaterTreeShield') then
+            aW = wkspce.Mobs.CorruptedGreaterTree.Collider
         end
     end
-    if game.PlaceId == Y[6.1] then
-        if e.Mobs:FindFirstChild('DavyJones') and not aW then
-            aW = e.Mobs.DavyJones.Collider
+    if game.PlaceId == dungeonIds[6.1] then
+        if wkspce.Mobs:FindFirstChild('DavyJones') and not aW then
+            aW = wkspce.Mobs.DavyJones.Collider
         end
-        if e:FindFirstChild('TriggerBarrel') then
-            aW = e.TriggerBarrel.Collision
+        if wkspce:FindFirstChild('TriggerBarrel') then
+            aW = wkspce.TriggerBarrel.Collision
         end
     end
-    if game.PlaceId == Z[2] then
-        if e.Mobs:FindFirstChild('BOSSKrakenMain') then
+    if game.PlaceId == towerIds[2] then
+        if wkspce.Mobs:FindFirstChild('BOSSKrakenMain') then
             for A = 1, 8 do
                 local bm = workspace.Mobs:FindFirstChild('BOSSKrakenArm3-Arm#' .. A)
                 if bm and bm.HealthProperties.Health.Value ~= 0 then
@@ -1605,7 +1593,7 @@ local function bi(aW)
 end
 local function bn(bo)
     local bj = math.huge;
-    for aA, B in pairs(e.Mobs:GetChildren()) do
+    for aA, B in pairs(wkspce.Mobs:GetChildren()) do
         if not table.find(a2, B.Name) then
             if B:FindFirstChild('Collider') and B:FindFirstChild('HealthProperties') and
                 not B:FindFirstChild('NoHealthbar') then
@@ -1621,11 +1609,11 @@ local function bn(bo)
 end
 local function bp(bq)
     local bj = math.huge;
-    if e.Mobs:FindFirstChild('SummonerSummonWeak') then
-        for aA, B in pairs(e.Mobs:GetChildren()) do
+    if wkspce.Mobs:FindFirstChild('SummonerSummonWeak') then
+        for aA, B in pairs(wkspce.Mobs:GetChildren()) do
             if not table.find(a2, B.Name) then
                 if B:FindFirstChild('Collider') and B:FindFirstChild('HealthProperties') then
-                    local b9 = (e.Mobs.SummonerSummonWeak.WorldPivot.Position - B.WorldPivot.Position).Magnitude;
+                    local b9 = (wkspce.Mobs.SummonerSummonWeak.WorldPivot.Position - B.WorldPivot.Position).Magnitude;
                     if b9 <= bj and B.HealthProperties.Health.Value > 8000 then
                         bj = b9;
                         bq = B.Collider
@@ -1811,7 +1799,7 @@ local function bz()
             local aW = bn()
             local bA = R:IsOnCooldown('Ultimate')
             if aW and (J.Position - aW.Collider.Position).Magnitude < 80 and
-                e.Characters[H.Name].Properties.BackSwordCount.Value == 6 then
+                wkspce.Characters[H.Name].Properties.BackSwordCount.Value == 6 then
                 if aW and aW.HealthProperties.Health.Value < 1 / 6 or bA then
                     break
                 end
@@ -1834,7 +1822,7 @@ local function bB()
             if aW and aW:FindFirstChild 'HealthProperties' and aW.HealthProperties.Health.Value < 1 / 6 then
                 break
             end
-            if aW and e.Characters[H.Name].Properties.SummonCount.Value == 5 and os.clock() - DeBounce >= 8 then
+            if aW and wkspce.Characters[H.Name].Properties.SummonCount.Value == 5 and os.clock() - DeBounce >= 8 then
                 DeBounce = os.clock()
                 X:Summon(aW.Collider.Position)
             end
@@ -1873,11 +1861,11 @@ local function bB()
         local DeBounce = os.clock()
         while al.KillAura and IsAlive() do
             local aW = bp()
-            if aW and e.Mobs:FindFirstChild('SummonerSummonWeak') then
+            if aW and wkspce.Mobs:FindFirstChild('SummonerSummonWeak') then
                 if not IsAlive() then
                     break
                 end
-                local b9 = (e.Mobs.SummonerSummonWeak.Collider.Position - aW.Position).Magnitude;
+                local b9 = (wkspce.Mobs.SummonerSummonWeak.Collider.Position - aW.Position).Magnitude;
                 if b9 < 8 and J and os.clock() - DeBounce >= 2 then
                     DeBounce = os.clock()
                     X:ExplodeSummons()
@@ -1903,15 +1891,15 @@ local function bC()
     end)
 end
 local bD;
-bD = e.ChildAdded:Connect(function(bE)
+bD = wkspce.ChildAdded:Connect(function(bE)
     if bE.Name == 'RadialIndicator' then
         local bo = bn()
-        if bo and not L:GetBossTag(bo) and e.RadialIndicator.Inner.Size.y > 20 then
+        if bo and not L:GetBossTag(bo) and wkspce.RadialIndicator.Inner.Size.y > 20 then
             a8 = 1
         end
     end
 end)
-e.ChildRemoved:Connect(function(bE)
+wkspce.ChildRemoved:Connect(function(bE)
     if bE.Name == 'RadialIndicator' then
         if bD then
             bD:Disconnect()
@@ -2055,7 +2043,6 @@ local AutoFarm = bF:Toggle({
             aK()
             aP()
             aI(false)
-            aN()
             if aC() then
                 a6, a7, a9 = 36, 30, 6
             elseif ay() then
@@ -2141,7 +2128,7 @@ local c9 = bG:Toggle({
             end)
             H.CharacterAdded:Connect(function()
                 for aA, B in pairs(ca:GetChildren()) do
-                    if table.find(a1, B.Name) then
+                    if table.find(eggs, B.Name) then
                         task.delay(2, function()
                             k.Shared.Inventory.DeleteItem:FireServer(B)
                         end)
@@ -2158,9 +2145,9 @@ bH:Button({
     Font = Enum.Font.FredokaOne,
     TextColor = Color3.fromRGB(255, 187, 109),
     Callback = function()
-        if e:FindFirstChild("MenuRings") and e.MenuRings:FindFirstChild("Bank") then
-            e.MenuRings.Bank.Ring.CFrame = I:WaitForChild('LeftFoot').CFrame * CFrame.new(0, 0, -12)
-            e.MenuRings.Bank.Floor.CFrame = I:WaitForChild('LeftFoot').CFrame * CFrame.new(0, 0, -12)
+        if wkspce:FindFirstChild("MenuRings") and wkspce.MenuRings:FindFirstChild("Bank") then
+            wkspce.MenuRings.Bank.Ring.CFrame = I:WaitForChild('LeftFoot').CFrame * CFrame.new(0, 0, -12)
+            wkspce.MenuRings.Bank.Floor.CFrame = I:WaitForChild('LeftFoot').CFrame * CFrame.new(0, 0, -12)
         end
     end
 })
@@ -2221,7 +2208,7 @@ local MoLPass = bI:Toggle({
         al.MoLPass = aJ;
         task.spawn(function()
             while al.MoLPass do
-                local character = e.Characters[H.Name]
+                local character = wkspce.Characters[H.Name]
                 local cg = require(k.Shared.Party):GetPartyByUsername(H.Name)
                 if character and character.HealthProperties.Health.Value / character.HealthProperties.MaxHealth.Value *
                     100 < 99 then
@@ -2237,7 +2224,7 @@ local MoLPass = bI:Toggle({
         task.spawn(function()
             ak('WZ_Toggles', al)
             while al.MoLPass do
-                local character = e.Characters[H.Name]
+                local character = wkspce.Characters[H.Name]
                 local cg = require(k.Shared.Party):GetPartyByUsername(H.Name)
                 if character and character.HealthProperties.BarrierHealth.Value <= 0 then
                     for aA, ch in pairs(d:GetPlayers()) do
@@ -2252,7 +2239,7 @@ local MoLPass = bI:Toggle({
     end
 })
 
-e.ChildAdded:Connect(function(ci)
+wkspce.ChildAdded:Connect(function(ci)
     if ci.Name == 'BarrierPart' then
         task.defer(ci.Destroy, ci)
     end
@@ -2269,7 +2256,7 @@ local RepeatRaid = bI:Toggle({
         al.RepeatRaid = aJ;
         task.spawn(function()
             ak('WZ_Toggles', al)
-            for aA, B in pairs(_) do
+            for aA, B in pairs(worldIds) do
                 if game.PlaceId ~= B and al.RepeatRaid then
                     local cj = H.PlayerGui.MissionRewards.MissionRewards;
                     if cj.Playerlist.Visible then
@@ -2427,7 +2414,7 @@ k.Shared.Missions.MissionFinished.OnClientEvent:Connect(function()
     sendEmbed(Embed)
 end)
 
-for aA, B in pairs(Y) do
+for aA, B in pairs(dungeonIds) do
     if game.PlaceId == B then
         local cj = H.PlayerGui.MissionRewards.MissionRewards;
         local cs = k.Shared.VIP.IsExtraDrop:InvokeServer()
@@ -2484,30 +2471,30 @@ for aA, B in pairs(Y) do
         end)
     end
 end
-if game.PlaceId == Y[2.1] then
-    e.MissionObjects.ChildRemoved:Connect(function(cu)
+if game.PlaceId == dungeonIds[2.1] then
+    wkspce.MissionObjects.ChildRemoved:Connect(function(cu)
         if cu.Name == 'MissionStart' then
             wait(1)
-            e.MissionObjects.Room1Trigger.CFrame = J.CFrame
+            wkspce.MissionObjects.Room1Trigger.CFrame = J.CFrame
         end
     end)
-    e.MissionObjects.Room1Trigger.ChildRemoved:Connect(function()
+    wkspce.MissionObjects.Room1Trigger.ChildRemoved:Connect(function()
         wait(2)
-        e.MissionObjects.Room2Trigger.CFrame = J.CFrame
+        wkspce.MissionObjects.Room2Trigger.CFrame = J.CFrame
     end)
-    e.MissionObjects.Room2Trigger.ChildRemoved:Connect(function()
+    wkspce.MissionObjects.Room2Trigger.ChildRemoved:Connect(function()
         wait(2)
-        e.MissionObjects.Room3Trigger.CFrame = J.CFrame
+        wkspce.MissionObjects.Room3Trigger.CFrame = J.CFrame
     end)
-    e.MissionObjects.Room3Trigger.ChildRemoved:Connect(function()
+    wkspce.MissionObjects.Room3Trigger.ChildRemoved:Connect(function()
         wait(2)
-        e.MissionObjects.Room4Trigger.CFrame = J.CFrame
+        wkspce.MissionObjects.Room4Trigger.CFrame = J.CFrame
     end)
-    e.MissionObjects.Room4Trigger.ChildRemoved:Connect(function()
+    wkspce.MissionObjects.Room4Trigger.ChildRemoved:Connect(function()
         wait(6)
-        J.CFrame = e.MissionObjects.WallsTrigger.CFrame;
+        J.CFrame = wkspce.MissionObjects.WallsTrigger.CFrame;
         wait(3)
-        J.CFrame = e.MissionObjects.WallsFinalTrigger.CFrame
+        J.CFrame = wkspce.MissionObjects.WallsFinalTrigger.CFrame
     end)
     H.PlayerGui.MissionObjective.MissionObjective.Label:GetPropertyChangedSignal('Text'):Connect(function()
         if H.PlayerGui.MissionObjective.MissionObjective.Label.Text == 'Take the royal crystal! (0 / 1)' then
@@ -2515,36 +2502,36 @@ if game.PlaceId == Y[2.1] then
         end
     end)
 end
-if game.PlaceId == Y[1.4] then
-    e.ChildAdded:Connect(function(cv)
+if game.PlaceId == dungeonIds[1.4] then
+    wkspce.ChildAdded:Connect(function(cv)
         if cv.Name == 'Cage1Marker' then
             wait(2)
-            e.Cage1Marker.Collider.CFrame = J.CFrame
+            wkspce.Cage1Marker.Collider.CFrame = J.CFrame
         end
     end)
-    e.ChildAdded:Connect(function(cv)
+    wkspce.ChildAdded:Connect(function(cv)
         if cv.Name == 'Cage2Marker' then
             wait(2.2)
-            e.Cage2Marker.Collider.CFrame = J.CFrame
+            wkspce.Cage2Marker.Collider.CFrame = J.CFrame
         end
     end)
 end
-if game.PlaceId == Y[3.1] then
-    e.MissionObjects.ChildRemoved:Connect(function(cw)
+if game.PlaceId == dungeonIds[3.1] then
+    wkspce.MissionObjects.ChildRemoved:Connect(function(cw)
         if cw.Name == 'ProgressionBlocker1' then
-            e.MissionObjects.CaveTrigger.CFrame = J.CFrame
+            wkspce.MissionObjects.CaveTrigger.CFrame = J.CFrame
         end
     end)
 end
-if game.PlaceId == Y[3] or game.PlaceId == Z[51] then
-    e.ChildAdded:Connect(function(cx)
+if game.PlaceId == dungeonIds[3] or game.PlaceId == towerIds[51] then
+    wkspce.ChildAdded:Connect(function(cx)
         if cx.Name == 'IceWall' then
             wait(5)
             AutoFarm.State = false;
-            J.CFrame = e.IceWall:FindFirstChild('Ring').CFrame
+            J.CFrame = wkspce.IceWall:FindFirstChild('Ring').CFrame
         end
     end)
-    e.ChildRemoved:Connect(function(cx)
+    wkspce.ChildRemoved:Connect(function(cx)
         if cx.Name == 'IceWall' then
             aK()
             AutoFarm.State = true
@@ -2553,81 +2540,79 @@ if game.PlaceId == Y[3] or game.PlaceId == Z[51] then
 end
 local function cy()
     pcall(function()
-        for aA, B in pairs(e.MissionObjects.TowerLegs:GetDescendants()) do
+        for aA, B in pairs(wkspce.MissionObjects.TowerLegs:GetDescendants()) do
             if B.Name == 'hitbox' and not B.CanCollide then
                 B.Parent:Destroy()
             end
         end
     end)
 end
-if game.PlaceId == Y[4.1] then
-    e.MissionObjects.TowerLegs.DescendantRemoving:Connect(cy)
+if game.PlaceId == dungeonIds[4.1] then
+    wkspce.MissionObjects.TowerLegs.DescendantRemoving:Connect(cy)
 end
-if game.PlaceId == Y[6.1] then
-    e.MissionObjects.ChildRemoved:Connect(function(cu)
+if game.PlaceId == dungeonIds[6.1] then
+    wkspce.MissionObjects.ChildRemoved:Connect(function(cu)
         if cu.Name == 'MissionStart' then
             wait(1)
-            e.MissionObjects.Area1Trigger.CFrame = J.CFrame
+            wkspce.MissionObjects.Area1Trigger.CFrame = J.CFrame
         end
     end)
-    e.MissionObjects.Area2Trigger.ChildAdded:Connect(function(cz)
+    wkspce.MissionObjects.Area2Trigger.ChildAdded:Connect(function(cz)
         if cz:IsA('TouchTransmitter') then
             wait(1)
-            e.MissionObjects.Area2Trigger.CFrame = J.CFrame
+            wkspce.MissionObjects.Area2Trigger.CFrame = J.CFrame
         end
     end)
 end
-if game.PlaceId == Y[7.1] then
-    e.MissionObjects.ChildRemoved:Connect(function(cu)
+if game.PlaceId == dungeonIds[7.1] then
+    wkspce.MissionObjects.ChildRemoved:Connect(function(cu)
         if cu.Name == 'MissionStart' then
             wait(1)
-            e.MissionObjects.FakeBoss.CFrame = J.CFrame
+            wkspce.MissionObjects.FakeBoss.CFrame = J.CFrame
         end
     end)
 end
-if game.PlaceId == Z[1] or game.PlaceId == Z[51] then
+if game.PlaceId == towerIds[1] or game.PlaceId == towerIds[51] then
     H.PlayerGui.MissionObjective.MissionObjective.Label:GetPropertyChangedSignal('Text'):Connect(function()
         if H.PlayerGui.MissionObjective.MissionObjective.Label.Text == 'Get behind the active shield! (2)' then
             AutoFarm.State = false;
-            J.CFrame = e.MissionObjects.IgnisShield.Ring.CFrame;
+            J.CFrame = wkspce.MissionObjects.IgnisShield.Ring.CFrame;
             wait(3)
             aK()
             AutoFarm.State = true
         end
     end)
 end
-for aA, B in pairs(Z) do
-    if game.PlaceId == B then
-        task.spawn(function()
-            while IsAlive() do
-                local cA = e.MissionObjects:WaitForChild('WaveStarter', math.huge)
-                if #cA:GetChildren() > 0 then
-                    AutoFarm.State = false;
-                    J.CFrame = cA.CFrame
-                    wait(3)
-                    AutoFarm.State = true
-                end
-                wait()
-            end
-        end)
-        e.MissionObjects.ChildAdded:Connect(function(cB)
-            if cB.Name == 'MinibossExitModel' then
-                wait(2)
-                e.MissionObjects.MinibossExitModel:MoveTo(J.Position)
-            end
-        end)
-        e.MissionObjects.ChildAdded:Connect(function(cC)
-            if cC.Name == 'MinibossExit' then
-                wait(3)
-                AutoFarm.State = false;
-                e.MissionObjects.MinibossExit.CFrame = J.CFrame;
-                wait()
-                aK()
-                AutoFarm.State = true
-            end
-        end)
+-- exit of tower floor
+task.spawn(function()
+    while IsAlive() do
+        local cA = wkspce.MissionObjects:WaitForChild('WaveStarter', math.huge)
+        if #cA:GetChildren() > 0 then
+            AutoFarm.State = false;
+            J.CFrame = cA.CFrame
+            wait(3)
+            AutoFarm.State = true
+        end
+        wait()
     end
-end
+end)
+wkspce.MissionObjects.ChildAdded:Connect(function(cB)
+    if cB.Name == 'MinibossExitModel' then
+        wait(2)
+        wkspce.MissionObjects.MinibossExitModel:MoveTo(J.Position)
+    end
+end)
+wkspce.MissionObjects.ChildAdded:Connect(function(cC)
+    if cC.Name == 'MinibossExit' then
+        wait(3)
+        AutoFarm.State = false;
+        wkspce.MissionObjects.MinibossExit.CFrame = J.CFrame;
+        wait()
+        aK()
+        AutoFarm.State = true
+    end
+end)
+
 for aA, B in ipairs(game:GetService("ReplicatedStorage").Shared.Effects.EffectScripts:GetChildren()) do
     if hookfunction and B:IsA("ModuleScript") and
         (string.find(B.Name, "Klaus") or string.find(B.Name, "Hades") or string.find(B.Name, "Prism") or
@@ -2639,10 +2624,10 @@ for aA, B in ipairs(game:GetService("ReplicatedStorage").Shared.Effects.EffectSc
         end)
     end
 end
-for A, B in pairs(Y) do
+for A, B in pairs(dungeonIds) do
     if type(A) ~= "string" and game.PlaceId == B then
-        if e:FindFirstChild('MissionObjects') then
-            local cE = e.MissionObjects;
+        if wkspce:FindFirstChild('MissionObjects') then
+            local cE = wkspce.MissionObjects;
             cE.DescendantAdded:Connect(function(cz)
                 if cz:IsA 'TouchTransmitter' and not string.match(cz.Parent.Parent.Name, 'Damage') and
                     not string.match(cz.Parent.Name, 'Killpart') and not string.match(cz.Parent.Name, '0') and
@@ -2666,108 +2651,15 @@ for A, B in pairs(Y) do
         end
     end
 end
-for aA, cG in pairs(Z) do
-    if game.PlaceId == cG then
-        e.ChildAdded:Connect(function(cH)
-            if cH.Name == 'RaidChestGold' then
-                e.RaidChestGold.ChestBase.CFrame = J.CFrame;
-                wait(3.8)
-                cH:Destroy()
-                repeat
-                wait()
-                until cj.OpenChest:WaitForChild("Next") and cj.OpenChest:FindFirstChild("Next").Visible;
-                aT(cj.OpenChest.Next.TextLabel)
-            end
-        end)
-        e.ChildAdded:Connect(function(cI)
-            if cI.Name == 'RaidChestSilver' then
-                e.RaidChestSilver.ChestBase.CFrame = J.CFrame;
-                wait(3.8)
-                cI:Destroy()
-                repeat
-                wait()
-                until cj.OpenChest:WaitForChild("Next") and cj.OpenChest:FindFirstChild("Next").Visible;
-                aT(cj.OpenChest.Next.TextLabel)
-            end
-        end)
-        e.ChildAdded:Connect(function(cJ)
-            if cJ.Name == 'AtlanticChest' then
-                for aA, B in pairs(e:GetChildren()) do
-                    if B.ClassName == 'Model' and B.Name == 'AtlanticChest' then
-                        B.ChestBase.CFrame = J.CFrame
-                    end
-                end
-            end
-        end)
-        e.ChildAdded:Connect(function(cK)
-            if cK.Name == 'VolcanicChestTower' then
-                for aA, B in pairs(e:GetChildren()) do
-                    if B.ClassName == 'Model' and B.Name == 'VolcanicChestTower' then
-                        B.ChestBase.CFrame = J.CFrame
-                    end
-                end
-            end
-        end)
-        e.ChildRemoved:Connect(function(cH)
-            if cH.Name == 'RaidChestGold' and e:FindFirstChild 'RaidChestGold' then
-                e.RaidChestGold.ChestBase.CFrame = J.CFrame
-                repeat
-                wait()
-                until cj.OpenChest:WaitForChild("Next") and cj.OpenChest:FindFirstChild("Next").Visible;
-                aT(cj.OpenChest.Next.TextLabel)
-            end
-        end)
-        e.ChildRemoved:Connect(function(cI)
-            if cI.Name == 'RaidChestSilver' and e:FindFirstChild 'RaidChestSilver' then
-                e.RaidChestSilver.ChestBase.CFrame = J.CFrame
-                repeat
-                wait()
-                until cj.OpenChest:WaitForChild("Next") and cj.OpenChest:FindFirstChild("Next").Visible;
-                aT(cj.OpenChest.Next.TextLabel)
-            end
-        end)
-        e.ChildRemoved:Connect(function(cJ)
-            if cJ.Name == 'AtlanticChest' then
-                for aA, B in pairs(e:GetChildren()) do
-                    if B.ClassName == 'Model' and B.Name == 'AtlanticChest' and e:FindFirstChild 'AtlanticChest' then
-                        B.ChestBase.CFrame = J.CFrame
-                    end
-                end
-            end
-        end)
-        e.ChildRemoved:Connect(function(cK)
-            if cK.Name == 'VolcanicChestTower' then
-                for aA, B in pairs(e:GetChildren()) do
-                    if B.ClassName == 'Model' and B.Name == 'VolcanicChestTower' and
-                        e:FindFirstChild 'VolcanicChestTower' then
-                        B.ChestBase.CFrame = J.CFrame
-                    end
-                end
-            end
-        end)
-    end
-end
-for aA, B in pairs(Z) do
-    if game.PlaceId == B then
-        c.PurchasePrompt.ProductPurchaseContainer.Animator.ChildAdded:Connect(function()
-            pcall(function()
-                c.PurchasePrompt.ProductPurchaseContainer.Animator.Prompt.Visible = false
-            end)
-        end)
-        c.PurchasePrompt.ChildAdded:Connect(function(cL)
-            if cL.Name == 'RobuxUpsellContainer' then
-                wait(1 / 3)
-                cL:Destroy()
-            end
-        end)
-    end
-end
-for aA, B in pairs(_) do
+
+-- open world, turn off KillAura and AutoFarm
+for _, B in pairs(worldIds) do
     if game.PlaceId == B then
         KillAura.State = false;
         AutoFarm.State = false
     end
 end
+
 local function cM(cN)
     character = cN;
     K = cN:WaitForChild('Humanoid')
