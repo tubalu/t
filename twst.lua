@@ -2602,7 +2602,10 @@ for aA, B in pairs(Z) do
             while IsAlive() do
                 local cA = e.MissionObjects:WaitForChild('WaveStarter', math.huge)
                 if #cA:GetChildren() > 0 then
-                    cA.CFrame = J.CFrame
+                    AutoFarm.State = false;
+                    J.CFrame = cA.CFrame
+                    wait(3)
+                    AutoFarm.State = true
                 end
                 wait()
             end
