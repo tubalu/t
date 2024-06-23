@@ -2593,6 +2593,15 @@ task.spawn(function()
             wait(3)
             AutoFarm.State = true
         end
+        -- inf tower gate
+        if game.PlaceId == towerIds[50] or game.PlaceId == towerIds[50] then
+            if wkspce.Boss_Gate and wkspce.Boss_Gate.Interractions then
+                AutoFarm.State = false;
+                wkspce.Boss_Gate.Interractions[1].CFrame = J.CFrame;
+                wait(3)
+                AutoFarm.State = true
+            end
+        end
         wait()
     end
 end)
