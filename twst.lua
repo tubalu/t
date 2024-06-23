@@ -2511,15 +2511,19 @@ task.spawn(function()
 
             local mobs = wkspce.Mobs:GetChildren()
             if #mobs == 0 then
+                print("no mobs")
                 -- find next floor
                 local mbs = wkspce:FindFirstChild("MissionObjects")
                 if mbs then 
+                    print("mbs")
                     local arena = mbs:FindFirstChild("Arena")
                     if arena then 
+                        print("arena")
                         local tps = bossGate:GetChildren()
                         AutoFarm.State = false;
                         for _, child in pairs(tps) do
                             local teleporter  = child:FindFirstChild("TeleporterLocation")
+                            print(teleporter)
                             J.CFrame = teleporter.CFrame
                             wait(3)
                         end
