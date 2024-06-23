@@ -2595,9 +2595,10 @@ task.spawn(function()
         end
         -- inf tower gate
         if game.PlaceId == towerIds[50] or game.PlaceId == towerIds[50] then
-            if wkspce.Boss_Gate and wkspce.Boss_Gate.Interractions then
+            if wkspce.Boss_Gate and wkspce.Boss_Gate.Interactions then
+                local infbds = wkspce.Boss_Gate.Interactions:GetChildren()
                 AutoFarm.State = false;
-                wkspce.Boss_Gate.Interractions[1].CFrame = J.CFrame;
+                infbds[2].CFrame = J.CFrame;
                 wait(3)
                 AutoFarm.State = true
             end
