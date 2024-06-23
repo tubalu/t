@@ -1,27 +1,27 @@
--- Define function to run after 7 minutes
-local function runAfter7Minutes()
-    -- Wait for 7 minutes (seconds)
-    wait(420)
+-- -- Define function to run after 7 minutes
+-- local function runAfter7Minutes()
+--     -- Wait for 7 minutes (seconds)
+--     wait(420)
     
-    -- After waiting for 7 minutes, perform the following code
-    local args = {
-        [1] = 34
-    }
+--     -- After waiting for 7 minutes, perform the following code
+--     local args = {
+--         [1] = 34
+--     }
 
-    local replicatedStorage = game:GetService("ReplicatedStorage")
-    local teleportService = replicatedStorage:WaitForChild("Shared"):WaitForChild("Teleport")
-    local startRaidEvent = teleportService:WaitForChild("StartRaid")
+--     local replicatedStorage = game:GetService("ReplicatedStorage")
+--     local teleportService = replicatedStorage:WaitForChild("Shared"):WaitForChild("Teleport")
+--     local startRaidEvent = teleportService:WaitForChild("StartRaid")
 
-    if startRaidEvent then
-        startRaidEvent:FireServer(unpack(args))
-        print("StartRaid event fired after 7 minutes.")
-    else
-        warn("StartRaid event not found!")
-    end
-end
+--     if startRaidEvent then
+--         startRaidEvent:FireServer(unpack(args))
+--         print("StartRaid event fired after 7 minutes.")
+--     else
+--         warn("StartRaid event not found!")
+--     end
+-- end
 
 -- Start a coroutine to avoid affecting other functions
-task.spawn(runAfter7Minutes)
+-- task.spawn(runAfter7Minutes)
 
 -- Configure item selling options
 getgenv().Common = true
