@@ -2594,7 +2594,9 @@ task.spawn(function()
             AutoFarm.State = true
         end
         -- inf tower gate
-        if game.PlaceId == towerIds[50] or game.PlaceId == towerIds[50] then
+        if game.PlaceId == towerIds[50] or game.PlaceId == towerIds[51] then
+
+
             AutoFarm.State = false;
 
             local bossGate = game.Workspace:FindFirstChild("Boss_Gate")
@@ -2610,6 +2612,26 @@ task.spawn(function()
 
             wait(3)
             AutoFarm.State = true
+
+            local mobs = wkspce.Mobs:GetChildren()
+            if #mobs == 0 then
+                -- find next floor
+                local mbs = wkspce:FindFirstChild("MissionObjects")
+                if mbs then 
+                    local arena = mbs:FindFirstChild("Arena")
+                    if arena then 
+                        local tps = bossGate:GetChildren()
+                        AutoFarm.State = false;
+                        for _, child in pairs(tps) do
+                            local teleporter  = child:FindFirstChild("TeleporterLocation")
+                            J.CFrame = teleporter.CFrame
+                            wait(3)
+                        end
+                        AutoFarm.State = true
+                    end
+                end
+            end
+
         end
         wait()
     end
