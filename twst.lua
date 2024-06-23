@@ -2535,14 +2535,17 @@ end)
 wkspce.MissionObjects.ChildAdded:Connect(function(cB)
     if cB.Name == 'MinibossExitModel' then
         wait(2)
-        wkspce.MissionObjects.MinibossExitModel:MoveTo(J.Position)
+        AutoFarm.State = false;
+        J.CFrame = wkspce.MissionObjects.MinibossExitModel;
+        wait(2)
+        AutoFarm.State = true;
     end
 end)
 wkspce.MissionObjects.ChildAdded:Connect(function(cC)
     if cC.Name == 'MinibossExit' then
         wait(3)
         AutoFarm.State = false;
-        wkspce.MissionObjects.MinibossExit.CFrame = J.CFrame;
+        J.CFrame = wkspce.MissionObjects.MinibossExit.CFrame;
         wait()
         aK()
         AutoFarm.State = true
