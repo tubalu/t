@@ -2500,16 +2500,24 @@ task.spawn(function()
                 local interactions = bossGate:FindFirstChild("Interactions")
                 if interactions then
                     local secondChild = interactions:GetChildren()[2]
+                    local thirdB = interactions:GetChildren()[3]
                     if secondChild then
                         J.CFrame = secondChild.CFrame
+                        wait(3)
+                    end
+                    if thirdB then
+                        J.CFrame = thirdB.CFrame
+                        wait(3)
                     end
                 end
             end
 
-            wait(3)
             AutoFarm.State = true
 
             local mobs = wkspce.Mobs:GetChildren()
+            print("mobs qty")
+            print(#mobs)
+
             if #mobs == 0 then
                 print("no mobs")
                 -- find next floor
