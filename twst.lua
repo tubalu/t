@@ -162,6 +162,7 @@ if existingContainer then
     checkAndDestroy(existingContainer)
 end
 
+-- dungon ids
 local a0 = {
     [2978696440] = 1,
     [4310464656] = 3,
@@ -2535,7 +2536,7 @@ if game.PlaceId == Y[3.1] then
         end
     end)
 end
-if game.PlaceId == Y[3] then
+if game.PlaceId == Y[3] or game.PlaceId == Z[51] then
     e.ChildAdded:Connect(function(cx)
         if cx.Name == 'IceWall' then
             wait(5)
@@ -2584,7 +2585,7 @@ if game.PlaceId == Y[7.1] then
         end
     end)
 end
-if game.PlaceId == Z[1] then
+if game.PlaceId == Z[1] or game.PlaceId == Z[51] then
     H.PlayerGui.MissionObjective.MissionObjective.Label:GetPropertyChangedSignal('Text'):Connect(function()
         if H.PlayerGui.MissionObjective.MissionObjective.Label.Text == 'Get behind the active shield! (2)' then
             AutoFarm.State = false;

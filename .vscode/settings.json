@@ -3,6 +3,16 @@
         "game",
         "task",
         "wait",
-        "workspace"
+        "workspace",
+        "UDim2",
+        "Instance",
+        "Vector2",
+        "Color3",
+        "Rect",
+        "Enum",
+        "CFrame",
+        "tick",
+        "Vector3",
+        "getgenv"
     ]
 }
