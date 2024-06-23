@@ -2499,14 +2499,19 @@ task.spawn(function()
             if bossGate then
                 local interactions = bossGate:FindFirstChild("Interactions")
                 if interactions then
-                    local secondChild = interactions:GetChildren()[2]
-                    local thirdB = interactions:GetChildren()[3]
-                    if secondChild then
-                        J.CFrame = secondChild.CFrame
+                    local atp = interactions:GetChildren()[1]
+                    local btp = interactions:GetChildren()[2]
+                    local ctp = interactions:GetChildren()[3]
+                    if atp then
+                        J.CFrame = atp.CFrame
                         wait(3)
                     end
-                    if thirdB then
-                        J.CFrame = thirdB.CFrame
+                    if btp then
+                        J.CFrame = btp.CFrame
+                        wait(3)
+                    end
+                    if ctp then
+                        J.CFrame = ctp.CFrame
                         wait(3)
                     end
                 end
