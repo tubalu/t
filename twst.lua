@@ -2595,13 +2595,21 @@ task.spawn(function()
         end
         -- inf tower gate
         if game.PlaceId == towerIds[50] or game.PlaceId == towerIds[50] then
-            if wkspce.Boss_Gate and wkspce.Boss_Gate.Interactions then
-                local infbds = wkspce.Boss_Gate.Interactions:GetChildren()
-                AutoFarm.State = false;
-                infbds[2].CFrame = J.CFrame;
-                wait(3)
-                AutoFarm.State = true
+            AutoFarm.State = false;
+
+            local bossGate = game.Workspace:FindFirstChild("Boss_Gate")
+            if bossGate then
+                local interactions = bossGate:FindFirstChild("Interactions")
+                if interactions then
+                    local secondChild = interactions:GetChildren()[2]
+                    if secondChild then
+                        J.CFrame = secondChild.CFrame
+                    end
+                end
             end
+
+            wait(3)
+            AutoFarm.State = true
         end
         wait()
     end
