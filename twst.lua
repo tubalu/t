@@ -2536,7 +2536,7 @@ wkspce.MissionObjects.ChildAdded:Connect(function(cB)
     if cB.Name == 'MinibossExitModel' then
         wait(2)
         AutoFarm.State = false;
-        J.CFrame = wkspce.MissionObjects.MinibossExitModel;
+        J.CFrame = wkspce.MissionObjects.MinibossExitModel.CFrame;
         wait(2)
         AutoFarm.State = true;
     end
