@@ -2510,63 +2510,6 @@ task.spawn(function()
             wait(3)
             AutoFarm.State = true
         end
-        -- inf tower gate
-        if game.PlaceId == towerIds[50] or game.PlaceId == towerIds[51] then
-
-
-            AutoFarm.State = false;
-
-            local bossGate = game.Workspace:FindFirstChild("Boss_Gate")
-            if bossGate then
-                local interactions = bossGate:FindFirstChild("Interactions")
-                if interactions then
-                    local atp = interactions:GetChildren()[1]
-                    local btp = interactions:GetChildren()[2]
-                    local ctp = interactions:GetChildren()[3]
-                    if atp then
-                        J.CFrame = atp.CFrame
-                        wait(3)
-                    end
-                    if btp then
-                        J.CFrame = btp.CFrame
-                        wait(3)
-                    end
-                    if ctp then
-                        J.CFrame = ctp.CFrame
-                        wait(3)
-                    end
-                end
-            end
-
-            AutoFarm.State = true
-
-            -- local mobs = wkspce.Mobs:GetChildren()
-            -- print("mobs qty")
-            -- print(#mobs)
-
-            -- if #mobs == 0 then
-                -- print("no mobs")
-                -- find next floor
-            local mbs = wkspce:FindFirstChild("MissionObjects")
-            if mbs then 
-                print("mbs")
-                local arena = mbs:FindFirstChild("Arena")
-                if arena then 
-                    print("arena")
-                    local tps = bossGate:GetChildren()
-                    AutoFarm.State = false;
-                    for _, child in pairs(tps) do
-                        local teleporter  = child:FindFirstChild("TeleporterLocation")
-                        print(teleporter)
-                        J.CFrame = teleporter.CFrame
-                        wait(3)
-                    end
-                    AutoFarm.State = true
-                end
-            end
-            -- end
-
-        end
         wait()
     end
 end)
@@ -2610,13 +2553,6 @@ for A, B in pairs(dungeonIds) do
     end
 end
 
--- open world, turn off KillAura and AutoFarm
-for _, B in pairs(worldIds) do
-    if game.PlaceId == B then
-        KillAura.State = false;
-        AutoFarm.State = false
-    end
-end
 
 local function cM(cN)
     character = cN;
