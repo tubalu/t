@@ -2514,17 +2514,17 @@ task.spawn(function()
     end
 end)
 
-for aA, B in ipairs(game:GetService("ReplicatedStorage").Shared.Effects.EffectScripts:GetChildren()) do
-    if hookfunction and B:IsA("ModuleScript") and
-        (string.find(B.Name, "Klaus") or string.find(B.Name, "Hades") or string.find(B.Name, "Prism") or
-            string.find(B.Name, "Taurha") or string.find(B.Name, "Kraken") or string.find(B.Name, "Anubis") or
-            string.find(B.Name, "Cerberus") or string.find(B.Name, "FallenKing")) then
-        local cD = require(B)
-        hookfunction(cD, function()
-            return nil
-        end)
-    end
-end
+-- for aA, B in ipairs(game:GetService("ReplicatedStorage").Shared.Effects.EffectScripts:GetChildren()) do
+--     if hookfunction and B:IsA("ModuleScript") and
+--         (string.find(B.Name, "Klaus") or string.find(B.Name, "Hades") or string.find(B.Name, "Prism") or
+--             string.find(B.Name, "Taurha") or string.find(B.Name, "Kraken") or string.find(B.Name, "Anubis") or
+--             string.find(B.Name, "Cerberus") or string.find(B.Name, "FallenKing")) then
+--         local cD = require(B)
+--         hookfunction(cD, function()
+--             return nil
+--         end)
+--     end
+-- end
 for A, B in pairs(dungeonIds) do
     if type(A) ~= "string" and game.PlaceId == B then
         if wkspce:FindFirstChild('MissionObjects') then
