@@ -2139,37 +2139,6 @@ local bQ = bF:Toggle({
         end)
     end
 })
-al.DelEgg=true
-local c9 = bG:Toggle({
-    Text = "DeleteEggs",
-    TextSize = 22,
-    TextColor = Color3.fromRGB(255, 187, 109),
-    Font = Enum.Font.FredokaOne,
-    Enabled = al.DelEgg,
-    Callback = function(aJ)
-        al.DelEgg = aJ;
-        task.spawn(function()
-            ak('WZ_Toggles', al)
-            local ca = k.Profiles[H.Name].Inventory.Items;
-            ca.DescendantAdded:Connect(function()
-                for aA, B in pairs(ca:GetChildren()) do
-                    if string.find(B.Name, "Egg") then
-                        k.Shared.Inventory.DeleteItem:FireServer(B)
-                    end
-                end
-            end)
-            H.CharacterAdded:Connect(function()
-                for aA, B in pairs(ca:GetChildren()) do
-                    if table.find(eggs, B.Name) then
-                        task.delay(2, function()
-                            k.Shared.Inventory.DeleteItem:FireServer(B)
-                        end)
-                    end
-                end
-            end)
-        end)
-    end
-})
 
 bH:Button({
     Text = "Bank",
