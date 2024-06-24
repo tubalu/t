@@ -68,7 +68,7 @@ local function xx()
 
 end
 
-task.spawn(xx)
+-- task.spawn(xx)
 
 getgenv().Common = true
 getgenv().Uncommon = true
