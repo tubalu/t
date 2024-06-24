@@ -28,7 +28,7 @@
 
 local function xx()
     local Hxx = game.Players.LocalPlayer
-    local Ixx = H.Character or Hxx.CharacterAdded:Wait()
+    local Ixx = Hxx.Character or Hxx.CharacterAdded:Wait()
     local Jxx = Ixx:WaitForChild('HumanoidRootPart', 180)
     while true do
 
