@@ -460,6 +460,16 @@ local worldIds = {
     [9] = 10651517727,
     [10] = 14914684761
 }
+
+-- quit in open world
+
+for _, wId in pairs(worldIds) do
+    if game.PlaceId == wId then
+        print("quit in open world")
+        return
+    end
+end
+
 local eggs = {'MoltenEgg', 'OceanEgg', 'CatEgg', 'AlligatorEgg', 'FairyEgg'}
 local a2 = {'SummonerSummonWeak', 'SummonerSummonStrong', 'CorruptedGreaterTree', 'DavyJones', 'BOSSHogRider',
             'BOSSAnubis', 'BOSSKrakenArm3-Arm#1', 'BOSSKrakenArm3-Arm#2', 'BOSSKrakenArm3-Arm#3',
