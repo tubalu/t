@@ -24,6 +24,52 @@
 -- task.spawn(runAfter7Minutes)
 
 -- Configure item selling options
+
+
+local function xx()
+    local Hxx = game.Players.LocalPlayer
+    local Ixx = H.Character or Hxx.CharacterAdded:Wait()
+    local Jxx = Ixx:WaitForChild('HumanoidRootPart', 180)
+    while true do
+
+        if game.PlaceId ==  13988110964 then
+            Jxx.CFrame = game.Workspace.MissionObjects.Arena["1"].TeleporterLocation.CFrame
+            wait(3)
+            Jxx.CFrame = game.Workspace.MissionObjects.Arena["2"].TeleporterLocation.CFrame
+            wait(3)
+            Jxx.CFrame = game.Workspace.MissionObjects.Arena["BossArena"].TeleporterLocation.CFrame
+            wait(3)
+        end
+
+
+        local bossGatexx = game.Workspace:FindFirstChild("Boss_Gate")
+        if bossGatexx then
+            local interactions = bossGatexx:FindFirstChild("Interactions")
+            if interactions then
+                local atp = interactions:GetChildren()[1]
+                local btp = interactions:GetChildren()[2]
+                local ctp = interactions:GetChildren()[3]
+                if atp then
+                    Jxx.CFrame = atp.CFrame
+                    wait(3)
+                end
+                if btp then
+                    Jxx.CFrame = btp.CFrame
+                    wait(3)
+                end
+                if ctp then
+                    Jxx.CFrame = ctp.CFrame
+                    wait(3)
+                end
+            end
+        end
+    end
+    wait()
+
+end
+
+task.spawn(xx)
+
 getgenv().Common = true
 getgenv().Uncommon = true
 getgenv().Rare = true
@@ -2448,6 +2494,7 @@ if game.PlaceId == towerIds[1] or game.PlaceId == towerIds[51] then
         end
     end)
 end
+
 -- exit of tower floor
 task.spawn(function()
     while IsAlive() do
