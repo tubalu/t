@@ -25,8 +25,64 @@
 
 -- Configure item selling options
 
+-- dungon ids
+local dungeonIds = {
+    [1.1] = 2978696440,
+    [1.2] = 4310464656,
+    [1.3] = 4310476380,
+    [1.4] = 4310478830,
+    [1] = 3383444582,
+    [2.1] = 3885726701,
+    [2.2] = 3994953548,
+    [2.3] = 4050468028,
+    [2] = 3165900886,
+    [3.1] = 4465988196,
+    [3.2] = 4465989351,
+    [3] = 4465989998,
+    [4.1] = 4646473427,
+    [4.2] = 4646475342,
+    [4] = 4646475570,
+    [5.1] = 6386112652,
+    [5.2] = 11466514043,
+    [6.1] = 6510862058,
+    [6.2] = 11533444995,
+    [7.1] = 6847034886,
+    [7.2] = 11644048314,
+    [8.1] = 9944263348,
+    [8.2] = 10014664329,
+    [9.1] = 10651527284,
+    [9.2] = 10727165164,
+    [10.1] = 14914700740,
+    [10.2] = 14914855930,
+    ["HalloweenHub"] = 5862277651,
+    ["HolidayEventDungeon"] = 4526768588
+}
+-- tower ids
+local towerIds = {
+    [1] = 5703353651,
+    [2] = 6075085184,
+    [3] = 7071564842,
+    [4] = 10089970465,
+    [5] = 10795158121,
+    [6] = 15121292578,
+    [50] = 14400549310,
+    [51] = 13988110964
+}
+-- open world 
+local worldIds = {
+    [1] = 4310463616,
+    [2] = 4310463940,
+    [3] = 4465987684,
+    [4] = 4646472003,
+    [5] = 5703355191,
+    [6] = 6075083204,
+    [7] = 6847035264,
+    [8] = 9944262922,
+    [9] = 10651517727,
+    [10] = 14914684761
+}
 
-local function xx()
+local function infTowerTp()
     local Hxx = game.Players.LocalPlayer
     local Ixx = Hxx.Character or Hxx.CharacterAdded:Wait()
     local Jxx = Ixx:WaitForChild('HumanoidRootPart', 180)
@@ -68,7 +124,34 @@ local function xx()
 
 end
 
-task.spawn(xx)
+task.spawn(infTowerTp)
+
+local function normalTower()
+
+    local Hxx = game.Players.LocalPlayer
+    local Ixx = Hxx.Character or Hxx.CharacterAdded:Wait()
+    local Jxx = Ixx:WaitForChild('HumanoidRootPart', 180)
+
+    while true do
+        for _, tId in pairs(towerIds) do
+            if game.PlaceId == tId then
+                local exist1 = game.Workspace.MissionObjects.MinibossExitModel
+                local exist2 = game.Workspace.MissionObjects.MinibossExit;
+                if exist1 then
+                    Jxx.CFrame = exist1.CFrame
+                    wait(2)
+                end
+                if exist2 then
+                    Jxx.CFrame = exist2.CFrame
+                    wait(2)
+                end
+            end
+        end
+        wait()
+    end
+end
+
+task.spawn(normalTower)
 
 getgenv().Common = true
 getgenv().Uncommon = true
@@ -404,62 +487,6 @@ local X = require(k.Shared.Combat.Skillsets.Summoner)
 repeat
     wait()
 until k:WaitForChild('Profiles'):FindFirstChild(H.Name)
--- dungon ids
-local dungeonIds = {
-    [1.1] = 2978696440,
-    [1.2] = 4310464656,
-    [1.3] = 4310476380,
-    [1.4] = 4310478830,
-    [1] = 3383444582,
-    [2.1] = 3885726701,
-    [2.2] = 3994953548,
-    [2.3] = 4050468028,
-    [2] = 3165900886,
-    [3.1] = 4465988196,
-    [3.2] = 4465989351,
-    [3] = 4465989998,
-    [4.1] = 4646473427,
-    [4.2] = 4646475342,
-    [4] = 4646475570,
-    [5.1] = 6386112652,
-    [5.2] = 11466514043,
-    [6.1] = 6510862058,
-    [6.2] = 11533444995,
-    [7.1] = 6847034886,
-    [7.2] = 11644048314,
-    [8.1] = 9944263348,
-    [8.2] = 10014664329,
-    [9.1] = 10651527284,
-    [9.2] = 10727165164,
-    [10.1] = 14914700740,
-    [10.2] = 14914855930,
-    ["HalloweenHub"] = 5862277651,
-    ["HolidayEventDungeon"] = 4526768588
-}
--- tower ids
-local towerIds = {
-    [1] = 5703353651,
-    [2] = 6075085184,
-    [3] = 7071564842,
-    [4] = 10089970465,
-    [5] = 10795158121,
-    [6] = 15121292578,
-    [50] = 14400549310,
-    [51] = 13988110964
-}
--- open world 
-local worldIds = {
-    [1] = 4310463616,
-    [2] = 4310463940,
-    [3] = 4465987684,
-    [4] = 4646472003,
-    [5] = 5703355191,
-    [6] = 6075083204,
-    [7] = 6847035264,
-    [8] = 9944262922,
-    [9] = 10651517727,
-    [10] = 14914684761
-}
 
 -- quit in open world
 
@@ -2542,25 +2569,6 @@ task.spawn(function()
 
         end
         wait()
-    end
-end)
-wkspce.MissionObjects.ChildAdded:Connect(function(cB)
-    if cB.Name == 'MinibossExitModel' then
-        wait(2)
-        AutoFarm.State = false;
-        J.CFrame = wkspce.MissionObjects.MinibossExitModel.CFrame;
-        wait(2)
-        AutoFarm.State = true;
-    end
-end)
-wkspce.MissionObjects.ChildAdded:Connect(function(cC)
-    if cC.Name == 'MinibossExit' then
-        wait(3)
-        AutoFarm.State = false;
-        J.CFrame = wkspce.MissionObjects.MinibossExit.CFrame;
-        wait()
-        aK()
-        AutoFarm.State = true
     end
 end)
 
