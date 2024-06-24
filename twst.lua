@@ -132,9 +132,7 @@ local function infTowerTp()
 
 end
 
-
 local function normalTower()
-
     while true do
         for _, tId in pairs(towerIds) do
             if game.PlaceId == tId then
@@ -149,7 +147,6 @@ local function normalTower()
         wait()
     end
 end
-
 
 
 task.spawn(infTowerTp)
