@@ -82,6 +82,14 @@ local worldIds = {
     [10] = 14914684761
 }
 
+
+for _, wId in pairs(worldIds) do
+    if game.PlaceId == wId then
+        print("quit in open world")
+        return
+    end
+end
+
 local Hxx = game.Players.LocalPlayer
 local Ixx = Hxx.Character or Hxx.CharacterAdded:Wait()
 local Jxx = Ixx:WaitForChild('HumanoidRootPart', 180)
@@ -124,7 +132,6 @@ local function infTowerTp()
 
 end
 
-task.spawn(infTowerTp)
 
 local function normalTower()
 
@@ -144,14 +151,8 @@ local function normalTower()
 end
 
 
-for _, wId in pairs(worldIds) do
-    if game.PlaceId == wId then
-        print("quit in open world")
-        return
-    end
-end
 
-
+task.spawn(infTowerTp)
 task.spawn(normalTower)
 
 getgenv().Common = true
