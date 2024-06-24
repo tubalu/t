@@ -131,7 +131,7 @@ local function normalTower()
     while true do
         for _, tId in pairs(towerIds) do
             if game.PlaceId == tId then
-                local exist2 = game.Workspace.MissionObjects.MinibossExit
+                local exist2 = game.Workspace.MissionObjects:FindFirstChild("MinibossExit")
                 if exist2 then
                     Jxx.CFrame = exist2.CFrame
                     wait(2)
