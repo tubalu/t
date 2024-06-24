@@ -82,12 +82,12 @@ local worldIds = {
     [10] = 14914684761
 }
 
-local function infTowerTp()
-    local Hxx = game.Players.LocalPlayer
-    local Ixx = Hxx.Character or Hxx.CharacterAdded:Wait()
-    local Jxx = Ixx:WaitForChild('HumanoidRootPart', 180)
-    while true do
+local Hxx = game.Players.LocalPlayer
+local Ixx = Hxx.Character or Hxx.CharacterAdded:Wait()
+local Jxx = Ixx:WaitForChild('HumanoidRootPart', 180)
 
+local function infTowerTp()
+    while true do
         if game.PlaceId ==  13988110964 then
             Jxx.CFrame = game.Workspace.MissionObjects.Arena["1"].TeleporterLocation.CFrame
             wait(3)
@@ -128,28 +128,29 @@ task.spawn(infTowerTp)
 
 local function normalTower()
 
-    local Hxx = game.Players.LocalPlayer
-    local Ixx = Hxx.Character or Hxx.CharacterAdded:Wait()
-    local Jxx = Ixx:WaitForChild('HumanoidRootPart', 180)
-
     while true do
         for _, tId in pairs(towerIds) do
             if game.PlaceId == tId then
-                local exist1 = game.Workspace.MissionObjects.MinibossExitModel
-                local exist2 = game.Workspace.MissionObjects.MinibossExit;
-                if exist1 then
-                    Jxx.CFrame = exist1.CFrame
-                    wait(2)
-                end
+                local exist2 = game.Workspace.MissionObjects.MinibossExit
                 if exist2 then
                     Jxx.CFrame = exist2.CFrame
                     wait(2)
                 end
             end
+            wait()
         end
         wait()
     end
 end
+
+
+for _, wId in pairs(worldIds) do
+    if game.PlaceId == wId then
+        print("quit in open world")
+        return
+    end
+end
+
 
 task.spawn(normalTower)
 
