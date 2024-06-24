@@ -1940,30 +1940,6 @@ local bI = Library:Window({
     FrameColor = Color3.fromRGB(63, 72, 80),
     BackgroundColor = Color3.fromRGB(35, 35, 35)
 })
-local bJ = Library:Window({
-    Title = "Running",
-    TextSize = 20,
-    Font = Enum.Font.LuckiestGuy,
-    TextColor = Color3.fromRGB(222, 248, 107),
-    FrameColor = Color3.fromRGB(63, 72, 80),
-    BackgroundColor = Color3.fromRGB(35, 35, 35)
-})
-local bK = Library:Window({
-    Title = "Ping: " .. math.floor(game:GetService('Stats').Network.ServerStatsItem['Data Ping']:GetValue()),
-    TextSize = 18,
-    Font = Enum.Font.LuckiestGuy,
-    TextColor = Color3.fromRGB(222, 248, 107),
-    FrameColor = Color3.fromRGB(63, 72, 80),
-    BackgroundColor = Color3.fromRGB(35, 35, 35)
-})
-local bL = Library:Window({
-    Title = "Misc",
-    TextSize = 18,
-    Font = Enum.Font.LuckiestGuy,
-    TextColor = Color3.fromRGB(222, 248, 107),
-    FrameColor = Color3.fromRGB(63, 72, 80),
-    BackgroundColor = Color3.fromRGB(35, 35, 35)
-})
 local KillAura = bF:Toggle({
     Text = "KillAura",
     TextSize = 22,
@@ -2246,13 +2222,6 @@ wkspce.ChildAdded:Connect(function(ci)
 end)
 local hasRun = false  -- Set this variable outside the Connect function to maintain the correct value
 
-bJ:Slider("WalkSpeed", 16, 120, K.WalkSpeed, function(bW)
-    K.WalkSpeed = bW
-end)
-
-bK:DestroyUI()
-bK:HideUI()
-bL:MinimizeWindows()
 k.Shared.Missions.MissionFinished.OnClientEvent:Connect(function()
     bG.Text = "EndTime: " .. os.date("%I:%M %p")
     -- WEBHOOK
