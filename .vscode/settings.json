@@ -13,6 +13,11 @@
         "CFrame",
         "tick",
         "Vector3",
-        "getgenv"
+        "getgenv",
+        "getupvalue",
+        "fake",
+        "hookmetamethod",
+        "checkcaller",
+        "typeof"
     ]
 }

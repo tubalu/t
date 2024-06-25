@@ -2149,6 +2149,7 @@ local bQ = bF:Toggle({
         al.GetDrop = aJ;
         task.spawn(function()
             ak('WZ_Toggles', al)
+            
             local bR = getupvalue(N.Start, 4)
             while al.GetDrop do
                 if not al.GetDrop then
@@ -2330,6 +2331,7 @@ k.Shared.Missions.MissionFinished.OnClientEvent:Connect(function()
     sendEmbed(Embed)
 end)
 
+-- open final chest
 for aA, B in pairs(dungeonIds) do
     if game.PlaceId == B then
         local cj = H.PlayerGui.MissionRewards.MissionRewards;
@@ -2442,6 +2444,7 @@ end
 if game.PlaceId == dungeonIds[3] or game.PlaceId == towerIds[51] then
     wkspce.ChildAdded:Connect(function(cx)
         if cx.Name == 'IceWall' then
+            print("find ice wall")
             wait(5)
             AutoFarm.State = false;
             J.CFrame = wkspce.IceWall:FindFirstChild('Ring').CFrame
@@ -2449,6 +2452,7 @@ if game.PlaceId == dungeonIds[3] or game.PlaceId == towerIds[51] then
     end)
     wkspce.ChildRemoved:Connect(function(cx)
         if cx.Name == 'IceWall' then
+            print("quit ice wall")
             aK()
             AutoFarm.State = true
         end
@@ -2490,9 +2494,9 @@ if game.PlaceId == dungeonIds[7.1] then
 end
 if game.PlaceId == towerIds[1] or game.PlaceId == towerIds[51] then
     H.PlayerGui.MissionObjective.MissionObjective.Label:GetPropertyChangedSignal('Text'):Connect(function()
-        if H.PlayerGui.MissionObjective.MissionObjective.Label.Text == 'Get behind the active shield! (2)' then
-            AutoFarm.State = false;
-            J.CFrame = wkspce.MissionObjects.IgnisShield.Ring.CFrame;
+        if H.PlayerGui.MissionObjective.MissionObjective.Label.Text:find("behind the active shield") then
+            AutoFarm.State = false
+            wkspce.MissionObjects.IgnisShield.Ring.CFrame = J.CFrame
             wait(3)
             aK()
             AutoFarm.State = true
