@@ -376,7 +376,7 @@ end)
 --
 local r = {
     ["createUi"] = function(s, t)
-        local u = {"MAI HOÀNG PHI", "🍊🍊🍊🍊🍊🍊🍊", "twist\nWorld Zero"}
+        local u = {"你吃饭了吗？", "🍊🍊🍊🍊🍊🍊🍊", "饭桶\nWorld Zero"}
         local v = {{
             ["Image"] = "rbxassetid://3926305904",
             ["RectOffset"] = Vector2.new(204, 844),
