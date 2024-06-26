@@ -2160,19 +2160,6 @@ local bQ = bF:Toggle({
     end
 })
 
-bH:Button({
-    Text = "Bank",
-    TextSize = 22,
-    Font = Enum.Font.FredokaOne,
-    TextColor = Color3.fromRGB(255, 187, 109),
-    Callback = function()
-        if wkspce:FindFirstChild("MenuRings") and wkspce.MenuRings:FindFirstChild("Bank") then
-            wkspce.MenuRings.Bank.Ring.CFrame = I:WaitForChild('LeftFoot').CFrame * CFrame.new(0, 0, -12)
-            wkspce.MenuRings.Bank.Floor.CFrame = I:WaitForChild('LeftFoot').CFrame * CFrame.new(0, 0, -12)
-        end
-    end
-})
-
 
 al.MolPass=true
 local MoLPass = bI:Toggle({
