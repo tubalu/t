@@ -96,14 +96,21 @@ local Jxx = Ixx:WaitForChild('HumanoidRootPart', 180)
 
 local function infTowerTp()
     while true do
-        if game.PlaceId ==  13988110964 then
-            Jxx.CFrame = game.Workspace.MissionObjects.Arena["1"].TeleporterLocation.CFrame
-            wait(1)
-            Jxx.CFrame = game.Workspace.MissionObjects.Arena["2"].TeleporterLocation.CFrame
-            wait(1)
-            Jxx.CFrame = game.Workspace.MissionObjects.Arena["BossArena"].TeleporterLocation.CFrame
-            wait(1)
+        -- celet or inf
+        if game.PlaceId ==  13988110964 or game.PlaceId == 14400549310 then
+            if game.Workspace.MissionObjects.Arena["1"].TeleporterLocation then 
+                Jxx.CFrame = game.Workspace.MissionObjects.Arena["1"].TeleporterLocation.CFrame
+                wait(1)
+            end
+            if game.Workspace.MissionObjects.Arena["2"].TeleporterLocation then
+                Jxx.CFrame = game.Workspace.MissionObjects.Arena["2"].TeleporterLocation.CFrame
+                wait(1)
+            end
 
+            if game.Workspace.MissionObjects.Arena["BossArena"].TeleporterLocation then
+                Jxx.CFrame = game.Workspace.MissionObjects.Arena["BossArena"].TeleporterLocation.CFrame
+                wait(1)
+            end
 
             local bossGatexx = game.Workspace:FindFirstChild("Boss_Gate")
             if bossGatexx then
