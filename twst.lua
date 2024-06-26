@@ -2310,7 +2310,7 @@ for aA, B in pairs(dungeonIds) do
         cj.OpenChest.Countdown:GetPropertyChangedSignal('Text'):Connect(function()
             if cj.OpenChest.Countdown.Text == '0' then
                 repeat
-                    wait()
+                    wait(1)
                 until cj.OpenChest:WaitForChild("Next") and cj.OpenChest:FindFirstChild("Next").Visible;
                 aT(cj.OpenChest.Next.TextLabel)
             end
@@ -2321,18 +2321,18 @@ for aA, B in pairs(dungeonIds) do
             else
                 aT(cj.Chests.Box2.ChestImage.VIP.TextLabel)
                 repeat
-                    wait()
+                    wait(1)
                 until cj.OpenChest.Chest:FindFirstChild("RaidChest")
                 wait(1)
                 repeat
                     aT(cj.Chests.Box2.ChestImage.Select)
-                    wait()
+                    wait(1)
                 until cj.OpenChest.Countdown.text == '0'
             end
         end)
         cj.Chests.Box2.ChestImage.ChildAdded:Connect(function(ct)
             if ct.Name == 'ViewportFrame' and cs then
-                wait()
+                wait(1)
                 aT(cj.OpenChest.Next.TextLabel)
             end
         end)
