@@ -134,7 +134,7 @@ local function infTowerTp()
                 end
             end
         end
-        wait()
+        wait(10)
     end
 
 end
@@ -2005,22 +2005,8 @@ local bF = Library:Window({
     FrameColor = Color3.fromRGB(63, 72, 80),
     BackgroundColor = Color3.fromRGB(35, 35, 35)
 })
-local bG = Library:Window({
-    Title = "Start: " .. os.date("%I:%M %p"),
-    TextSize = 18,
-    Font = Enum.Font.LuckiestGuy,
-    TextColor = Color3.fromRGB(222, 248, 107),
-    FrameColor = Color3.fromRGB(63, 72, 80),
-    BackgroundColor = Color3.fromRGB(35, 35, 35)
-})
-local bH = Library:Window({
-    Title = n.country .. " | " .. n.city,
-    TextSize = 20,
-    Font = Enum.Font.LuckiestGuy,
-    TextColor = Color3.fromRGB(222, 248, 107),
-    FrameColor = Color3.fromRGB(63, 72, 80),
-    BackgroundColor = Color3.fromRGB(35, 35, 35)
-})
+
+
 local bI = Library:Window({
     Title = "Gold: " .. as(game.ReplicatedStorage.Profiles[H.Name].Currency.Gold.Value),
     TextSize = 18,
@@ -2186,51 +2172,7 @@ bH:Button({
         end
     end
 })
-bH:Button({
-    Text = "Upgrade",
-    TextSize = 22,
-    Font = Enum.Font.FredokaOne,
-    TextColor = Color3.fromRGB(255, 187, 109),
-    Callback = function()
-        require(k.Client.Gui.GuiScripts.ItemUpgrade):Toggle()
-    end
-})
-bH:Button({
-    Text = "Zero Altar",
-    TextSize = 22,
-    Font = Enum.Font.FredokaOne,
-    TextColor = Color3.fromRGB(255, 187, 109),
-    Callback = function()
-        require(k.Client.Gui.GuiScripts.Fusion):Open()
-    end
-})
-bH:Button({
-    Text = "Way Stones",
-    TextSize = 22,
-    Font = Enum.Font.FredokaOne,
-    TextColor = Color3.fromRGB(255, 187, 109),
-    Callback = function()
-        require(k.Client.Gui.GuiScripts.Waystones):Open()
-    end
-})
-bH:Button({
-    Text = "World Menu",
-    TextSize = 22,
-    Font = Enum.Font.FredokaOne,
-    TextColor = Color3.fromRGB(255, 187, 109),
-    Callback = function()
-        require(k.Client.Gui.GuiScripts.WorldTeleport):Toggle()
-    end
-})
-bH:Button({
-    Text = "Dungeon Menu",
-    TextSize = 22,
-    Font = Enum.Font.FredokaOne,
-    TextColor = Color3.fromRGB(255, 187, 109),
-    Callback = function()
-        require(k.Client.Gui.GuiScripts.MissionSelect):Toggle()
-    end
-})
+
 
 al.MolPass=true
 local MoLPass = bI:Toggle({
@@ -2282,7 +2224,7 @@ end)
 local hasRun = false  -- Set this variable outside the Connect function to maintain the correct value
 
 k.Shared.Missions.MissionFinished.OnClientEvent:Connect(function()
-    bG.Text = "EndTime: " .. os.date("%I:%M %p")
+    -- bG.Text = "EndTime: " .. os.date("%I:%M %p")
     -- WEBHOOK
     local OSTime = os.time()
     local Time = os.date('!*t', OSTime)
