@@ -98,11 +98,11 @@ local function infTowerTp()
     while true do
         if game.PlaceId ==  13988110964 then
             Jxx.CFrame = game.Workspace.MissionObjects.Arena["1"].TeleporterLocation.CFrame
-            wait(3)
+            wait(1)
             Jxx.CFrame = game.Workspace.MissionObjects.Arena["2"].TeleporterLocation.CFrame
-            wait(3)
+            wait(1)
             Jxx.CFrame = game.Workspace.MissionObjects.Arena["BossArena"].TeleporterLocation.CFrame
-            wait(3)
+            wait(1)
 
 
             local bossGatexx = game.Workspace:FindFirstChild("Boss_Gate")
@@ -114,15 +114,15 @@ local function infTowerTp()
                     local ctp = interactions:GetChildren()[3]
                     if atp then
                         Jxx.CFrame = atp.CFrame
-                        wait(3)
+                        wait(1)
                     end
                     if btp then
                         Jxx.CFrame = btp.CFrame
-                        wait(3)
+                        wait(1)
                     end
                     if ctp then
                         Jxx.CFrame = ctp.CFrame
-                        wait(3)
+                        wait(1)
                     end
                 end
             end
