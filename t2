@@ -26,7 +26,7 @@ task.spawn(function()
     textLabel.Size = UDim2.new(1, -20, 0.4, 0)
     textLabel.Position = UDim2.new(0, 10, 0, 5)
     textLabel.BackgroundTransparency = 1
-    textLabel.Text = "🔑 Key: 5m$ / 10.000 VND / 20M (1 week) 💖\n🔑 Buy now to unlock script!"
+    textLabel.Text = "🔑 1.2m"
     textLabel.Font = Enum.Font.FredokaOne
     textLabel.TextSize = 18
     textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
