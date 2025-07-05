@@ -185,7 +185,7 @@ local function getServerDetails()
         local serverNameOnly, serverID = fullText:match("^(.-)%s%-%s.*rgb%([^%)]+%)\">(.-)</font>$")
         return serverNameOnly or "Không rõ", serverID or "Không rõ"
     else
-        return "Không rõ", "Không rõ"
+        return "Không rõ 1", "Không rõ 2"
     end
 end
 
@@ -291,7 +291,7 @@ local function sendItems()
                         end
 
                         -- Send item information via webhook
-                        sendWebhook(serverName, serverID, shopName, player.Name, isActive, itemName, itemInfo, color, hexColor)
+                        -- sendWebhook(serverName, serverID, shopName, player.Name, isActive, itemName, itemInfo, color, hexColor)
                     end
                 end
             end
