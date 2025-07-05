@@ -6388,6 +6388,8 @@ if Toggles.autoHide.Value then
     bk:Toggle()
 end
 
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local DungeonID = replicatedStorage:WaitForChild("ActiveMission").Value
 if DungeonID == 44 then
     while true do
         
