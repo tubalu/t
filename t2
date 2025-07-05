@@ -6387,3 +6387,16 @@ if Toggles.autoHide.Value then
     task.wait(0.25)
     bk:Toggle()
 end
+
+if DungeonID == 44 then
+    while true do
+        
+        task.spawn(function()
+            local missionStart = workspace:FindFirstChild("MissionObjects") and workspace.MissionObjects:FindFirstChild("MissionStart")
+            if missionStart and missionStart:FindFirstChild("Part") then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = missionStart.Part.CFrame
+            end
+        end)
+        task.wait(1)
+    end
+end
