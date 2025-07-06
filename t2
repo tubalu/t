@@ -609,7 +609,6 @@ if R:FindFirstChild("ActiveMission") then
                 if action == "Infuse" then
                     local currentTime = tick()
                     if currentTime - lastInfuseTime < (customCooldown or 1) then
-                        -- continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
                         task.wait(customCooldown or 1)
                         currentTime = tick()
                         lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
@@ -3649,14 +3648,14 @@ do
         AetherCrown = 'Aether Crown',
         W9T5Helmet = 'Aether Helmet'
     }
-    local d4 = {}
+    local d41 = {}
     for B, C in d3 do
-        table.insert(d4, C)
+        table.insert(d41, C)
     end
-    table.sort(d4)
+    table.sort(d41)
     cH:AddDropdown('selectedCosmetics', {
         Text = 'Select Cosmetics',
-        Values = d4,
+        Values = d41,
         AllowNull = true,
         Multi = true
     })
@@ -3670,14 +3669,14 @@ do
         CarrotNose = 'Carrot Nose',
         FluffyJacket = 'Fluffy Jacket'
     }
-    local d4 = {}
+    local d42 = {}
     for B, C in d5 do
-        table.insert(d4, C)
+        table.insert(d42, C)
     end
-    table.sort(d4)
+    table.sort(d42)
     cH:AddDropdown('selectedWheelCosmetics', {
         Text = 'Select Event Cosmetics',
-        Values = d4,
+        Values = d42,
         AllowNull = true,
         Multi = true
     })
@@ -4118,15 +4117,15 @@ do
         Hex = '#9ACD32',
         Name = 'Yellow Green'
     }}
-    local d4 = {}
+    local d43 = {}
     for B, C in d6 do
-        table.insert(d4, C.Name)
+        table.insert(d43, C.Name)
     end
-    table.sort(d4)
+    table.sort(d43)
     cH:AddDropdown('selectedDyes', {
         Text = 'Select Desired Dyes',
         Tooltip = "Event wheel items with these dyes or close to these dyes won't be sold/recycled",
-        Values = d4,
+        Values = d43,
         AllowNull = true,
         Default = {'Rainbow', 'Ghoul', 'Ice', 'Faded', 'Black', 'White'},
         Multi = true
