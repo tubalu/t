@@ -4834,20 +4834,19 @@ function AutoCheckpoint()
                             local missionStart = missionObjects and missionObjects:FindFirstChild("MissionStart")
                             local missionTimer = missionStart and missionStart:FindFirstChild("MissionTimer")
                             local surfaceGui = missionTimer and missionTimer:FindFirstChild("SurfaceGui")
-                            local collider = missionStart and missionStart:FindFirstChild("Collider")
+                            local collider = missionStart and (missionStart:FindFirstChild("Collider") or missionStart:FindFirstChild("Part"))
                             local timerLabel = surfaceGui and surfaceGui:FindFirstChild("Timer")
 
                             local shouldSkip = false
 
                             -- Chỉ kiểm tra Timer 1 lần
                             if not movedToTimer and timerLabel and timerLabel:IsA("TextLabel") then
-                                if timerLabel.Text == "--" and collider and collider:IsA("BasePart") then
-                                    hrp.CFrame = collider.CFrame + Vector3.new(0, 5, 0)
-                                    movedToTimer = true
-                                    shouldSkip = true
-                                    warn("✅ Đã dịch chuyển đến Timer checkpoint")
-                                    task.wait(1)
-                                end
+                                task.wait(1)
+                                hrp.CFrame = collider.CFrame + Vector3.new(0, 5, 0)
+                                movedToTimer = true
+                                shouldSkip = true
+                                warn("✅ Đã dịch chuyển đến Timer checkpoint")
+                                task.wait(1)
                             end
 
                             if not shouldSkip then
