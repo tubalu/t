@@ -599,7 +599,9 @@ local aB;
 local aC;
 local aD = {'Crystal'}
 local aE = {}
--- spin special skills of classes
+
+
+-- trigger skills
 if R:FindFirstChild("ActiveMission") then
     local skills = {
         {"Demon", "BloodBinding"},
@@ -646,6 +648,10 @@ if R:FindFirstChild("ActiveMission") then
         end
     end)
 end
+
+
+
+
 if R:FindFirstChild("ActiveMission") then
     ao = true;
     ai = game:GetService("Workspace"):WaitForChild("MissionObjects")
