@@ -147,6 +147,10 @@ pcall(function()
     keypress(0x50) -- 0x50 is the ASCII code for the P key
     wait(0.1)
     keyrelease(0x50)
+    wait(0.1)
+    keypress(0x50) -- 0x50 is the ASCII code for the P key
+    wait(0.1)
+    keyrelease(0x50)
 end)
 -- Convert Color3 to integer for embed
 local function color3ToDecimal(color)
