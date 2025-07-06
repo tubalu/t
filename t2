@@ -665,10 +665,6 @@ if R:FindFirstChild("ActiveMission") then
     if ak == 44 then
         aA = true;
         ax = true
-        local vaneBoss = game:GetService("Workspace"):FindFirstChild("Mobs"):FindFirstChild("EVENTBOSSVane")
-        if vaneBoss then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = vaneBoss.PrimaryPart.CFrame
-        end
     end
     if ak == 22 then
         aB = true;
@@ -1071,7 +1067,7 @@ local c5 = {
     },
     VaneEvent = {
         Id = 44,
-        -- priorityTbl = {'EVENTBOSSVane'}
+        priorityTbl = {'EVENTBOSSVane'}
     },
     AetherTower = {
         Id = 34,
@@ -5118,6 +5114,7 @@ do
         getgenv().codeStr = eG.EventDungeon and 'Event' or (au or av) and 'Special' or eG.TowerID and 'Tower ' ..
                                 eG.TowerID or eG.DisplayWorldID .. '-' .. eG.WorldMissionID;
         function hookWithUserInfo(ci, eH, eI, d8, g, cl)
+            return
             request({
                 Url = ci,
                 Method = "POST",
@@ -5139,6 +5136,7 @@ do
             })
         end
         function anonHook(ci, eH, eI, d8, g, cl)
+            return
             request({
                 Url = ci,
                 Method = "POST",
