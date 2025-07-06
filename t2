@@ -612,7 +612,7 @@ if R:FindFirstChild("ActiveMission") then
         {"MageOfLight", "Infuse", 6} -- Add a 3rd parameter for a separate cooldown
     }
     task.spawn(function()
-        local lastInfuseTime = 0 -- Biến để theo dõi thời gian sử dụng Infuse
+        local lastInfuseTime = 0 -- Variable to track the time when Infuse is used
         
         while true do
             for _, skill in ipairs(skills) do
@@ -622,9 +622,9 @@ if R:FindFirstChild("ActiveMission") then
                 if action == "Infuse" then
                     local currentTime = tick()
                     if currentTime - lastInfuseTime < (customCooldown or 1) then
-                        goto continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
+                        goto continue -- Skip this loop if not enough time has passed
                     else
-                        lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
+                        lastInfuseTime = currentTime -- Update the time when Infuse is used
                     end
                 end
                 
@@ -642,7 +642,7 @@ if R:FindFirstChild("ActiveMission") then
                 end
                 ::continue::
             end
-            task.wait(1) -- Vẫn chờ 1 giây trước vòng lặp kế tiếp cho các kỹ năng khác
+            task.wait(1) -- Wait 1 second before the next loop for other skills
         end
     end)
 end
