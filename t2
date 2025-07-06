@@ -1,72 +1,316 @@
-wait(20)
-if not game:IsLoaded() then
-    game.Loaded:Wait()
+
+
+task.spawn(function()
+    local player = game.Players.LocalPlayer
+    local gui = Instance.new("ScreenGui")
+    gui.Parent = player:FindFirstChild("PlayerGui") or player:WaitForChild("PlayerGui")
+
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0.4, 0, 0.3, 0) -- Nhỏ hơn một chút
+    frame.Position = UDim2.new(0.3, 0, 0.15, 0)
+    frame.BackgroundColor3 = Color3.fromRGB(255, 223, 230)
+    frame.BackgroundTransparency = 1
+    frame.BorderSizePixel = 0
+    frame.Parent = gui
+
+    local border = Instance.new("UIStroke")
+    border.Thickness = 3
+    border.Color = Color3.fromRGB(255, 255, 255)
+    border.Parent = frame
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0.25, 0)
+    corner.Parent = frame
+
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(1, -20, 0.4, 0)
+    textLabel.Position = UDim2.new(0, 10, 0, 5)
+    textLabel.BackgroundTransparency = 1
+    textLabel.Text = "🔑 Key: 0.5$ / 10.000 VNĐ / 20M (1 tuần) 💖\n🔑 Buy now to unlock script!"
+    textLabel.Font = Enum.Font.FredokaOne
+    textLabel.TextSize = 18
+    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    textLabel.TextStrokeTransparency = 0
+    textLabel.TextStrokeColor3 = Color3.fromRGB(255, 105, 180)
+    textLabel.TextWrapped = true
+    textLabel.TextYAlignment = Enum.TextYAlignment.Center
+    textLabel.Parent = frame
+
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(0.55, 0, 0.12, 0) -- Nhỏ hơn
+    button.Position = UDim2.new(0.225, 0, 0.55, 0)
+    button.BackgroundColor3 = Color3.fromRGB(255, 180, 200)
+    button.Text = "📋 Copy Discord Link"
+    button.Font = Enum.Font.FredokaOne
+    button.TextSize = 14 -- Chữ nhỏ hơn tí
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.Parent = frame
+
+    local buttonStroke = Instance.new("UIStroke")
+    buttonStroke.Thickness = 2
+    buttonStroke.Color = Color3.fromRGB(255, 105, 180)
+    buttonStroke.Parent = button
+
+    local buttonCorner = Instance.new("UICorner")
+    buttonCorner.CornerRadius = UDim.new(0.3, 0)
+    buttonCorner.Parent = button
+
+    button.MouseEnter:Connect(function()
+        button.BackgroundColor3 = Color3.fromRGB(255, 160, 190)
+    end)
+
+    button.MouseLeave:Connect(function()
+        button.BackgroundColor3 = Color3.fromRGB(255, 180, 200)
+    end)
+
+    button.MouseButton1Click:Connect(function()
+        setclipboard("https://discord.gg/A5aDk94a")
+        button.Text = "✅ Copied!"
+        button.BackgroundColor3 = Color3.fromRGB(255, 130, 160)
+        task.wait(1.5)
+        button.Text = "📋 Copy Discord Link"
+        button.BackgroundColor3 = Color3.fromRGB(255, 180, 200)
+    end)
+
+    -- 🔥 Loading Script Text (Moved Below Discord Button)
+    local loadingLabel = Instance.new("TextLabel")
+    loadingLabel.Size = UDim2.new(1, 0, 0.1, 0)
+    loadingLabel.Position = UDim2.new(0, 0, 0.7, 0) -- Căn lại
+    loadingLabel.BackgroundTransparency = 1
+    loadingLabel.Text = "⏳ Loading Script..."
+    loadingLabel.Font = Enum.Font.FredokaOne
+    loadingLabel.TextSize = 16
+    loadingLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    loadingLabel.TextStrokeTransparency = 0
+    loadingLabel.TextStrokeColor3 = Color3.fromRGB(255, 105, 180)
+    loadingLabel.Parent = frame
+
+    -- 🔥 Progress Bar (Countdown Timer)
+    local progressFrame = Instance.new("Frame")
+    progressFrame.Size = UDim2.new(0.8, 0, 0.08, 0)
+    progressFrame.Position = UDim2.new(0.1, 0, 0.85, 0)
+    progressFrame.BackgroundColor3 = Color3.fromRGB(255, 200, 220)
+    progressFrame.BorderSizePixel = 0
+    progressFrame.Parent = frame
+
+    local progressBar = Instance.new("Frame")
+    progressBar.Size = UDim2.new(1, 0, 1, 0) -- Ban đầu đầy
+    progressBar.BackgroundColor3 = Color3.fromRGB(255, 130, 160)
+    progressBar.BorderSizePixel = 0
+    progressBar.Parent = progressFrame
+
+    local progressCorner = Instance.new("UICorner")
+    progressCorner.CornerRadius = UDim.new(0.4, 0)
+    progressCorner.Parent = progressFrame
+
+    local progressBarCorner = Instance.new("UICorner")
+    progressBarCorner.CornerRadius = UDim.new(0.4, 0)
+    progressBarCorner.Parent = progressBar
+
+    local TweenService = game:GetService("TweenService")
+    local tweenInfo = TweenInfo.new(2, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+    local goal = {Size = UDim2.new(0, 0, 1, 0)}
+    local tween = TweenService:Create(progressBar, tweenInfo, goal)
+
+    -- 🌟 Hiệu ứng Fade-in
+    for i = 1, 20 do
+        frame.BackgroundTransparency = 1 - (i * 0.05)
+        textLabel.TextTransparency = 1 - (i * 0.05)
+        loadingLabel.TextTransparency = 1 - (i * 0.05)
+        button.TextTransparency = 1 - (i * 0.05)
+        task.wait(0.05)
+    end
+
+    -- ⏳ Chạy progress bar
+    tween:Play()
+
+    -- ⏳ Đợi 20 giây
+    tween.Completed:Wait()
+
+    -- 🌙 Hiệu ứng Fade-out (Đồng bộ thời gian)
+    for i = 1, 40 do
+        local transparencyStep = i * 0.025
+        frame.BackgroundTransparency = transparencyStep
+        textLabel.TextTransparency = transparencyStep
+        loadingLabel.TextTransparency = transparencyStep
+        button.TextTransparency = transparencyStep
+        progressBar.BackgroundTransparency = transparencyStep
+        progressFrame.BackgroundTransparency = transparencyStep
+        task.wait(0.05)
+    end
+
+    gui:Destroy()
+end)
+wait(2)
+pcall(function()
+    keypress(0x50) -- 0x50 là mã ASCII của phím P
+    wait(0.1)
+    keyrelease(0x50)
+end)
+-- Chuyển đổi Color3 thành số nguyên cho embed
+local function color3ToDecimal(color)
+    local r = math.floor(color.R * 255)
+    local g = math.floor(color.G * 255)
+    local b = math.floor(color.B * 255)
+    return (r * 256^2) + (g * 256) + b
 end
--- WEBHOOK
-local HttpService = game:GetService('HttpService')
-local Players = game:GetService('Players')
 
-local OSTime = os.time()
-local Time = os.date('!*t', OSTime)
-local Avatar = 'https://cdn.discordapp.com/embed/avatars/4.png'
-local Content = '<@880845879404285952> Treo Acc World//Zero AnyaTeam' -- Nội dung có tag role
-local player = Players.LocalPlayer
-local playerName = player.Name
+-- Chuyển đổi Color3 thành mã hex
+local function color3ToHex(color)
+    local r = math.floor(color.R * 255)
+    local g = math.floor(color.G * 255)
+    local b = math.floor(color.B * 255)
+    return string.format("#%02X%02X%02X", r, g, b)
+end
+-- Đợi vô hạn cho đến khi ServerName hiện ra trong GUI
+local function waitForServerName()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    local gui = player:WaitForChild("PlayerGui", 10)
 
--- Hàm gửi embed
-local function sendEmbed(goldValue)
-    local currentTime = os.time()
-    local timeData = os.date('!*t', currentTime)
-    
-    local Embed = {
-        title = 'World//Zero',
-        color = 99999,
-        footer = { text = game.JobId },
-        author = {
-            name = 'MAI HOÀNG PHI',
-            url = 'https://www.roblox.com/',
-        },
+    while true do
+        local serverNameLabel = gui:FindFirstChild("ServerName", true)
+        if serverNameLabel and serverNameLabel:IsA("TextLabel") then
+            return serverNameLabel
+        end
+        task.wait(1)
+    end
+end
+
+-- Lấy ServerName và ID từ PlayerGui
+local function getServerDetails()
+    local serverNameLabel = waitForServerName()
+    if serverNameLabel then
+        local fullText = serverNameLabel.Text
+        local serverNameOnly, serverID = fullText:match("^(.-)%s%-%s.*rgb%([^%)]+%)\">(.-)</font>$")
+        return serverNameOnly or "Không rõ", serverID or "Không rõ"
+    else
+        return "Không rõ", "Không rõ"
+    end
+end
+
+
+-- Webhook URL
+local webhookUrl = "https://discord.com/api/webhooks/1358010037003616368/ZHJ1cKMIBhrq4KQAI5mqfQOZFgjDNeU4y-PO5mFJ7ta86hOW5mUtiC4zXyr4Dn0Zjh8d"
+
+-- Hàm gửi thông tin qua webhook
+local function sendWebhook(serverName, serverID, shopName, ownerName, isActive, itemName, itemInfo, color, hexColor)
+    local OSTime = os.time()
+    local Time = os.date('!*t', OSTime)
+
+    local embed = {
+        title = "Thông tin món đồ trong PlayerShop",
+        description = string.format("Tên server: **%s**\nID server: **%s**\nShop: **%s**\nChủ shop: **%s**\nTình trạng: **%s**",
+                                    serverName, serverID, shopName, ownerName, isActive and "Đang mở" or "Đóng cửa"),
+        color = color or 65280, -- Màu mặc định: xanh lá
         fields = {
-            {
-                name = playerName,
-                value = tostring(goldValue)
-            },
-            {
-                name = 'NGÀY VÀ GIỜ',
-                value = os.date('%Y-%m-%d %H:%M:%S', currentTime)
-            }
+            { name = "Tên món đồ", value = string.format("**%s**", itemName) },
         },
-        timestamp = string.format('%d-%d-%dT%02d:%02d:%02dZ', timeData.year, timeData.month, timeData.day, timeData.hour, timeData.min, timeData.sec),
+        footer = { text = "Được gửi từ Roblox game" },
+        timestamp = string.format('%d-%d-%dT%02d:%02d:%02dZ', Time.year, Time.month, Time.day, Time.hour, Time.min, Time.sec),
     }
 
-    (syn and syn.request or http_request) {
-        Url = 'https://discord.com/api/webhooks/1366249100760059915/VkEi882cb9zKazZ-gYISAdJfu9KBxDW3sZwZk5QnhWlJdxHprpGXhCMxTV8wALNtkFpY',
-        Method = 'POST',
-        Headers = {
-            ['Content-Type'] = 'application/json'
-        },
-        Body = HttpService:JSONEncode({
-            content = Content,
-            allowed_mentions = {
-                parse = {"roles"}
+    -- Thêm các thông tin chi tiết vào embed
+    for _, detail in ipairs(itemInfo) do
+        table.insert(embed.fields, { name = detail.name, value = detail.value, inline = true })
+    end
+
+    -- Thêm thông tin mã màu (hex) vào embed
+    if hexColor then
+        table.insert(embed.fields, { name = "Màu sắc (hex)", value = string.format("`%s`", hexColor), inline = false })
+    end
+
+    -- Gửi request tới webhook
+    local httpService = game:GetService("HttpService")
+    local success, err = pcall(function()
+        (syn and syn.request or http_request)({
+            Url = webhookUrl,
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json",
             },
-            embeds = {Embed}
+            Body = httpService:JSONEncode({
+                content = "🌸Đã tìm thấy món đồ mới trong shop🌸",
+                embeds = { embed },
+            }),
         })
-    }
+    end)
+
+    if not success then
+        warn("Gửi webhook thất bại:", err)
+    end
 end
 
--- Coroutine để kiểm tra liên tục
-coroutine.wrap(function()
-    while task.wait(10) do -- Chờ 10s mỗi lần
-        local playerProfile = player:FindFirstChild("PlayerGui"):FindFirstChild("Profile")
-        if playerProfile and playerProfile:FindFirstChild("Currency") and playerProfile.Currency:FindFirstChild("Gold") then
-            local goldValue = playerProfile.Currency.Gold.Value
-            if goldValue == 99999999 then -- Kiểm tra nhỏ hơn hoặc bằng 10 triệu
-                sendEmbed(goldValue)
+-- Hàm duyệt qua các món đồ và gửi thông tin qua webhook
+local function sendItems()
+    local serverName, serverID = getServerDetails() -- Lấy thông tin server
+    print("Tên server:", serverName, "ID server:", serverID)
+
+    local replicatedStorage = game:GetService("ReplicatedStorage")
+    local playerShops = replicatedStorage:FindFirstChild("PlayerShops")
+
+    if not playerShops then
+        warn("PlayerShops không tồn tại trong ReplicatedStorage.")
+        return
+    end
+
+    for _, player in ipairs(playerShops:GetChildren()) do
+        local shop = player:FindFirstChild("SellShop")
+        if shop then
+            local shopNameValue = shop:FindFirstChild("ShopName")
+            local activeValue = shop:FindFirstChild("Active")
+            local shopName = shopNameValue and shopNameValue.Value or "Không rõ"
+            local isActive = activeValue and activeValue.Value or false
+
+            local items = shop:FindFirstChild("Items")
+            if items then
+                for _, item in ipairs(items:GetChildren()) do
+                    local itemName = item.Name
+                    local itemInfo = {}
+                    local color
+                    local hexColor
+
+                    -- Xử lý những món đồ có Dye
+                    local dye = item:FindFirstChild("Dye")
+                    if dye and dye:IsA("Color3Value") then
+                        color = color3ToDecimal(dye.Value)
+                        hexColor = color3ToHex(dye.Value)
+                        table.insert(itemInfo, {
+                            name = "Màu sắc",
+                            value = hexColor,
+                        })
+
+                        -- Thu thập các thông tin chi tiết khác của món đồ
+                        for _, detail in ipairs(item:GetChildren()) do
+                            if detail:IsA("IntValue") or detail:IsA("NumberValue") then
+                                table.insert(itemInfo, {
+                                    name = detail.Name,
+                                    value = tostring(detail.Value),
+                                })
+                            end
+                        end
+
+                        -- Gửi thông tin món đồ qua webhook
+                        sendWebhook(serverName, serverID, shopName, player.Name, isActive, itemName, itemInfo, color, hexColor)
+                    end
+                end
             end
         end
     end
-end)()
+end
+
+-- Chạy vòng lặp liên tục
+task.spawn(function()
+    while true do
+        sendItems()
+        task.wait(60)
+    end
+end)
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
+
 
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
