@@ -631,7 +631,10 @@ if R:FindFirstChild("ActiveMission") then
             task.wait(1) -- Vẫn chờ 1 giây trước vòng lặp kế tiếp cho các kỹ năng khác
         end
     end)
+else
+    return
 end
+
 if R:FindFirstChild("ActiveMission") then
     ao = true;
     ai = game:GetService("Workspace"):WaitForChild("MissionObjects")
