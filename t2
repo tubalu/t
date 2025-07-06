@@ -609,7 +609,10 @@ if R:FindFirstChild("ActiveMission") then
                 if action == "Infuse" then
                     local currentTime = tick()
                     if currentTime - lastInfuseTime < (customCooldown or 1) then
-                        continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
+                        -- continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
+                        task.wait(customCooldown or 1)
+                        currentTime = tick()
+                        lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
                     else
                         lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
                     end
