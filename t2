@@ -4833,6 +4833,16 @@ function AutoCheckpoint()
                             local timerLabel = surfaceGui and surfaceGui:FindFirstChild("Timer")
 
                             local shouldSkip = false
+                            print("AutoCheckpoint: Toggles.Autofarm.Value = " .. tostring(Toggles.Autofarm.Value))
+                            print("AutoCheckpoint: isBossDoorAdded = " .. tostring(isBossDoorAdded))
+                            print("AutoCheckpoint: missionObjects = " .. tostring(missionObjects))
+                            print("AutoCheckpoint: missionStart = " .. tostring(missionStart))
+                            print("AutoCheckpoint: missionTimer = " .. tostring(missionTimer))
+                            print("AutoCheckpoint: surfaceGui = " .. tostring(surfaceGui))
+                            print("AutoCheckpoint: collider = " .. tostring(collider))
+                            if timerLabel then
+                                print("AutoCheckpoint: timerLabel.Text = " .. timerLabel.Text)
+                            end
 
                             -- Only check Timer once
                             if not movedToTimer and timerLabel and timerLabel:IsA("TextLabel") then
