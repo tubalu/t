@@ -4841,17 +4841,18 @@ function AutoCheckpoint()
                             local shouldSkip = false
                             print("AutoCheckpoint: Toggles.Autofarm.Value = " .. tostring(Toggles.Autofarm.Value))
                             print("AutoCheckpoint: isBossDoorAdded = " .. tostring(isBossDoorAdded))
-                            print("AutoCheckpoint: missionObjects = " .. tostring(missionObjects))
-                            print("AutoCheckpoint: missionStart = " .. tostring(missionStart))
-                            print("AutoCheckpoint: missionTimer = " .. tostring(missionTimer))
-                            print("AutoCheckpoint: surfaceGui = " .. tostring(surfaceGui))
-                            print("AutoCheckpoint: collider = " .. tostring(collider))
+                            print("AutoCheckpoint: missionObjects = " .. tostring(missionObjects ~= nil))
+                            print("AutoCheckpoint: missionStart = " .. tostring(missionStart ~= nil))
+                            print("AutoCheckpoint: missionTimer = " .. tostring(missionTimer ~= nil))
+                            print("AutoCheckpoint: surfaceGui = " .. tostring(surfaceGui ~= nil))
+                            print("AutoCheckpoint: collider = " .. tostring(collider ~= nil))
                             if timerLabel then
                                 print("AutoCheckpoint: timerLabel.Text = " .. timerLabel.Text)
                             end
 
                             -- Only check Timer once
                             if not movedToTimer and timerLabel and timerLabel:IsA("TextLabel") then
+                                print("AutoCheckpoint: timerLabel.Text == \"--\" and (collider and collider:IsA(\"BasePart\") or collider and collider:IsA(\"Part\")) = " .. tostring(timerLabel.Text == "--" and (collider and collider:IsA("BasePart") or collider and collider:IsA("Part"))))
                                 if timerLabel.Text == "--" and (collider and collider:IsA("BasePart") or collider and collider:IsA("Part")) then
                                     hrp.CFrame = collider.CFrame + Vector3.new(0, 5, 0)
                                     movedToTimer = true
