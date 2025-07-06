@@ -4829,7 +4829,7 @@ function AutoCheckpoint()
                             local missionStart = missionObjects and missionObjects:FindFirstChild("MissionStart")
                             local missionTimer = missionStart and missionStart:FindFirstChild("MissionTimer")
                             local surfaceGui = missionTimer and missionTimer:FindFirstChild("SurfaceGui")
-                            local collider = missionStart and missionStart:FindFirstChild("Collider")
+                            local collider = missionStart and (missionStart:FindFirstChild("Collider") or missionStart:FindFirstChild("Part"))
                             local timerLabel = surfaceGui and surfaceGui:FindFirstChild("Timer")
 
                             local shouldSkip = false
