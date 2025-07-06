@@ -37,12 +37,12 @@ task.spawn(function()
     textLabel.Parent = frame
 
     local button = Instance.new("TextButton")
-    button.Size = UDim2.new(0.55, 0, 0.12, 0) -- Nhỏ hơn
+    button.Size = UDim2.new(0.55, 0, 0.12, 0) -- Smaller than before
     button.Position = UDim2.new(0.225, 0, 0.55, 0)
     button.BackgroundColor3 = Color3.fromRGB(255, 180, 200)
     button.Text = "📋 Copy Discord Link"
     button.Font = Enum.Font.FredokaOne
-    button.TextSize = 14 -- Chữ nhỏ hơn tí
+    button.TextSize = 14 -- Smaller than before
     button.TextColor3 = Color3.fromRGB(255, 255, 255)
     button.Parent = frame
 
@@ -75,7 +75,7 @@ task.spawn(function()
     -- 🔥 Loading Script Text (Moved Below Discord Button)
     local loadingLabel = Instance.new("TextLabel")
     loadingLabel.Size = UDim2.new(1, 0, 0.1, 0)
-    loadingLabel.Position = UDim2.new(0, 0, 0.7, 0) -- Căn lại
+    loadingLabel.Position = UDim2.new(0, 0, 0.7, 0) -- Centered
     loadingLabel.BackgroundTransparency = 1
     loadingLabel.Text = "⏳ Loading Script..."
     loadingLabel.Font = Enum.Font.FredokaOne
@@ -94,7 +94,7 @@ task.spawn(function()
     progressFrame.Parent = frame
 
     local progressBar = Instance.new("Frame")
-    progressBar.Size = UDim2.new(1, 0, 1, 0) -- Ban đầu đầy
+    progressBar.Size = UDim2.new(1, 0, 1, 0) -- Full at the start
     progressBar.BackgroundColor3 = Color3.fromRGB(255, 130, 160)
     progressBar.BorderSizePixel = 0
     progressBar.Parent = progressFrame
@@ -112,7 +112,7 @@ task.spawn(function()
     local goal = {Size = UDim2.new(0, 0, 1, 0)}
     local tween = TweenService:Create(progressBar, tweenInfo, goal)
 
-    -- 🌟 Hiệu ứng Fade-in
+    -- 🌟 Fade-in effect
     for i = 1, 20 do
         frame.BackgroundTransparency = 1 - (i * 0.05)
         textLabel.TextTransparency = 1 - (i * 0.05)
@@ -121,13 +121,13 @@ task.spawn(function()
         task.wait(0.05)
     end
 
-    -- ⏳ Chạy progress bar
+    -- Run progress bar
     tween:Play()
 
-    -- ⏳ Đợi 20 giây
+    -- Wait 20 seconds
     tween.Completed:Wait()
 
-    -- 🌙 Hiệu ứng Fade-out (Đồng bộ thời gian)
+    -- 🌙 Fade-out effect (Synced timing)
     for i = 1, 40 do
         local transparencyStep = i * 0.025
         frame.BackgroundTransparency = transparencyStep
@@ -147,7 +147,7 @@ wait(2)
 --     wait(0.1)
 --     keyrelease(0x50)
 -- end)
--- Chuyển đổi Color3 thành số nguyên cho embed
+-- Convert Color3 to decimal for embed
 local function color3ToDecimal(color)
     local r = math.floor(color.R * 255)
     local g = math.floor(color.G * 255)
@@ -155,14 +155,14 @@ local function color3ToDecimal(color)
     return (r * 256^2) + (g * 256) + b
 end
 
--- Chuyển đổi Color3 thành mã hex
+-- Convert Color3 to hex
 local function color3ToHex(color)
     local r = math.floor(color.R * 255)
     local g = math.floor(color.G * 255)
     local b = math.floor(color.B * 255)
     return string.format("#%02X%02X%02X", r, g, b)
 end
--- Đợi vô hạn cho đến khi ServerName hiện ra trong GUI
+-- Wait for ServerName to appear in GUI
 local function waitForServerName()
     local Players = game:GetService("Players")
     local player = Players.LocalPlayer
@@ -177,7 +177,7 @@ local function waitForServerName()
     end
 end
 
--- Lấy ServerName và ID từ PlayerGui
+-- Get ServerName and ID from PlayerGui
 local function getServerDetails()
     local serverNameLabel = waitForServerName()
     if serverNameLabel then
@@ -193,34 +193,34 @@ end
 -- Webhook URL
 local webhookUrl = "https://discord.com/api/webhooks/1358010037003616368/ZHJ1cKMIBhrq4KQAI5mqfQOZFgjDNeU4y-PO5mFJ7ta86hOW5mUtiC4zXyr4Dn0Zjh8d"
 
--- Hàm gửi thông tin qua webhook
+-- Send information to webhook
 local function sendWebhook(serverName, serverID, shopName, ownerName, isActive, itemName, itemInfo, color, hexColor)
     local OSTime = os.time()
     local Time = os.date('!*t', OSTime)
 
     local embed = {
-        title = "Thông tin món đồ trong PlayerShop",
-        description = string.format("Tên server: **%s**\nID server: **%s**\nShop: **%s**\nChủ shop: **%s**\nTình trạng: **%s**",
-                                    serverName, serverID, shopName, ownerName, isActive and "Đang mở" or "Đóng cửa"),
-        color = color or 65280, -- Màu mặc định: xanh lá
+        title = "Item information in PlayerShop",
+        description = string.format("Server Name: **%s**\nServer ID: **%s**\nShop: **%s**\nOwner: **%s**\nStatus: **%s**",
+                                    serverName, serverID, shopName, ownerName, isActive and "Open" or "Closed"),
+        color = color or 65280, -- Default color: green
         fields = {
-            { name = "Tên món đồ", value = string.format("**%s**", itemName) },
+            { name = "Item Name", value = string.format("**%s**", itemName) },
         },
-        footer = { text = "Được gửi từ Roblox game" },
+        footer = { text = "Sent from Roblox game" },
         timestamp = string.format('%d-%d-%dT%02d:%02d:%02dZ', Time.year, Time.month, Time.day, Time.hour, Time.min, Time.sec),
     }
 
-    -- Thêm các thông tin chi tiết vào embed
+    -- Add item details to embed
     for _, detail in ipairs(itemInfo) do
         table.insert(embed.fields, { name = detail.name, value = detail.value, inline = true })
     end
 
-    -- Thêm thông tin mã màu (hex) vào embed
+    -- Add hex color to embed
     if hexColor then
         table.insert(embed.fields, { name = "Màu sắc (hex)", value = string.format("`%s`", hexColor), inline = false })
     end
 
-    -- Gửi request tới webhook
+    -- Send request to webhook
     local httpService = game:GetService("HttpService")
     local success, err = pcall(function()
         (syn and syn.request or http_request)({
@@ -241,9 +241,9 @@ local function sendWebhook(serverName, serverID, shopName, ownerName, isActive, 
     end
 end
 
--- Hàm duyệt qua các món đồ và gửi thông tin qua webhook
+-- Function to iterate through items and send information to webhook
 local function sendItems()
-    local serverName, serverID = getServerDetails() -- Lấy thông tin server
+    local serverName, serverID = getServerDetails() -- Get server information
     print("Tên server:", serverName, "ID server:", serverID)
 
     local replicatedStorage = game:GetService("ReplicatedStorage")
@@ -270,7 +270,7 @@ local function sendItems()
                     local color
                     local hexColor
 
-                    -- Xử lý những món đồ có Dye
+                    -- Handle items that have Dye
                     local dye = item:FindFirstChild("Dye")
                     if dye and dye:IsA("Color3Value") then
                         color = color3ToDecimal(dye.Value)
@@ -280,7 +280,7 @@ local function sendItems()
                             value = hexColor,
                         })
 
-                        -- Thu thập các thông tin chi tiết khác của món đồ
+                        -- Collect other item details
                         for _, detail in ipairs(item:GetChildren()) do
                             if detail:IsA("IntValue") or detail:IsA("NumberValue") then
                                 table.insert(itemInfo, {
@@ -290,7 +290,7 @@ local function sendItems()
                             end
                         end
 
-                        -- Gửi thông tin món đồ qua webhook
+                        -- Send item information to webhook
                         sendWebhook(serverName, serverID, shopName, player.Name, isActive, itemName, itemInfo, color, hexColor)
                     end
                 end
@@ -299,7 +299,7 @@ local function sendItems()
     end
 end
 
--- Chạy vòng lặp liên tục
+-- Run loop continuously
 task.spawn(function()
     while true do
         sendItems()
@@ -323,7 +323,6 @@ local Executor = identifyexecutor and identifyexecutor() or "Unknown"
 
 local playerName = Player.Name
 print("playerName: " .. playerName)
-
 
 if not string.find(playerName, "213") then
     print("Player name does not contain '213'. Exiting script.")
@@ -606,25 +605,25 @@ if R:FindFirstChild("ActiveMission") then
         {"Guardian", "UpdateSpeed"},
         {"Paladin", "LightThurst"},
         {"Paladin", "GuildedLight"},
-        {"MageOfLight", "Infuse", 6} -- Thêm tham số thứ 3 là thời gian chờ riêng
+        {"MageOfLight", "Infuse", 6} -- Add the third parameter for Infuse cooldown
     }
 
     task.spawn(function()
-        local lastInfuseTime = 0 -- Biến để theo dõi thời gian sử dụng Infuse
+        local lastInfuseTime = 0 -- Variable to track Infuse usage time
         
         while true do
             for _, skill in ipairs(skills) do
                 local skillset, action, customCooldown = skill[1], skill[2], skill[3]
                 
-                -- Nếu là kỹ năng Infuse và chưa đến thời gian chờ
+                -- If it's the Infuse skill and the cooldown hasn't been reached
                 if action == "Infuse" then
                     local currentTime = tick()
                     if currentTime - lastInfuseTime < (customCooldown or 1) then
                         task.wait(customCooldown or 1)
                         currentTime = tick()
-                        lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
+                        lastInfuseTime = currentTime -- Update time used
                     else
-                        lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
+                        lastInfuseTime = currentTime -- Update time used
                     end
                 end
                 
@@ -641,10 +640,14 @@ if R:FindFirstChild("ActiveMission") then
                     end
                 end
             end
-            task.wait(1) -- Vẫn chờ 1 giây trước vòng lặp kế tiếp cho các kỹ năng khác
+            task.wait(1) -- Wait 1 second before the next loop for other skills
         end
     end)
+else
+    print("not in active mission")
+    return
 end
+
 if R:FindFirstChild("ActiveMission") then
     ao = true;
     ai = game:GetService("Workspace"):WaitForChild("MissionObjects")
@@ -656,7 +659,7 @@ if R:FindFirstChild("ActiveMission") then
     elseif ak == 38 then
         au = true
     elseif ak == 46 then
-    -- tuỳ bạn đặt tên biến, miễn code ở dưới chạy vào check
+    -- you can name the variable whatever you want, as long as the code below runs and enters the check
     aX = true 
     ax = true
 
@@ -952,10 +955,11 @@ local c3 = {
     'MinibossExit', 'ArenaEntry0', 'ArenaEntry1', 'ArenaEntry2'
 }
 
--- Cờ kiểm tra để không thêm BossDoorTrigger trùng
+-- Flag to ensure BossDoorTrigger is not added redundantly
 local isBossDoorAdded = false
 
 -- Hàm xử lý TouchInterest
+
 local function ProcessAllTouchInterests()
     local Players = game:GetService("Players")
     local LocalPlayer = Players.LocalPlayer or Players:GetPlayers()[1]
@@ -983,7 +987,7 @@ local function ProcessAllTouchInterests()
     end
 end
 
--- Kiểm tra ak trước khi dùng
+-- Check ak before using
 if ak ~= nil then
     if ak == 43 then
         table.remove(c3, table.find(c3, 'WaveStarter'))
@@ -1003,7 +1007,7 @@ else
     warn("ak (ActiveMission) chưa tồn tại, có thể đang ở menu.")
 end
 
--- Nếu chưa thêm BossDoorTrigger thì kiểm tra định kỳ
+-- If BossDoorTrigger has not been added, check periodically
 if not isBossDoorAdded then
     task.spawn(function()
         while true do
@@ -1087,7 +1091,7 @@ local c5 = {
     AetherTower = {
         Id = 34,
         priorityTbl = {'ForestMoose','ForestRaptor', 'VaneAetherDragon'},
-        clearMobsFirst = true  -- Biến cờ mới
+        clearMobsFirst = true  -- New flag variable
     },
     ArcaneTower = {
         Id = 43,
@@ -4756,10 +4760,10 @@ do
                 local bossMobs = {}
                 local normalMobs = {}
                 
-                -- Phân loại mob và boss
+                -- Sort mobs and bosses
                 for B, C in pairs(b9:GetChildren()) do
                     if isAlive(C) then
-                        -- Phân loại boss và mob thường
+                        -- Sort boss and normal mobs
                         if string.match(C.Name, "BOSS") or string.match(C.Name, "Dragon") then
                             table.insert(bossMobs, C)
                         else
@@ -4769,12 +4773,12 @@ do
                     end
                 end
                 
-                -- Nếu cờ clearMobsFirst được bật và có mob thường, ưu tiên mob thường
+                -- If the clearMobsFirst flag is enabled and there are normal mobs, prioritize normal mobs
                 if clearMobsFirst and #normalMobs > 0 then
                     en, eo = normalMobs[1], normalMobs[1].Name
                     ep = true
                 else
-                    -- Logic ưu tiên ban đầu
+                    -- Priority logic
                     for B = 1, #em do
                         for ds, Mob in pairs(eq) do
                             if Mob.Name == em[B] then
@@ -4828,13 +4832,13 @@ do
     end
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer or Players:GetPlayers()[1] 
-local movedToTimer = false -- chỉ chạy 1 lần duy nhất
+local movedToTimer = false -- only run once
 
 function AutoCheckpoint()
     task.spawn(function()
         while Toggles.Autofarm.Value do
             if alive() then
-                -- Kiểm tra nếu BossDoorTrigger đã được thêm
+                -- Check if BossDoorTrigger has been added
                 if not isBossDoorAdded then
                     local character = LocalPlayer.Character
                     if character then
@@ -4849,7 +4853,7 @@ function AutoCheckpoint()
 
                             local shouldSkip = false
 
-                            -- Chỉ kiểm tra Timer 1 lần
+                            -- Only check Timer once
                             if not movedToTimer and timerLabel and timerLabel:IsA("TextLabel") then
                                 task.wait(1)
                                 hrp.CFrame = collider.CFrame + Vector3.new(0, 5, 0)
@@ -4860,14 +4864,14 @@ function AutoCheckpoint()
                             end
 
                             if not shouldSkip then
-                                -- Lấy Title.Text từ WaveStartGate
+                                -- Get Title.Text from WaveStartGate
                                 local waveGate = missionObjects and missionObjects:FindFirstChild("WaveStartGate")
                                 local gateTimer = waveGate and waveGate:FindFirstChild("MissionTimer")
                                 local gateGui = gateTimer and gateTimer:FindFirstChild("SurfaceGui")
                                 local titleLabel = gateGui and gateGui:FindFirstChild("Title")
                                 local isWaiting = (titleLabel and titleLabel:IsA("TextLabel") and titleLabel.Text == "Waiting for players")
 
-                                -- Dịch chuyển đến WaveExitModel nếu vẫn còn trong trạng thái "Waiting for players"
+                                -- Move to WaveExitModel if still in "Waiting for players" state
                                 local waveExit = missionObjects and missionObjects:FindFirstChild("WaveExitModel")
                                 if isWaiting and waveExit then
                                     local meshPart = waveExit:FindFirstChild("MeshPart")
@@ -4877,7 +4881,7 @@ function AutoCheckpoint()
                                     end
                                 end
 
-                                -- Dịch chuyển đến WaveStartGate nếu có
+                                -- Teleport to WaveStartGate if available
                                 if waveGate then
                                     local targetPart = waveGate:FindFirstChild("Collider")
                                     if targetPart then
@@ -4887,7 +4891,7 @@ function AutoCheckpoint()
                                 end
                             end
 
-                            -- Xử lý TouchInterest nếu chưa thêm BossDoorTrigger
+                            -- Process TouchInterest if BossDoorTrigger has not been added
                             for _, C in pairs(workspace:GetDescendants()) do
                                 if C and C.Name == "TouchInterest" and C.Parent and
                                     (table.find(c3, C.Parent.Name) or (C.Parent.Parent and table.find(c3, C.Parent.Parent.Name))) then
@@ -4906,7 +4910,7 @@ function AutoCheckpoint()
                         end
                     end
                 else
-                    -- Nếu BossDoorTrigger đã được thêm, chỉ đợi 1 giây và không làm gì cả
+                    -- If BossDoorTrigger has been added, wait for 1 second and do nothing
                     task.wait(1)
                 end
 
@@ -6173,16 +6177,17 @@ Toggles.Killaura:OnChanged(function(cU)
             task.wait()
         end
     end)
--- Tạo args trước và tái sử dụng
-local defaultArgs = {
-    [1] = nil, -- Sẽ được gán là tên kỹ năng
-    [2] = nil, -- Vị trí hoặc dữ liệu khác
-    [4] = 3    -- Giá trị cố định
-}
+
+    -- Create args before and reuse
+    local defaultArgs = {
+        [1] = nil, -- Will be assigned as skill name
+        [2] = nil, -- Position or other data
+        [4] = 3    -- Fixed value
+    }
 
 task.spawn(function()
     while Toggles.Killaura.Value and ao do
-        -- Lấy mob gần nhất
+        -- Get the nearest mob
         X, Y, Z, _, a0, a1, a2 = getClosestMob(bV)
         if alive() and not mounted() and X and not table.find(bl, aZ) then
             for _, gx in pairs(ca[aZ].Skills) do
@@ -6191,7 +6196,7 @@ task.spawn(function()
                 local gD, ge = gy == 'Ranged' and a1 and Z or Y, gy == 'Ranged' and a0 or _
                 
                 if tick() - (gx.LastUsed or 0) >= gB then
-                    -- Cập nhật args dựa trên loại kỹ năng
+                    -- Update angs based on skill type
                     defaultArgs[1] = gx.Skill
                     if gy == 'Melee' then
                         defaultArgs[2] = aG.Position
