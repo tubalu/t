@@ -665,6 +665,10 @@ if R:FindFirstChild("ActiveMission") then
     if ak == 44 then
         aA = true;
         ax = true
+        local vaneBoss = game:GetService("Workspace"):FindFirstChild("Mobs"):FindFirstChild("EVENTBOSSVane")
+        if vaneBoss then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = vaneBoss.PrimaryPart.CFrame
+        end
     end
     if ak == 22 then
         aB = true;
@@ -1067,7 +1071,7 @@ local c5 = {
     },
     VaneEvent = {
         Id = 44,
-        priorityTbl = {'EVENTBOSSVane'}
+        -- priorityTbl = {'EVENTBOSSVane'}
     },
     AetherTower = {
         Id = 34,
@@ -5181,33 +5185,34 @@ do
                 save()
             end
             eM = eM .. '\nGold: `' .. formatNumberWithCommas(aP.Value) .. ''
+            local eO = {
+    KrakenRaid = {
+        coinCode = "KrakenCoin",
+        coinStr = "Kraken Coins",
+        lb = "KRAKEN_KILLS",
+        name = "Kraken"
+    },
+    VaneRaid = {
+        coinCode = "DragonCoin",
+        coinStr = "Dragon Coins",
+        lb = "VANE_KILLS",
+        name = "Vane"
+    },
+    HalloweenRaid = {
+        coinCode = "HalloweenCoin",
+        coinStr = "Halloween Coins",
+        lb = "FALLENKING_KILLS",
+        name = "Halloween"
+    },
+    ChristmasRaid = {
+        coinCode = "ChristmasCoin",
+        coinStr = "Christmas Coins",
+        lb = "SANTA_KILLS",
+        name = "Christmas"
+    }
+}
+
             if ax then
-                local eO = {
-                    KrakenRaid = {
-                        coinCode = "KrakenCoin",
-                        coinStr = "Kraken Coins",
-                        lb = "KRAKEN_KILLS",
-                        name = "Kraken"
-                    },
-                    VaneRaid = {
-                        coinCode = "DragonCoin",
-                        coinStr = "Dragon Coins",
-                        lb = "VANE_KILLS",
-                        name = "Vane"
-                    },
-                    HalloweenRaid = {
-                        coinCode = "HalloweenCoin",
-                        coinStr = "Halloween Coins",
-                        lb = "FALLENKING_KILLS",
-                        name = "Halloween"
-                    },
-                    ChristmasRaid = {
-                        coinCode = "ChristmasCoin",
-                        coinStr = "Christmas Coins",
-                        lb = "SANTA_KILLS",
-                        name = "Christmas"
-                    }
-                }
                 local eP = ay and "KrakenRaid" or aA and "VaneRaid" or aB and "HalloweenRaid" or az and "ChristmasRaid"
                 local eQ = eO[eP].coinCode;
                 local eR = eO[eP].coinStr;
