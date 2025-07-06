@@ -621,7 +621,8 @@ if R:FindFirstChild("ActiveMission") then
                 if action == "Infuse" then
                     local currentTime = tick()
                     if currentTime - lastInfuseTime < (customCooldown or 1) then
-                        continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
+                        -- continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
+                        goto continue
                     else
                         lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
                     end
@@ -639,6 +640,7 @@ if R:FindFirstChild("ActiveMission") then
                         skillAction:FireServer()
                     end
                 end
+                ::continue::
             end
             task.wait(1) -- Vẫn chờ 1 giây trước vòng lặp kế tiếp cho các kỹ năng khác
         end
