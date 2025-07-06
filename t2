@@ -599,6 +599,7 @@ local aB;
 local aC;
 local aD = {'Crystal'}
 local aE = {}
+-- spin special skills of classes
 if R:FindFirstChild("ActiveMission") then
     local skills = {
         {"Demon", "BloodBinding"},
@@ -621,8 +622,7 @@ if R:FindFirstChild("ActiveMission") then
                 if action == "Infuse" then
                     local currentTime = tick()
                     if currentTime - lastInfuseTime < (customCooldown or 1) then
-                        -- continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
-                        goto continue
+                        goto continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
                     else
                         lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
                     end
