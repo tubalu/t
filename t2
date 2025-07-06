@@ -599,9 +599,6 @@ local aB;
 local aC;
 local aD = {'Crystal'}
 local aE = {}
-
-
--- trigger skills
 if R:FindFirstChild("ActiveMission") then
     local skills = {
         {"Demon", "BloodBinding"},
@@ -613,45 +610,33 @@ if R:FindFirstChild("ActiveMission") then
         {"Paladin", "GuildedLight"},
         {"MageOfLight", "Infuse", 6} -- Add a 3rd parameter for a separate cooldown
     }
-    task.spawn(function()
-        local lastInfuseTime = 0 -- Variable to track the time when Infuse is used
-        
-        while true do
-            for _, skill in ipairs(skills) do
-                local skillset, action, customCooldown = skill[1], skill[2], skill[3]
-                
-                -- Nếu là kỹ năng Infuse và chưa đến thời gian chờ
-                if action == "Infuse" then
-                    local currentTime = tick()
-                    if currentTime - lastInfuseTime < (customCooldown or 1) then
-                        goto continue -- Skip this loop if not enough time has passed
-                    else
-                        lastInfuseTime = currentTime -- Update the time when Infuse is used
-                    end
-                end
-                
-                local skillFolder = game:GetService("ReplicatedStorage")
-                    :WaitForChild("Shared")
-                    :WaitForChild("Combat")
-                    :WaitForChild("Skillsets")
-                    :FindFirstChild(skillset)
-                    
-                if skillFolder then
-                    local skillAction = skillFolder:FindFirstChild(action)
-                    if skillAction then
-                        skillAction:FireServer()
-                    end
-                end
-                ::continue::
-            end
-            task.wait(1) -- Wait 1 second before the next loop for other skills
-        end
-    end)
+    -- for _, skill in ipairs(skills) do
+    --     local skillset, action, customCooldown = skill[1], skill[2], skill[3]
+    --     
+    --     -- If it's the Infuse skill and the cooldown has not passed
+    --     -- if action == "Infuse" then
+    --     --     local currentTime = tick()
+    --     --     if currentTime - lastInfuseTime < (customCooldown or 1) then
+    --     --         continue -- Skip this loop if the cooldown is not over
+    --     --     else
+    --     --         lastInfuseTime = currentTime -- Update the usage time
+    --     --     end
+    --     -- end
+    --     
+    --     local skillFolder = game:GetService("ReplicatedStorage")
+    --         :WaitForChild("Shared")
+    --         :WaitForChild("Combat")
+    --         :WaitForChild("Skillsets")
+    --         :FindFirstChild(skillset)
+    --         
+    --     if skillFolder then
+    --         local skillAction = skillFolder:FindFirstChild(action)
+    --         if skillAction then
+    --             skillAction:FireServer()
+    --         end
+    --     end
+    -- end
 end
-
-
-
-
 if R:FindFirstChild("ActiveMission") then
     ao = true;
     ai = game:GetService("Workspace"):WaitForChild("MissionObjects")
