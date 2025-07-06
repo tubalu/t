@@ -141,7 +141,7 @@ task.spawn(function()
 
     gui:Destroy()
 end)
-wait(20)
+wait(1)
 pcall(function()
     keypress(0x50) -- 0x50 is the ASCII code for the P key
     wait(0.1)
