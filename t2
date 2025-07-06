@@ -142,11 +142,11 @@ task.spawn(function()
     gui:Destroy()
 end)
 wait(2)
-pcall(function()
-    keypress(0x50) -- 0x50 là mã ASCII của phím P
-    wait(0.1)
-    keyrelease(0x50)
-end)
+-- pcall(function()
+--     keypress(0x50) -- 0x50 là mã ASCII của phím P
+--     wait(0.1)
+--     keyrelease(0x50)
+-- end)
 -- Chuyển đổi Color3 thành số nguyên cho embed
 local function color3ToDecimal(color)
     local r = math.floor(color.R * 255)
