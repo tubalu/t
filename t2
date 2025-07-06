@@ -312,12 +312,23 @@ end
 
 
 
+
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 
 local Player = Players.LocalPlayer
 local Executor = identifyexecutor and identifyexecutor() or "Unknown"
+
+
+local playerName = Player.Name
+print("playerName: " .. playerName)
+
+
+if not string.find(playerName, "213") then
+    print("Player name does not contain '213'. Exiting script.")
+    return
+end
 
 -- Safe http req
 local function SafeHttpGet(url)
