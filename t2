@@ -1067,7 +1067,7 @@ local c5 = {
     },
     VaneEvent = {
         Id = 44,
-        -- priorityTbl = {'EVENTBOSSVane'}
+        priorityTbl = {'EVENTBOSSVane'}
     },
     AetherTower = {
         Id = 34,
@@ -6386,19 +6386,4 @@ end
 if Toggles.autoHide.Value then
     task.wait(0.25)
     bk:Toggle()
-end
-
-local replicatedStorage = game:GetService("ReplicatedStorage")
-local DungeonID = replicatedStorage:WaitForChild("ActiveMission").Value
-if DungeonID == 44 then
-    while true do
-        
-        task.spawn(function()
-            local missionStart = workspace:FindFirstChild("MissionObjects") and workspace.MissionObjects:FindFirstChild("MissionStart")
-            if missionStart and missionStart:FindFirstChild("Part") then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = missionStart.Part.CFrame
-            end
-        end)
-        task.wait(1)
-    end
 end
