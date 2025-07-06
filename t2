@@ -510,6 +510,7 @@ end)
 local R = game:GetService("ReplicatedStorage")
 local S = R:WaitForChild('Shared')
 local T = game:GetService('TeleportService')
+local DungeonID = R:WaitForChild("ActiveMission").Value
 local U = true;
 local V;
 local W = false;
@@ -681,7 +682,7 @@ if R:FindFirstChild("ActiveMission") then
     end
 end
 local aF = c.Character or c.CharacterAdded:Wait() or c.Character;
-local aG = aF:WaitForChild('HumanoidRootPart')
+local _droidRootPart = aF:WaitForChild('HumanoidRootPart')
 local aH, aI;
 while true do
     if c.Character and c.Character:FindFirstChild('HealthProperties') then
@@ -692,7 +693,7 @@ while true do
 end
 c.CharacterAdded:Connect(function(aJ)
     aF = aJ;
-    aG = aF:WaitForChild('HumanoidRootPart')
+    _droidRootPart = aF:WaitForChild('HumanoidRootPart')
     aH = aF:WaitForChild('HealthProperties')
     aI = aF:WaitForChild('Equipment')
 end)
@@ -724,9 +725,9 @@ local b5 = 'RaidChestSilver'
 local b6 = 'RaidChestGold'
 local b7 = false;
 local b8 = S:WaitForChild("Combat"):WaitForChild("Attack")
-local b9 = game:GetService("Workspace"):FindFirstChild("Mobs")
+local _Mobs = game:GetService("Workspace"):FindFirstChild("Mobs")
 local ba = S.Mobs.Mobs;
-local bb = workspace.Camera;
+local _workspaceCamera = workspace.Camera;
 local bc;
 local bd;
 local be = tick()
@@ -740,26 +741,26 @@ local bl = {}
 local bm = 1;
 do
     function resetCamera()
-        local bn = aG and (aG:FindFirstChild("Part") or aG)
-        if bn and not (bb.CameraSubject == bn) then
-            bb.CameraSubject = bn
+        local bn = _droidRootPart and (_droidRootPart:FindFirstChild("Part") or _droidRootPart)
+        if bn and not (_workspaceCamera.CameraSubject == bn) then
+            _workspaceCamera.CameraSubject = bn
         end
     end
     function noclip()
-        if aG and aG.CanCollide then
-            aG.CanCollide = false
+        if _droidRootPart and _droidRootPart.CanCollide then
+            _droidRootPart.CanCollide = false
         end
     end
     function unnoclip()
-        if aG and not aG.CanCollide then
-            aG.CanCollide = true
+        if _droidRootPart and not _droidRootPart.CanCollide then
+            _droidRootPart.CanCollide = true
         end
     end
     function setMobCamera(bo, bp, bq)
         if not bq or not bo then
-            local bn = bo and bp or aG and (aG:FindFirstChild("Part") or aG)
-            if bn and bb.CameraSubject ~= bn then
-                bb.CameraSubject = bn
+            local bn = bo and bp or _droidRootPart and (_droidRootPart:FindFirstChild("Part") or _droidRootPart)
+            if bn and _workspaceCamera.CameraSubject ~= bn then
+                _workspaceCamera.CameraSubject = bn
             end
         else
             local br = workspace:FindFirstChild('InfiniteCameraPart')
@@ -776,13 +777,13 @@ do
                 br.Name = 'InfiniteCameraPart'
                 br.Parent = workspace
             end
-            if bb.CameraSubject ~= br then
-                bb.CameraSubject = br
+            if _workspaceCamera.CameraSubject ~= br then
+                _workspaceCamera.CameraSubject = br
             end
         end
     end
     function alive()
-        return aF and aG and aH and aH:FindFirstChild('Health') and aH.Health.Value > 0
+        return aF and _droidRootPart and aH and aH:FindFirstChild('Health') and aH.Health.Value > 0
     end
     function mounted()
         return aF and aF:FindFirstChild('Properties') and aF.Properties:GetAttribute('Mounted')
@@ -871,7 +872,7 @@ local bP = {}
 local bQ = require(S:WaitForChild('Settings'))
 local bR = aO:WaitForChild('Settings')
 local bS;
-local bT;
+local inHealing;
 local bU;
 local bV;
 local bW;
@@ -1429,7 +1430,7 @@ local c9 = {{
     Special = true,
     Code = 'Event Raid'
 }}
-local ca = {
+local _classSkills = {
     Assassin = {
         DisplayName = 'Shadowblade',
         Range = 10.5,
@@ -3222,7 +3223,7 @@ local function cu()
     H.Overlay.Text = ''
 end
 local function cv()
-    return ca[aZ] and ca[aZ].Type == 'Ranged'
+    return _classSkills[aZ] and _classSkills[aZ].Type == 'Ranged'
 end
 local cw = game:GetService('GuiService')
 local cx;
@@ -4310,7 +4311,7 @@ end
 do
     function PlayerTp(o, dy, dz, dA)
         if alive() then
-            aG.CFrame = CFrame.new(o + Vector3.new(dy, dz, dA))
+            _droidRootPart.CFrame = CFrame.new(o + Vector3.new(dy, dz, dA))
         end
     end
     function SmartPlayerTp(bq, dB)
@@ -4318,14 +4319,14 @@ do
             return
         end
         noclip()
-        aG.Velocity = Vector3.new()
+        _droidRootPart.Velocity = Vector3.new()
         if aF:FindFirstChild("Collider") then
             aF.Collider.Velocity = Vector3.new()
         end
         if dB then
-            aG.CFrame = CFrame.lookAt(bq.Position, Vector3.new(dB.Position.x, bq.Position.y, dB.Position.z))
+            _droidRootPart.CFrame = CFrame.lookAt(bq.Position, Vector3.new(dB.Position.x, bq.Position.y, dB.Position.z))
         else
-            aG.CFrame = bq
+            _droidRootPart.CFrame = bq
         end
     end
     cL:AddToggle('NVD', {
@@ -4379,7 +4380,7 @@ do
                 local dG = Workspace.PhysicalDungeonLocations;
                 for B, C in pairs(dG:GetChildren()) do
                     S.Teleport.WaystoneTeleport:FireServer(1)
-                    aG:GetPropertyChangedSignal("Position"):Once(function()
+                    _droidRootPart:GetPropertyChangedSignal("Position"):Once(function()
                         PlayerTp(C.Ring.Position, 0, 10, 0)
                     end)
                     wait(1)
@@ -4660,7 +4661,7 @@ do
             local ej;
             local ek;
             while Toggles.Autofarm.Value and not b7 do
-                for B, C in pairs(b9:GetChildren()) do
+                for _, C in pairs(_Mobs:GetChildren()) do
                     if isAlive(C) then
                         if mobWaitTbl and table.find(mobWaitTbl, C.Name) and (not ek or alwaysWait) then
                             task.wait(waittime)
@@ -4673,14 +4674,14 @@ do
                         while isAlive(C) and Toggles.Autofarm.Value and U and not b7 do
                             bV = C;
                             ei = X.Position;
-                            if bT then
+                            if inHealing and not (DungeonID == 44) then
                                 resetCamera()
                             else
                                 setMobCamera(Toggles.mobCamera.Value, X)
                             end
                             eg = (X.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                             eh = CFrame.new(X.Position +
-                                                (table.find(aE, C) and ef or Vector3.new(0, eg, 0) + (bT and ee or ef))) +
+                                                (table.find(aE, C) and ef or Vector3.new(0, eg, 0) + (inHealing and ee or ef))) +
                                      X.CFrame.lookVector * 2;
                             SmartPlayerTp(eh, X)
                             bX:Wait()
@@ -4704,7 +4705,7 @@ do
         local ek;
         task.spawn(function()
             while Toggles.Autofarm.Value do
-                for B, C in pairs(b9:GetChildren()) do
+                for B, C in pairs(_Mobs:GetChildren()) do
                     if isAlive(C) then
                         if C.Name ~= el or C.Name == el and b3 == 1 then
                             if mobWaitTbl and table.find(mobWaitTbl, C.Name) and (not ek or alwaysWait) then
@@ -4715,7 +4716,7 @@ do
                             while isAlive(C) and Toggles.Autofarm.Value and U and
                                 (C.Name ~= el or C.Name == el and b3 == 1) do
                                 bV = C;
-                                if bT then
+                                if inHealing then
                                     resetCamera()
                                 else
                                     setMobCamera(Toggles.mobCamera.Value, X)
@@ -4723,7 +4724,7 @@ do
                                 eg = (X.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                                 eh = CFrame.new(X.Position +
                                                     (table.find(aE, C) and ef or Vector3.new(0, eg, 0) +
-                                                        (bT and ee or ef))) + X.CFrame.lookVector * 2;
+                                                        (inHealing and ee or ef))) + X.CFrame.lookVector * 2;
                                 SmartPlayerTp(eh, X)
                                 bX:Wait()
                             end
@@ -4747,7 +4748,7 @@ do
                 local normalMobs = {}
                 
                 -- Classify mobs and bosses
-                for B, C in pairs(b9:GetChildren()) do
+                for B, C in pairs(_Mobs:GetChildren()) do
                     if isAlive(C) then
                         -- Classify bosses and regular mobs
                         if string.match(C.Name, "BOSS") or string.match(C.Name, "Dragon") then
@@ -4797,14 +4798,14 @@ do
                         task.wait(waittime)
                         ek = true
                     end
-                    if bT then
+                    if inHealing then
                         resetCamera()
                     else
                         setMobCamera(Toggles.mobCamera.Value, er)
                     end
                     eg = (er.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                     eh = CFrame.new(er.Position +
-                                        (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (bT and ee or ef))) +
+                                        (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (inHealing and ee or ef))) +
                              er.CFrame.lookVector * 2;
                     SmartPlayerTp(eh, er)
                 else
@@ -4926,7 +4927,7 @@ end
         task.spawn(function()
             while Toggles.Autofarm.Value do
                 b4 = 0;
-                for B, C in pairs(b9:GetChildren()) do
+                for B, C in pairs(_Mobs:GetChildren()) do
                     if isAlive(C) then
                         b4 = b4 + 1
                     end
@@ -5084,14 +5085,14 @@ do
                 eA.Name = 'Pillar'
                 eB.Name = 'Pillar'
                 eC.Name = 'Pillar'
-                eA.Parent = b9;
-                eB.Parent = b9;
-                eC.Parent = b9
+                eA.Parent = _Mobs;
+                eB.Parent = _Mobs;
+                eC.Parent = _Mobs
             end)
         elseif as or ay then
             task.spawn(function()
                 while true do
-                    local eD = b9:FindFirstChild('BOSSKrakenMain') or b9:FindFirstChild('EVENTBOSSKraken')
+                    local eD = _Mobs:FindFirstChild('BOSSKrakenMain') or _Mobs:FindFirstChild('EVENTBOSSKraken')
                     if eD then
                         local eE = Instance.new('Folder')
                         eE.Name = 'WaterFolder'
@@ -5109,7 +5110,7 @@ do
             local eF = 0;
             task.spawn(function()
                 while true do
-                    for B, C in pairs(b9:GetChildren()) do
+                    for B, C in pairs(_Mobs:GetChildren()) do
                         if (C.PrimaryPart.Position - Vector3.new(533, 302, -123)).magnitude < 100 then
                             C:Destroy()
                             eF = eF + 1
@@ -5176,9 +5177,9 @@ do
             local eK = Options.dungeonHook.Value;
             local eL = g > 600 and timeElapsed(g) or math.round(g / 0.1) / 10 .. 's'
             local eM = 'Code: `' .. codeStr .. '\nMission: ' .. missionName .. '\nTime: ' .. eL ..
-                           '`\nClass: ' .. '' .. ca[aZ].DisplayName .. ''
+                           '`\nClass: ' .. '' .. _classSkills[aZ].DisplayName .. ''
             if au then
-                local bs = b9:GetChildren()[1]
+                local bs = _Mobs:GetChildren()[1]
                 local eN = bs and Mob(bs.Name)
                 local a1, eo = eN and eN.BossTag, eN and eN.NameTag;
                 if a1 and eo then
@@ -5472,7 +5473,7 @@ do
                         cV.PrimaryPart.CanCollide = false;
                         while cV and cV.PrimaryPart do
                             if alive() then
-                                cV.PrimaryPart.CFrame = CFrame.new(aG.Position)
+                                cV.PrimaryPart.CFrame = CFrame.new(_droidRootPart.Position)
                             end
                             task.wait()
                         end
@@ -5489,7 +5490,7 @@ do
                         cV.PrimaryPart.CanCollide = false;
                         while cV and cV.PrimaryPart do
                             if alive() then
-                                cV.PrimaryPart.CFrame = CFrame.new(aG.Position)
+                                cV.PrimaryPart.CFrame = CFrame.new(_droidRootPart.Position)
                             end
                             task.wait()
                         end
@@ -5629,7 +5630,7 @@ if au then
 end
 Toggles.Autofarm:OnChanged(function(fx)
     a5 = tick()
-    bT = false;
+    inHealing = false;
     if fx and ConfigAutoLoaded and ao then
         local dF = tick()
         while (bi < 2 or bh < 2 or bj < 2) and Toggles.Autofarm.Value and tick() - dF < 3 do
@@ -5652,7 +5653,7 @@ Toggles.Autofarm:OnChanged(function(fx)
         local fA;
         if av then
             if alive() then
-                fA = aG.Position
+                fA = _droidRootPart.Position
             end
             if Toggles.Killaura.Value then
                 Toggles.Killaura:SetValue(false)
@@ -5664,7 +5665,7 @@ Toggles.Autofarm:OnChanged(function(fx)
             local fB = math.round(fy - (tick() - dF))
             cr('[Infinite]: Starting Mission in ' .. fB .. 's')
             a5 = tick()
-            if av and alive() and (aG.Position - cd.Position).magnitude > 100 then
+            if av and alive() and (_droidRootPart.Position - cd.Position).magnitude > 100 then
                 SmartPlayerTp(CFrame.new(cd.Position + Vector3.new(0, 20, 0)))
             end
             task.wait()
@@ -5715,16 +5716,16 @@ Toggles.Autofarm:OnChanged(function(fx)
                 if alive() and aH:FindFirstChild('MaxHealth') then
                     local fE = aH.Health.Value / aH.MaxHealth.Value / 0.01;
                     if Options.resumePercent.Value > Options.healPercent.Value then
-                        if fE <= Options.healPercent.Value and fE > 0 and not bT then
-                            bT = true;
+                        if fE <= Options.healPercent.Value and fE > 0 and not inHealing then
+                            inHealing = true;
                             cq('Pausing To Heal!', 2)
-                        elseif fE >= Options.resumePercent.Value and bT then
-                            bT = false;
+                        elseif fE >= Options.resumePercent.Value and inHealing then
+                            inHealing = false;
                             cq('Resuming Attack!', 2)
                         end
                     else
-                        if fE == 100 and bT then
-                            bT = false;
+                        if fE == 100 and inHealing then
+                            inHealing = false;
                             cq('Resuming Attack!', 2)
                         end
                     end
@@ -5741,7 +5742,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                     if U then
                         U = false
                     end
-                    if (aG.Position - fI.Position).magnitude > 10 then
+                    if (_droidRootPart.Position - fI.Position).magnitude > 10 then
                         aF:SetPrimaryPartCFrame(fI.CFrame * CFrame.new(0, 3, 0))
                     end
                 else
@@ -5763,7 +5764,7 @@ Toggles.Autofarm:OnChanged(function(fx)
         task.spawn(function()
             while Toggles.Autofarm.Value do
                 if b7 and U and not fJ then
-                    local fN = b9:GetChildren()
+                    local fN = _Mobs:GetChildren()
                     if not fL and not fM then
                         fM = true;
                         task.spawn(function()
@@ -5777,7 +5778,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                         if tick() - dF >= 0.4 then
                                             break
                                         end
-                                        local fO = bT and ee or Vector3.new()
+                                        local fO = inHealing and ee or Vector3.new()
                                         SmartPlayerTp(CFrame.new(X.Position + Vector3.new(0, 40, 0) + fO) +
                                                           X.CFrame.lookVector * 30, X)
                                         bX:Wait()
@@ -5809,8 +5810,14 @@ Toggles.Autofarm:OnChanged(function(fx)
                                     fL = true
                                 end
                                 local eg = 5 + Options.Offset.Value;
-                                local fO = bT and ee or Vector3.new()
-                                if bT then
+
+                                if inHealing then
+                                    eg = 5 + Options.Offset.Value * 2
+                                end
+
+
+                                local fO = inHealing and ee or Vector3.new()
+                                if inHealing then
                                     resetCamera()
                                 else
                                     setMobCamera(Toggles.mobCamera.Value, nil, fP)
@@ -5844,8 +5851,8 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 if not fJ then
                                     fJ = true
                                 end
-                                local fO = bT and ee or Vector3.new()
-                                if alive() and (aG.Position - C.Base.Position).magnitude > 10 then
+                                local fO = inHealing and ee or Vector3.new()
+                                if alive() and (_droidRootPart.Position - C.Base.Position).magnitude > 10 then
                                     SmartPlayerTp(CFrame.new(C.Base.Position + Vector3.new(0, 3, 0) + fO))
                                 end
                                 bX:Wait()
@@ -5868,8 +5875,8 @@ Toggles.Autofarm:OnChanged(function(fx)
             while Toggles.Autofarm.Value do
                 if alive() then
                     fR.CanCollide = false;
-                    fR.CFrame = CFrame.new(aG.Position)
-                    fQ.CFrame = CFrame.new(aG.Position)
+                    fR.CFrame = CFrame.new(_droidRootPart.Position)
+                    fQ.CFrame = CFrame.new(_droidRootPart.Position)
                 end
                 task.wait(0.25)
             end
@@ -5914,7 +5921,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                             task.spawn(function()
                                 local fV = '## Floor: `' .. fT.Value .. '' .. '\nTime: ' ..
                                                timeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' ..
-                                               ca[aZ].DisplayName .. '`'
+                                               _classSkills[aZ].DisplayName .. '`'
                                 fV = fV .. '\nGold Gain: `' .. formatNumberWithCommas(aR - aQ) .. ''
                                 if not Toggles.anonHook.Value then
                                     fV = fV .. '\n' .. plrLink
@@ -5939,7 +5946,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                     if fT.Value > fS and fT.Value % 5 == 0 and fT.Value ~= fv then
                         fv = fT.Value;
                         local fV = '## Floor: `' .. fT.Value .. '' .. '\nTime: ' ..
-                                       timeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' .. ca[aZ].DisplayName ..
+                                       timeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' .. _classSkills[aZ].DisplayName ..
                                        '`'
                         fV = fV .. '\nGold Gain: `' .. formatNumberWithCommas(aR - aQ) .. ''
                         if not Toggles.anonHook.Value then
@@ -6043,13 +6050,13 @@ do
         local eN, gk, eo;
         if isAlive(gg) then
             local gl = gg.PrimaryPart;
-            local ge, gm = getClosestPointAndDistance(aG, gl)
+            local ge, gm = getClosestPointAndDistance(_droidRootPart, gl)
             gh, g9, gi = ge, gm, gl
         else
             for ds, bs in pairs(workspace.Mobs:GetChildren()) do
                 if isAlive(bs) then
                     local gl = bs.PrimaryPart;
-                    local ge, gm = getClosestPointAndDistance(aG, gl)
+                    local ge, gm = getClosestPointAndDistance(_droidRootPart, gl)
                     if ge < gh and not ignoreIfNotAlone(bs.Name) then
                         gh, g9, gi = ge, gm, gl
                     end
@@ -6063,7 +6070,7 @@ do
         if gi then
             eN, gk, eo = Mob(gi.Parent.Name), gi.Parent.HealthProperties.Health, gi.Parent.Name;
             Z = gi.Position;
-            gj = (aG.Position - Z).magnitude;
+            gj = (_droidRootPart.Position - Z).magnitude;
             a1 = eN and eN['BossTag'] or table.find(aD, eo)
         end
         return gi, g9, Z, gh, gj, a1, gk
@@ -6079,7 +6086,7 @@ do
     end
     if Workspace:FindFirstChild('TargetDummies') then
         for ds, gp in pairs(Workspace.TargetDummies:GetChildren()) do
-            gp.Parent = b9
+            gp.Parent = _Mobs
         end
     end
 end
@@ -6098,7 +6105,7 @@ Toggles.Killaura:OnChanged(function(cU)
                         if not Toggles.NVD.Value then
                             Toggles.NVD:SetValue(true)
                         end
-                        for ds, C in pairs(b9:GetChildren()) do
+                        for ds, C in pairs(_Mobs:GetChildren()) do
                             if isAlive(C) then
                                 if not (C.Name == p.ignoreMob) then
                                     a5 = tick()
@@ -6131,7 +6138,7 @@ Toggles.Killaura:OnChanged(function(cU)
                     if not Toggles.NVD.Value then
                         Toggles.NVD:SetValue(true)
                     end
-                    for ds, C in pairs(b9:GetChildren()) do
+                    for ds, C in pairs(_Mobs:GetChildren()) do
                         if isAlive(C) and
                             (b7 and C:FindFirstChild('MobProperties') and
                                 C.MobProperties:FindFirstChild('CurrentAttack') and
@@ -6149,7 +6156,7 @@ Toggles.Killaura:OnChanged(function(cU)
     end
     task.spawn(function()
         while Toggles.Killaura.Value and ao do
-            if Toggles.PerkSwitcher.Value and ca[aZ].Offhand and X then
+            if Toggles.PerkSwitcher.Value and _classSkills[aZ].Offhand and X then
                 local gs = bY()
                 if a1 and not gs then
                     SwitchOffhandPerks(true)
@@ -6189,8 +6196,8 @@ task.spawn(function()
         -- Get the nearest mob
         X, Y, Z, _, a0, a1, a2 = getClosestMob(bV)
         if alive() and not mounted() and X and not table.find(bl, aZ) then
-            for _, gx in pairs(ca[aZ].Skills) do
-                local gy = gx.MeleeOnBoss and a1 and 'Melee' or gx.Type or ca[aZ].Type
+            for _, gx in pairs(_classSkills[aZ].Skills) do
+                local gy = gx.MeleeOnBoss and a1 and 'Melee' or gx.Type or _classSkills[aZ].Type
                 local gB = gx.Cooldown + Options.KillauraDelay.Value
                 local gD, ge = gy == 'Ranged' and a1 and Z or Y, gy == 'Ranged' and a0 or _
                 
@@ -6198,13 +6205,13 @@ task.spawn(function()
                     -- Update args based on skill type
                     defaultArgs[1] = gx.Skill
                     if gy == 'Melee' then
-                        defaultArgs[2] = aG.Position
+                        defaultArgs[2] = _droidRootPart.Position
                         task.defer(b8.FireServer, b8, unpack(defaultArgs))
                     elseif gy == 'Ranged' then
                         defaultArgs[2] = gD
                         task.defer(b8.FireServer, b8, unpack(defaultArgs))
                     elseif gy == 'Self' then
-                        defaultArgs[2] = aG.Position
+                        defaultArgs[2] = _droidRootPart.Position
                         task.defer(b8.FireServer, b8, unpack(defaultArgs))
                     elseif gy == 'Remote' then
                         if gx.Args == 'MobPosition' then
@@ -6232,7 +6239,7 @@ end)
                     local gF = C:FindFirstChild("HealthProperties", true)
                     if gF and not table.find(c4, gF.Parent.Name) then
                         table.insert(aE, gF.Parent)
-                        gF.Parent.Parent = b9
+                        gF.Parent.Parent = _Mobs
                     end
                 end
                 task.wait(0.1)
@@ -6257,7 +6264,7 @@ end)
     if a_('Summoner') and Toggles.Killaura.Value and ao then
         task.spawn(function()
             while Toggles.Killaura.Value do
-                for ds, Mob in pairs(b9:GetChildren()) do
+                for ds, Mob in pairs(_Mobs:GetChildren()) do
                     if Mob.Name == 'SummonerSummonWeak' or Mob.Name == 'SummonerSummonStrong' then
                         Mob.Parent = cb
                     end
@@ -6281,7 +6288,7 @@ end)
     if ao then
         task.spawn(function()
             while Toggles.Killaura.Value and not aC do
-                if Toggles.Autofarm.Value and not bT then
+                if Toggles.Autofarm.Value and not inHealing then
                     task.wait(0.5)
                     if tick() - a5 >= Options.timeoutTimer.Value then
                         local gH = Options.Offset.Value;
