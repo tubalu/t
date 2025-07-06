@@ -4911,61 +4911,61 @@ end
 
 
 
-function MobCounter()
-    task.spawn(function()
-        while Toggles.Autofarm.Value do
-            b4 = 0;
-            for B, C in pairs(b9:GetChildren()) do
-                if isAlive(C) then
-                    b4 = b4 + 1
-                end
-            end
-            if b3 ~= b4 then
-                b3 = b4
-            end
-            task.wait()
-        end
-    end)
-end
-function AntiFling()
-    if Toggles.Autofarm.Value then
+    function MobCounter()
         task.spawn(function()
-            bS = nil;
-            while Toggles.Autofarm.Value and not b7 do
-                if bV and bV.PrimaryPart and bV.PrimaryPart.Position then
-                    bS = ay and CFrame.new(Vector3.new(324, 60, -134)) or
-                                CFrame.new(bV.PrimaryPart.Position + Vector3.new(0, 5, 0))
-                end
-                if bS and b3 == 0 then
-                    local es = tick()
-                    while tick() - es <= 0.1 and b3 == 0 do
-                        SmartPlayerTp(bS)
-                        bX:Wait()
+            while Toggles.Autofarm.Value do
+                b4 = 0;
+                for B, C in pairs(b9:GetChildren()) do
+                    if isAlive(C) then
+                        b4 = b4 + 1
                     end
-                    bS = nil
+                end
+                if b3 ~= b4 then
+                    b3 = b4
                 end
                 task.wait()
             end
-            if not Toggles.Autofarm.Value and not b7 then
-                if bS then
-                    local es = tick()
-                    while tick() - es <= 0.1 do
-                        SmartPlayerTp(bS)
-                        bX:Wait()
-                    end
-                    bS = nil
-                end
-            end
         end)
     end
+    function AntiFling()
+        if Toggles.Autofarm.Value then
+            task.spawn(function()
+                bS = nil;
+                while Toggles.Autofarm.Value and not b7 do
+                    if bV and bV.PrimaryPart and bV.PrimaryPart.Position then
+                        bS = ay and CFrame.new(Vector3.new(324, 60, -134)) or
+                                 CFrame.new(bV.PrimaryPart.Position + Vector3.new(0, 5, 0))
+                    end
+                    if bS and b3 == 0 then
+                        local es = tick()
+                        while tick() - es <= 0.1 and b3 == 0 do
+                            SmartPlayerTp(bS)
+                            bX:Wait()
+                        end
+                        bS = nil
+                    end
+                    task.wait()
+                end
+                if not Toggles.Autofarm.Value and not b7 then
+                    if bS then
+                        local es = tick()
+                        while tick() - es <= 0.1 do
+                            SmartPlayerTp(bS)
+                            bX:Wait()
+                        end
+                        bS = nil
+                    end
+                end
+            end)
+        end
+    end
+    function sell(bx)
+        S.Drops.SellItems:InvokeServer(bx)
+    end
+    function recycle(bx)
+        S.Recycler.Recycle:FireServer(bx)
+    end
 end
-function sell(bx)
-    S.Drops.SellItems:InvokeServer(bx)
-end
-function recycle(bx)
-    S.Recycler.Recycle:FireServer(bx)
-end
-
 if notadding then
     local function et(o, p)
         if aF then
