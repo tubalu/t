@@ -1073,7 +1073,8 @@ local c5 = {
     },
     VaneEvent = {
         Id = 44,
-        priorityTbl = {'EVENTBOSSVane'}
+        -- priorityTbl = {'EVENTBOSSVane'}
+        priorityTbl = {'BabyIgnis', 'BabyWinterfall'}
     },
     AetherTower = {
         Id = 34,
