@@ -108,7 +108,7 @@ task.spawn(function()
     progressBarCorner.Parent = progressBar
 
     local TweenService = game:GetService("TweenService")
-    local tweenInfo = TweenInfo.new(2, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+    local tweenInfo = TweenInfo.new(20, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
     local goal = {Size = UDim2.new(0, 0, 1, 0)}
     local tween = TweenService:Create(progressBar, tweenInfo, goal)
 
@@ -141,7 +141,7 @@ task.spawn(function()
 
     gui:Destroy()
 end)
-wait(2)
+wait(20)
 pcall(function()
     keypress(0x50) -- 0x50 là mã ASCII của phím P
     wait(0.1)
@@ -609,9 +609,7 @@ if R:FindFirstChild("ActiveMission") then
                 if action == "Infuse" then
                     local currentTime = tick()
                     if currentTime - lastInfuseTime < (customCooldown or 1) then
-                        task.wait(customCooldown or 1)
-                        currentTime = tick()
-                        lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
+                        continue -- Bỏ qua vòng lặp này nếu chưa đủ thời gian chờ
                     else
                         lastInfuseTime = currentTime -- Cập nhật thời gian sử dụng
                     end
@@ -4833,14 +4831,14 @@ function AutoCheckpoint()
                             local missionStart = missionObjects and missionObjects:FindFirstChild("MissionStart")
                             local missionTimer = missionStart and missionStart:FindFirstChild("MissionTimer")
                             local surfaceGui = missionTimer and missionTimer:FindFirstChild("SurfaceGui")
-                            local collider = missionStart and (missionStart:FindFirstChild("Collider") or missionStart:FindFirstChild("Part"))
+                            local collider = missionStart and missionStart:FindFirstChild("Collider")
                             local timerLabel = surfaceGui and surfaceGui:FindFirstChild("Timer")
 
                             local shouldSkip = false
 
                             -- Chỉ kiểm tra Timer 1 lần
                             if not movedToTimer and timerLabel and timerLabel:IsA("TextLabel") then
-                                if timerLabel.Text == "--" and collider and (collider:IsA("BasePart") or collider:IsA("Part")) then
+                                if timerLabel.Text == "--" and collider and collider:IsA("BasePart") then
                                     hrp.CFrame = collider.CFrame + Vector3.new(0, 5, 0)
                                     movedToTimer = true
                                     shouldSkip = true
