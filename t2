@@ -4846,7 +4846,7 @@ function AutoCheckpoint()
 
                             -- Only check Timer once
                             if not movedToTimer and timerLabel and timerLabel:IsA("TextLabel") then
-                                if timerLabel.Text == "--" and collider and collider:IsA("BasePart") then
+                                if timerLabel.Text == "--" and (collider and collider:IsA("BasePart") or collider and collider:IsA("Part")) then
                                     hrp.CFrame = collider.CFrame + Vector3.new(0, 5, 0)
                                     movedToTimer = true
                                     shouldSkip = true
