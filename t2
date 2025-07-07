@@ -763,7 +763,7 @@ local aT = aS:WaitForChild('Primary')
 local aU = aS:WaitForChild('Offhand')
 local aV = aS:WaitForChild('Armor')
 local aW = _shared:WaitForChild('ItemUpgrade'):WaitForChild('Upgrade')
-local aX = game:GetService("Workspace"):WaitForChild("Characters")
+local aX = _workspace:WaitForChild("Characters")
 local aY = aO:WaitForChild("Class")
 local aZ = aY.Value;
 local function a_(b0)
@@ -771,16 +771,16 @@ local function a_(b0)
 end
 local b1 = _shared.Missions.GetMissionPrize;
 _equipment = _character.Equipment;
-local b2 = _shared:WaitForChild('Combat'):WaitForChild('Skillsets')
+local _skillsets = _shared:WaitForChild('Combat'):WaitForChild('Skillsets')
 local b3 = 0;
 local b4;
 local b5 = 'RaidChestSilver'
 local b6 = 'RaidChestGold'
 local b7 = false;
 local b8 = _shared:WaitForChild("Combat"):WaitForChild("Attack")
-local b9 = game:GetService("Workspace"):FindFirstChild("Mobs")
+local b9 = _workspace:FindFirstChild("Mobs")
 local ba = _shared.Mobs.Mobs;
-local bb = workspace.Camera;
+local bb = _workspace.Camera;
 local bc;
 local bd;
 local be = tick()
@@ -793,30 +793,30 @@ local bk;
 local bl = {}
 local bm = 1;
 do
-    function resetCamera()
+    function ResetCamera()
         local bn = _humanoid and (_humanoid:FindFirstChild("Part") or _humanoid)
         if bn and not (bb.CameraSubject == bn) then
             bb.CameraSubject = bn
         end
     end
-    function noclip()
+    function Noclip()
         if _humanoid and _humanoid.CanCollide then
             _humanoid.CanCollide = false
         end
     end
-    function unnoclip()
+    function Unnoclip()
         if _humanoid and not _humanoid.CanCollide then
             _humanoid.CanCollide = true
         end
     end
-    function setMobCamera(bo, bp, bq)
+    function SetMobCamera(bo, bp, bq)
         if not bq or not bo then
             local bn = bo and bp or _humanoid and (_humanoid:FindFirstChild("Part") or _humanoid)
             if bn and bb.CameraSubject ~= bn then
                 bb.CameraSubject = bn
             end
         else
-            local br = workspace:FindFirstChild('InfiniteCameraPart')
+            local br = _workspace:FindFirstChild('InfiniteCameraPart')
             if br and br.Position ~= bq then
                 br.CFrame = CFrame.new(bq)
             end
@@ -828,7 +828,7 @@ do
                 br.Size = Vector3.new(1, 1, 1)
                 br.Position = bq;
                 br.Name = 'InfiniteCameraPart'
-                br.Parent = workspace
+                br.Parent = _workspace
             end
             if bb.CameraSubject ~= br then
                 bb.CameraSubject = br
@@ -1008,7 +1008,7 @@ local function ProcessAllTouchInterests()
     if character then
         local hrp = character:FindFirstChild("HumanoidRootPart")
         if hrp then
-            for _, C in pairs(workspace:GetDescendants()) do
+            for _, C in pairs(_workspace:GetDescendants()) do
                 if C and C.Name == "TouchInterest" and C.Parent and
                     (table.find(c3, C.Parent.Name) or (C.Parent.Parent and table.find(c3, C.Parent.Parent.Name))) then
                     task.spawn(function()
@@ -1053,7 +1053,7 @@ if not isBossDoorAdded then
     task.spawn(function()
         while true do
             task.wait(1)
-            local missionObjects = workspace:FindFirstChild("MissionObjects")
+            local missionObjects = _workspace:FindFirstChild("MissionObjects")
             if missionObjects then
                 local waveStartGate = missionObjects:FindFirstChild("WaveStartGate")
                 if waveStartGate then
@@ -1528,11 +1528,11 @@ local ca = {
             Cooldown = 6.1,
             Range = 59
         }, {
-            Skill = b2:WaitForChild('Assassin'):WaitForChild('EventStealthWalk'),
+            Skill = _skillsets:WaitForChild('Assassin'):WaitForChild('EventStealthWalk'),
             Cooldown = 0.25,
             Type = 'Remote'
         }, {
-            Skill = b2:WaitForChild('Assassin'):WaitForChild('Ultimate'),
+            Skill = _skillsets:WaitForChild('Assassin'):WaitForChild('Ultimate'),
             Cooldown = 1,
             Type = 'Remote'
         }, {
@@ -1585,16 +1585,16 @@ local ca = {
             Skill = 'MageOfLightBlastCharged',
             Cooldown = 0.33
         }, {
-            Skill = b2:WaitForChild('MageOfLight'):WaitForChild('HealCircle'),
+            Skill = _skillsets:WaitForChild('MageOfLight'):WaitForChild('HealCircle'),
             Cooldown = 14.2,
             Type = 'Heal'
         }, {
-            Skill = b2:WaitForChild('MageOfLight'):WaitForChild('Barrier'),
+            Skill = _skillsets:WaitForChild('MageOfLight'):WaitForChild('Barrier'),
             Args = _localplayer,
             Cooldown = 15.2,
             Type = 'Heal'
         }, {
-            Skill = b2:WaitForChild('MageOfLight'):WaitForChild('Ultimate'),
+            Skill = _skillsets:WaitForChild('MageOfLight'):WaitForChild('Ultimate'),
             Cooldown = 1,
             Type = 'Heal'
         }}
@@ -1729,7 +1729,7 @@ local ca = {
             Cooldown = 9,
             Range = 19
         }, {
-            Skill = b2:WaitForChild('Paladin'):WaitForChild('GuildedLight'),
+            Skill = _skillsets:WaitForChild('Paladin'):WaitForChild('GuildedLight'),
             Cooldown = 15.2,
             Type = 'Heal'
         }}
@@ -1842,7 +1842,7 @@ local ca = {
             Cooldown = 10.2,
             Range = 9
         }, {
-            Skill = b2:WaitForChild('Berserker'):WaitForChild('Ultimate'),
+            Skill = _skillsets:WaitForChild('Berserker'):WaitForChild('Ultimate'),
             Cooldown = 1,
             Type = 'Remote'
         }}
@@ -1920,7 +1920,7 @@ local ca = {
             Range = 44,
             Type = 'Ranged'
         }, {
-            Skill = b2:WaitForChild('Guardian'):WaitForChild('AggroDraw'),
+            Skill = _skillsets:WaitForChild('Guardian'):WaitForChild('AggroDraw'),
             Cooldown = 14.5,
             Type = 'Remote'
         }, {
@@ -2168,7 +2168,7 @@ local ca = {
             Type = 'Ranged',
             Range = 56
         }, {
-            Skill = b2:WaitForChild('Demon'):WaitForChild('Ultimate'),
+            Skill = _skillsets:WaitForChild('Demon'):WaitForChild('Ultimate'),
             Cooldown = 1,
             Type = 'Remote'
         }, {
@@ -2383,7 +2383,7 @@ local ca = {
             Skill = 'DualWield10',
             Cooldown = 0.75
         }, {
-            Skill = b2:WaitForChild('DualWielder'):WaitForChild('AttackBuff'),
+            Skill = _skillsets:WaitForChild('DualWielder'):WaitForChild('AttackBuff'),
             Cooldown = 12.2,
             Type = 'Remote'
         }, {
@@ -2440,7 +2440,7 @@ local ca = {
             Type = 'Ranged',
             Range = 47
         }, {
-            Skill = b2:WaitForChild('DualWielder'):WaitForChild('Ultimate'),
+            Skill = _skillsets:WaitForChild('DualWielder'):WaitForChild('Ultimate'),
             Cooldown = 31,
             Type = 'Remote'
         }, {
@@ -2790,7 +2790,7 @@ local ca = {
             Cooldown = 8.2,
             Range = 5
         }, {
-            Skill = b2:WaitForChild('Dragoon'):WaitForChild('Ultimate'),
+            Skill = _skillsets:WaitForChild('Dragoon'):WaitForChild('Ultimate'),
             Cooldown = 1,
             Type = 'Remote'
         }, {
@@ -3020,17 +3020,17 @@ local ca = {
             Type = 'Melee',
             Range = 21
         }, {
-            Skill = b2:WaitForChild('Summoner'):WaitForChild('SoulHarvest'),
+            Skill = _skillsets:WaitForChild('Summoner'):WaitForChild('SoulHarvest'),
             Cooldown = 10.2,
             Type = 'Remote',
             Args = "MobPosition",
             Range = 39
         }, {
-            Skill = b2:WaitForChild('Summoner'):WaitForChild('Summon'),
+            Skill = _skillsets:WaitForChild('Summoner'):WaitForChild('Summon'),
             Cooldown = 0.5,
             Type = 'Remote'
         }, {
-            Skill = b2:WaitForChild('Summoner'):WaitForChild('Ultimate'),
+            Skill = _skillsets:WaitForChild('Summoner'):WaitForChild('Ultimate'),
             Cooldown = 1,
             Type = 'Remote'
         }}
@@ -3148,7 +3148,7 @@ local ca = {
             Range = 98,
             Type = 'Ranged'
         }, {
-            Skill = b2:WaitForChild('Necromancer'):WaitForChild('Ultimate'),
+            Skill = _skillsets:WaitForChild('Necromancer'):WaitForChild('Ultimate'),
             Cooldown = 31,
             Type = 'Remote'
         }}
@@ -3183,12 +3183,12 @@ local ca = {
             Skill = 'MageOfShadowsDamageCircle',
             Cooldown = 0.33
         }, {
-            Skill = b2:WaitForChild('MageOfShadows'):WaitForChild('ShadowChains'),
+            Skill = _skillsets:WaitForChild('MageOfShadows'):WaitForChild('ShadowChains'),
             Cooldown = 6,
             Type = 'Remote',
             Args = 'mobTbl'
         }, {
-            Skill = b2:WaitForChild('MageOfShadows'):WaitForChild('Ultimate'),
+            Skill = _skillsets:WaitForChild('MageOfShadows'):WaitForChild('Ultimate'),
             Cooldown = 2,
             Type = 'Remote'
         }}
@@ -3206,10 +3206,10 @@ local ca = {
 }
 local cb = Instance.new('Folder')
 cb.Name = 'SummonFolder'
-cb.Parent = Workspace;
+cb.Parent = _workspace;
 local cc = Instance.new('Folder')
 cc.Name = 'infiniteboy'
-cc.Parent = Workspace;
+cc.Parent = _workspace;
 local cd;
 if _in39 then
     cd = Instance.new('Part')
@@ -4374,7 +4374,7 @@ do
         if not alive() then
             return
         end
-        noclip()
+        Noclip()
         _humanoid.Velocity = Vector3.new()
         if _character:FindFirstChild("Collider") then
             _character.Collider.Velocity = Vector3.new()
@@ -4741,9 +4741,9 @@ do
                             bV = C;
                             ei = X.Position;
                             if _inHeal then
-                                resetCamera()
+                                ResetCamera()
                             else
-                                setMobCamera(Toggles.mobCamera.Value, X)
+                                SetMobCamera(Toggles.mobCamera.Value, X)
                             end
                             eg = (X.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                             if _inHeal then
@@ -4758,8 +4758,8 @@ do
                     end
                 end
                 bV = nil;
-                resetCamera()
-                unnoclip()
+                ResetCamera()
+                Unnoclip()
                 if au and U and ej then
                     SmartPlayerTp(CFrame.new(10000, 10000, 10000))
                 end
@@ -4786,9 +4786,9 @@ do
                                 (C.Name ~= el or C.Name == el and b3 == 1) do
                                 bV = C;
                                 if _inHeal then
-                                    resetCamera()
+                                    ResetCamera()
                                 else
-                                    setMobCamera(Toggles.mobCamera.Value, X)
+                                    SetMobCamera(Toggles.mobCamera.Value, X)
                                 end
                                 eg = (X.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                                 eh = CFrame.new(X.Position +
@@ -4801,8 +4801,8 @@ do
                     end
                 end
                 bV = nil;
-                resetCamera()
-                unnoclip()
+                ResetCamera()
+                Unnoclip()
                 task.wait()
             end
         end)
@@ -4868,9 +4868,9 @@ do
                         ek = true
                     end
                     if _inHeal then
-                        resetCamera()
+                        ResetCamera()
                     else
-                        setMobCamera(Toggles.mobCamera.Value, er)
+                        SetMobCamera(Toggles.mobCamera.Value, er)
                     end
                     eg = (er.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                     eh = CFrame.new(er.Position +
@@ -4879,8 +4879,8 @@ do
                     SmartPlayerTp(eh, er)
                 else
                     bV = nil;
-                    resetCamera()
-                    unnoclip()
+                    ResetCamera()
+                    Unnoclip()
                 end
                 bX:Wait()
             end
@@ -5867,9 +5867,9 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 local eg = 5 + Options.Offset.Value;
                                 local fO = _inHeal and ee or Vector3.new()
                                 if _inHeal then
-                                    resetCamera()
+                                    ResetCamera()
                                 else
-                                    setMobCamera(Toggles.mobCamera.Value, nil, fP)
+                                    SetMobCamera(Toggles.mobCamera.Value, nil, fP)
                                 end
                                 SmartPlayerTp(
                                     CFrame.new(X.Position + Vector3.new(0, eg, 0) + fO) + X.CFrame.lookVector * 45, X)
@@ -5882,8 +5882,8 @@ Toggles.Autofarm:OnChanged(function(fx)
                         fL = false
                     end
                     bV = nil;
-                    unnoclip()
-                    resetCamera()
+                    Unnoclip()
+                    ResetCamera()
                 end
                 task.wait()
             end
@@ -6150,7 +6150,7 @@ do
 end
 Toggles.Killaura:OnChanged(function(cU)
     bj = bj + 1;
-    local gq = b2[ey][ez]
+    local gq = _skillsets[ey][ez]
     a5 = tick()
     if _functiondefined and a_(ey) and cU then
         local gr;
@@ -6311,7 +6311,7 @@ end)
                 if a_(ey) then
                     if alive() and not mounted() and not _character:FindFirstChild('AttackBuffDemonBloodBinding', true) and X and
                         _ and _ <= 95 then
-                        b2.Demon.BloodBinding:FireServer()
+                        _skillsets.Demon.BloodBinding:FireServer()
                         a5 = tick()
                         task.wait(6)
                     end
@@ -6336,7 +6336,7 @@ end)
                         if gG:FindFirstChild('HealthProperties') and gG.HealthProperties:FindFirstChild('Health') and
                             gG.HealthProperties.Health.Value > 0 and gG.HealthProperties.Health.Value /
                             gG.HealthProperties.MaxHealth.Value <= 0.25 then
-                            b2.Summoner.ExplodeSummons:FireServer()
+                            _skillsets.Summoner.ExplodeSummons:FireServer()
                         end
                     end
                 end
