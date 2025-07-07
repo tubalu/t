@@ -4382,10 +4382,8 @@ do
         if dB then
 
             _humanoid.CFrame = CFrame.lookAt(bq.Position, Vector3.new(dB.Position.x, bq.Position.y, dB.Position.z))
-            print("SmartPlayerTp: " .. bq.Position.y .. "-1")
         else
             _humanoid.CFrame = bq
-            print("SmartPlayerTp: " .. bq.Position.y .. "-2")
         end
     end
 
@@ -5841,7 +5839,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 if tick() - dF >= 0.4 then
                                     break
                                 end
-                                SmartPlayerTp(CFrame.new(3371, 73, -331))
+                                SmartPlayerTp(CFrame.new(1571, 73, -331))
                                 bX:Wait()
                             end
                             fM = false
