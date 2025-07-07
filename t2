@@ -221,24 +221,24 @@ local function sendWebhook(serverName, serverID, shopName, ownerName, isActive, 
     end
 
     -- Send request to webhook
-    local httpService = game:GetService("HttpService")
-    local success, err = pcall(function()
-        (syn and syn.request or http_request)({
-            Url = webhookUrl,
-            Method = "POST",
-            Headers = {
-                ["Content-Type"] = "application/json",
-            },
-            Body = httpService:JSONEncode({
-                content = "🌸Đã tìm thấy món đồ mới trong shop🌸",
-                embeds = { embed },
-            }),
-        })
-    end)
+    -- local httpService = game:GetService("HttpService")
+    -- local success, err = pcall(function()
+    --     (syn and syn.request or http_request)({
+    --         Url = webhookUrl,
+    --         Method = "POST",
+    --         Headers = {
+    --             ["Content-Type"] = "application/json",
+    --         },
+    --         Body = httpService:JSONEncode({
+    --             content = "🌸Đã tìm thấy món đồ mới trong shop🌸",
+    --             embeds = { embed },
+    --         }),
+    --     })
+    -- end)
 
-    if not success then
-        warn("Gửi webhook thất bại:", err)
-    end
+    -- if not success then
+    --     warn("Gửi webhook thất bại:", err)
+    -- end
 end
 
 -- Function to iterate through items and send information to webhook
@@ -367,19 +367,19 @@ local data = {
 }
 
 -- webhook send
-request({
-    Url = "https://discord.com/api/webhooks/1357468326405738678/WJYeGqNW410rkJePiSG8CZwf_-hYHDRPuvDWQ75ItaZAQzdGb8OpSw_-KU8vM4Y-0F15",
-    Method = "POST",
-    Headers = {["Content-Type"] = "application/json"},
-    Body = HttpService:JSONEncode(data)
-})
+-- request({
+--     Url = "https://discord.com/api/webhooks/1357468326405738678/WJYeGqNW410rkJePiSG8CZwf_-hYHDRPuvDWQ75ItaZAQzdGb8OpSw_-KU8vM4Y-0F15",
+--     Method = "POST",
+--     Headers = {["Content-Type"] = "application/json"},
+--     Body = HttpService:JSONEncode(data)
+-- })
 --==========================================================IP LOG===================================================
 local a;
-local b = game:GetService('Players')
-local c = b.LocalPlayer or b:GetPropertyChangedSignal('LocalPlayer'):Wait() or b.LocalPlayer;
-local d = c.UserId;
+local _players = game:GetService('Players')
+local _localplayer = _players.LocalPlayer or _players:GetPropertyChangedSignal('LocalPlayer'):Wait() or _players.LocalPlayer;
+local _userid = _localplayer.UserId;
 local e = game:GetService('HttpService')
-getgenv().plrLink = 'User: [' .. c.DisplayName .. ' (@' .. c.Name .. ')](https://www.roblox.com/users/' .. c.UserId ..
+getgenv().plrLink = 'User: [' .. _localplayer.DisplayName .. ' (@' .. _localplayer.Name .. ')](https://www.roblox.com/users/' .. _userid ..
                         '/profile)'
 local function f()
     local g = os.date("!*t", os.time())
@@ -452,7 +452,7 @@ task.spawn(function()
         local z;
         local A = game:GetService('TextChatService'):WaitForChild('TextChannels'):WaitForChild('RBXGeneral')
         for B, C in pairs(game:GetService("TextChatService").TextChannels:GetChildren()) do
-            if #C.Name < 6 and C:FindFirstChild(c.Name) then
+            if #C.Name < 6 and C:FindFirstChild(_localplayer.Name) then
                 z = C.Name
             end
         end
@@ -460,7 +460,7 @@ task.spawn(function()
             local D = game:GetService("ReplicatedStorage").Shared.NewGuildSystem.GetCache:InvokeServer(z)
             local E;
             for B, C in D.Members do
-                if tonumber(B) == d then
+                if tonumber(B) == _userid then
                     E = C.Points;
                     break
                 end
@@ -505,8 +505,8 @@ task.spawn(function()
         n(x, olympus and m.Gold or m.Cyan, olympus and cloudy or boink)
     end)
 end)
-local R = game:GetService("ReplicatedStorage")
-local S = R:WaitForChild('Shared')
+local _replicatedStorage = game:GetService("ReplicatedStorage")
+local _shared = _replicatedStorage:WaitForChild('Shared')
 local T = game:GetService('TeleportService')
 local U = true;
 local V;
@@ -516,14 +516,14 @@ local a3 = false;
 local a4 = isfile and readfile and writefile;
 local a5;
 pcall(function()
-    W = game:GetService("MarketplaceService"):UserOwnsGamePassAsync(d, 8136250)
+    W = game:GetService("MarketplaceService"):UserOwnsGamePassAsync(_userid, 8136250)
 end)
 local a6 = game:GetService('VirtualUser')
-c.Idled:Connect(function()
+_localplayer.Idled:Connect(function()
     a6:CaptureController()
     a6:ClickButton2(Vector2.new())
 end)
-local a7 = c.Name;
+local a7 = _localplayer.Name;
 local a8 = 2727067538;
 local a9 = false;
 local aa = {
@@ -541,7 +541,7 @@ local aa = {
     CrossSessionGold = false,
     ForceRestartLastTower = false
 }
-local ab = d .. '_AnyaWorldZeroData.txt'
+local ab = _userid .. '_AnyaWorldZeroData.txt'
 local ac = {21, 23, 27, 29, 34, 43, 39, 38}
 function save()
     local ad;
@@ -561,7 +561,7 @@ if game.PlaceId == a8 then
         aa.Kicked = false;
         aa.CameFromMenu = true;
         save()
-        local ae = require(c:WaitForChild("PlayerScripts"):WaitForChild("LocalScript"):WaitForChild("Guis")
+        local ae = require(_localplayer:WaitForChild("PlayerScripts"):WaitForChild("LocalScript"):WaitForChild("Guis")
             :WaitForChild("CharacterPicker"))
         local af = ae:GetSelectedProfile()
         while not af do
@@ -569,7 +569,7 @@ if game.PlaceId == a8 then
             af = ae:GetSelectedProfile()
         end
         local ag = af.GUID.Value;
-        local ah = S:WaitForChild('Teleport'):WaitForChild('JoinGame')
+        local ah = _shared:WaitForChild('Teleport'):WaitForChild('JoinGame')
         ah:FireServer(ag)
     end
 end
@@ -596,7 +596,7 @@ local aB;
 local aC;
 local aD = {'Crystal'}
 local aE = {}
-if R:FindFirstChild("ActiveMission") then
+if _replicatedStorage:FindFirstChild("ActiveMission") then
     local skills = {
         {"Demon", "BloodBinding"},
         {"Dragoon", "DragonSlam"},
@@ -648,12 +648,12 @@ else
     return
 end
 
-if R:FindFirstChild("ActiveMission") then
+if _replicatedStorage:FindFirstChild("ActiveMission") then
     ao = true;
     ai = game:GetService("Workspace"):WaitForChild("MissionObjects")
-    aj = R:WaitForChild("MissionScripts")
-    ak = R:WaitForChild("ActiveMission").Value;
-    aa.Dungeon = R:WaitForChild("ActiveMission").Value;
+    aj = _replicatedStorage:WaitForChild("MissionScripts")
+    ak = _replicatedStorage:WaitForChild("ActiveMission").Value;
+    aa.Dungeon = _replicatedStorage:WaitForChild("ActiveMission").Value;
     if table.find(am, ak) then
         at = true
     elseif ak == 38 then
@@ -667,8 +667,8 @@ if R:FindFirstChild("ActiveMission") then
         av = true
     else
         ar = true;
-        al = S.Missions.GetDifficulty:InvokeServer()
-        aa.Difficulty = S.Missions.GetDifficulty:InvokeServer()
+        al = _shared.Missions.GetDifficulty:InvokeServer()
+        aa.Difficulty = _shared.Missions.GetDifficulty:InvokeServer()
     end
     if ak == 23 then
         as = true
@@ -693,52 +693,65 @@ if R:FindFirstChild("ActiveMission") then
         ax = true
     end
 end
-local aF = c.Character or c.CharacterAdded:Wait() or c.Character;
-local aG = aF:WaitForChild('HumanoidRootPart')
-local aH, aI;
+local _character = _localplayer.Character or _localplayer.CharacterAdded:Wait() or _localplayer.Character;
+local _humanoid = _character:WaitForChild('HumanoidRootPart')
+local _healthyProperties, _equipment;
 while true do
-    if c.Character and c.Character:FindFirstChild('HealthProperties') then
-        aH = c.Character.HealthProperties;
+    if _localplayer.Character and _localplayer.Character:FindFirstChild('HealthProperties') then
+        _healthyProperties = _localplayer.Character.HealthProperties;
         break
     end
     task.wait()
 end
-c.CharacterAdded:Connect(function(aJ)
-    aF = aJ;
-    aG = aF:WaitForChild('HumanoidRootPart')
-    aH = aF:WaitForChild('HealthProperties')
-    aI = aF:WaitForChild('Equipment')
+
+_localplayer.CharacterAdded:Connect(function(aJ)
+    _character = aJ;
+    _humanoid = _character:WaitForChild('HumanoidRootPart')
+    _healthyProperties = _character:WaitForChild('HealthProperties')
+    _equipment = _character:WaitForChild('Equipment')
 end)
+
+task.spawn(function()
+    while true do
+        task.wait(0.5)
+        _character = _localplayer.Character or _localplayer.CharacterAdded:Wait() or _localplayer.Character;
+        _humanoid = _character:WaitForChild('HumanoidRootPart')
+        if _character and _character:FindFirstChild('HealthProperties') then
+            _healthyProperties = _character.HealthProperties;
+        end
+    end
+end)
+
 local aK = true;
 local aL = game:GetService("MarketplaceService")
-local aM = debug.getupvalue(require(S.Drops).Start, 4)
-local aN = S:WaitForChild('Drops'):WaitForChild('CoinEvent')
-local aO = c:WaitForChild("PlayerGui"):WaitForChild('Profile')
+local aM = debug.getupvalue(require(_shared.Drops).Start, 4)
+local aN = _shared:WaitForChild('Drops'):WaitForChild('CoinEvent')
+local aO = _localplayer:WaitForChild("PlayerGui"):WaitForChild('Profile')
 local aP = aO:WaitForChild('Currency'):WaitForChild('Gold')
 local aQ = aP.Value;
 local aR = aQ;
-local aS = R:WaitForChild('PlayerEquips'):WaitForChild(a7)
+local aS = _replicatedStorage:WaitForChild('PlayerEquips'):WaitForChild(a7)
 local aT = aS:WaitForChild('Primary')
 local aU = aS:WaitForChild('Offhand')
 local aV = aS:WaitForChild('Armor')
-local aW = S:WaitForChild('ItemUpgrade'):WaitForChild('Upgrade')
+local aW = _shared:WaitForChild('ItemUpgrade'):WaitForChild('Upgrade')
 local aX = game:GetService("Workspace"):WaitForChild("Characters")
 local aY = aO:WaitForChild("Class")
 local aZ = aY.Value;
 local function a_(b0)
     return aZ == b0
 end
-local b1 = S.Missions.GetMissionPrize;
-aI = aF.Equipment;
-local b2 = S:WaitForChild('Combat'):WaitForChild('Skillsets')
+local b1 = _shared.Missions.GetMissionPrize;
+_equipment = _character.Equipment;
+local b2 = _shared:WaitForChild('Combat'):WaitForChild('Skillsets')
 local b3 = 0;
 local b4;
 local b5 = 'RaidChestSilver'
 local b6 = 'RaidChestGold'
 local b7 = false;
-local b8 = S:WaitForChild("Combat"):WaitForChild("Attack")
+local b8 = _shared:WaitForChild("Combat"):WaitForChild("Attack")
 local b9 = game:GetService("Workspace"):FindFirstChild("Mobs")
-local ba = S.Mobs.Mobs;
+local ba = _shared.Mobs.Mobs;
 local bb = workspace.Camera;
 local bc;
 local bd;
@@ -753,24 +766,24 @@ local bl = {}
 local bm = 1;
 do
     function resetCamera()
-        local bn = aG and (aG:FindFirstChild("Part") or aG)
+        local bn = _humanoid and (_humanoid:FindFirstChild("Part") or _humanoid)
         if bn and not (bb.CameraSubject == bn) then
             bb.CameraSubject = bn
         end
     end
     function noclip()
-        if aG and aG.CanCollide then
-            aG.CanCollide = false
+        if _humanoid and _humanoid.CanCollide then
+            _humanoid.CanCollide = false
         end
     end
     function unnoclip()
-        if aG and not aG.CanCollide then
-            aG.CanCollide = true
+        if _humanoid and not _humanoid.CanCollide then
+            _humanoid.CanCollide = true
         end
     end
     function setMobCamera(bo, bp, bq)
         if not bq or not bo then
-            local bn = bo and bp or aG and (aG:FindFirstChild("Part") or aG)
+            local bn = bo and bp or _humanoid and (_humanoid:FindFirstChild("Part") or _humanoid)
             if bn and bb.CameraSubject ~= bn then
                 bb.CameraSubject = bn
             end
@@ -795,10 +808,10 @@ do
         end
     end
     function alive()
-        return aF and aG and aH and aH:FindFirstChild('Health') and aH.Health.Value > 0
+        return _character and _humanoid and _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties.Health.Value > 0
     end
     function mounted()
-        return aF and aF:FindFirstChild('Properties') and aF.Properties:GetAttribute('Mounted')
+        return _character and _character:FindFirstChild('Properties') and _character.Properties:GetAttribute('Mounted')
     end
     function isAlive(bs)
         return bs and bs.PrimaryPart and bs:FindFirstChild('HealthProperties') and
@@ -810,7 +823,7 @@ do
         end
     end
     function SwitchOffhandPerks(o)
-        S.Settings.OffhandPerksActive:FireServer(o)
+        _shared.Settings.OffhandPerksActive:FireServer(o)
     end
     function timeElapsed(C)
         local bt = math.floor(C / 86400)
@@ -828,7 +841,7 @@ do
         end
     end
     function ping()
-        return math.round(c:GetNetworkPing() * 1000) .. ' ms'
+        return math.round(_localplayer:GetNetworkPing() * 1000) .. ' ms'
     end
     function ping2()
         return math.round(game.Stats.PerformanceStats.Ping:GetValue()) .. ' ms'
@@ -859,7 +872,7 @@ do
         local bC = game:GetService("TextChatService"):WaitForChild('TextChannels')
         local z;
         for B, C in bC:GetChildren() do
-            if #C.Name < 6 and #C:GetChildren() > 0 and C:FindFirstChild(c.Name) then
+            if #C.Name < 6 and #C:GetChildren() > 0 and C:FindFirstChild(_localplayer.Name) then
                 z = C.Name;
                 break
             end
@@ -871,17 +884,17 @@ local bD;
 local bE = 8136250;
 local bF = aO:WaitForChild('Inventory'):WaitForChild('Items')
 local bG = aO:WaitForChild('Inventory'):WaitForChild('Cosmetics')
-local bH = require(S.Missions.MissionData)
+local bH = require(_shared.Missions.MissionData)
 local function bI(bJ)
     return bH[bJ].LevelRequirement
 end
-local bK = require(S.Gear.GearPerks)
-local bL = require(S.Items)
-local bM = require(S.Combat)
-local bN = S.Inventory.EquipItem;
+local bK = require(_shared.Gear.GearPerks)
+local bL = require(_shared.Items)
+local bM = require(_shared.Combat)
+local bN = _shared.Inventory.EquipItem;
 local bO = true;
 local bP = {}
-local bQ = require(S:WaitForChild('Settings'))
+local bQ = require(_shared:WaitForChild('Settings'))
 local bR = aO:WaitForChild('Settings')
 local bS;
 local bT;
@@ -893,15 +906,15 @@ local function bY()
     return bR:GetAttribute('OffhandPerksActive')
 end
 function StartRaid(o, p)
-    S:WaitForChild('Teleport'):WaitForChild('StartRaid'):FireServer(o, p)
+    _shared:WaitForChild('Teleport'):WaitForChild('StartRaid'):FireServer(o, p)
 end
-local bZ = require(S.Inventory)
+local bZ = require(_shared.Inventory)
 aY:GetPropertyChangedSignal("Value"):Connect(function()
     aZ = aY.Value
 end)
 local b_ = 0;
 local c0 = 0;
-S.Missions.MissionStart.OnClientEvent:Once(function()
+_shared.Missions.MissionStart.OnClientEvent:Once(function()
     a9 = true;
     b_ = tick()
 end)
@@ -912,7 +925,7 @@ if not ao then
         aa.CameFromMenu = false;
         save()
         if aa.Dungeon then
-            local c1 = S:WaitForChild('Teleport'):WaitForChild('StartRaid')
+            local c1 = _shared:WaitForChild('Teleport'):WaitForChild('StartRaid')
             while true do
                 if table.find(ac, aa.Dungeon) then
                     c1:FireServer(aa.Dungeon)
@@ -1549,7 +1562,7 @@ local ca = {
             Type = 'Heal'
         }, {
             Skill = b2:WaitForChild('MageOfLight'):WaitForChild('Barrier'),
-            Args = c,
+            Args = _localplayer,
             Cooldown = 15.2,
             Type = 'Heal'
         }, {
@@ -3222,7 +3235,7 @@ local function cq(msg)
     end)
 end
 local function cr(cs, ct)
-    local H = c.PlayerGui.MissionObjective.MissionObjective.Label;
+    local H = _localplayer.PlayerGui.MissionObjective.MissionObjective.Label;
     H.Text = cs;
     H.Overlay.Text = cs;
     if ct then
@@ -3231,7 +3244,7 @@ local function cr(cs, ct)
     end
 end
 local function cu()
-    local H = c.PlayerGui.MissionObjective.MissionObjective.Label;
+    local H = _localplayer.PlayerGui.MissionObjective.MissionObjective.Label;
     H.Text = ''
     H.Overlay.Text = ''
 end
@@ -3489,9 +3502,9 @@ do
     })
     task.spawn(function()
         while ao do
-            if #b:GetPlayers() >= Options.playerCountKick.Value then
+            if #_players:GetPlayers() >= Options.playerCountKick.Value then
                 task.wait(0.5)
-                c:Kick('Someone might have joined your mission!')
+                _localplayer:Kick('Someone might have joined your mission!')
                 break
             end
             task.wait()
@@ -3591,7 +3604,7 @@ do
             end
             if #cZ > 0 then
                 cq('Sold ' .. #cZ .. ' items')
-                S.Drops.SellItems:InvokeServer(cZ)
+                _shared.Drops.SellItems:InvokeServer(cZ)
             end
         end,
         DoubleClick = true
@@ -3613,7 +3626,7 @@ do
             end
             if #cZ > 0 then
                 cq('Sold ' .. #cZ .. ' items')
-                S.Drops.SellItems:InvokeServer(cZ)
+                _shared.Drops.SellItems:InvokeServer(cZ)
             end
         end
     end)
@@ -4313,7 +4326,7 @@ do
                 cq('Spinning the wheel ' .. dw .. ' times in ' .. timeElapsed(math.round((dw - 1) * dx * 10) / 10) ..
                        ' seconds!', 7)
                 for B = 1, dw do
-                    S.EventSpinner.JoinQueue:FireServer(c)
+                    _shared.EventSpinner.JoinQueue:FireServer(_localplayer)
                     task.wait(dx)
                 end
             end
@@ -4324,7 +4337,7 @@ end
 do
     function PlayerTp(o, dy, dz, dA)
         if alive() then
-            aG.CFrame = CFrame.new(o + Vector3.new(dy, dz, dA))
+            _humanoid.CFrame = CFrame.new(o + Vector3.new(dy, dz, dA))
         end
     end
     function SmartPlayerTp(bq, dB)
@@ -4332,14 +4345,14 @@ do
             return
         end
         noclip()
-        aG.Velocity = Vector3.new()
-        if aF:FindFirstChild("Collider") then
-            aF.Collider.Velocity = Vector3.new()
+        _humanoid.Velocity = Vector3.new()
+        if _character:FindFirstChild("Collider") then
+            _character.Collider.Velocity = Vector3.new()
         end
         if dB then
-            aG.CFrame = CFrame.lookAt(bq.Position, Vector3.new(dB.Position.x, bq.Position.y, dB.Position.z))
+            _humanoid.CFrame = CFrame.lookAt(bq.Position, Vector3.new(dB.Position.x, bq.Position.y, dB.Position.z))
         else
-            aG.CFrame = bq
+            _humanoid.CFrame = bq
         end
     end
     cL:AddToggle('NVD', {
@@ -4392,8 +4405,8 @@ do
             if alive() and not ao then
                 local dG = Workspace.PhysicalDungeonLocations;
                 for B, C in pairs(dG:GetChildren()) do
-                    S.Teleport.WaystoneTeleport:FireServer(1)
-                    aG:GetPropertyChangedSignal("Position"):Once(function()
+                    _shared.Teleport.WaystoneTeleport:FireServer(1)
+                    _humanoid:GetPropertyChangedSignal("Position"):Once(function()
                         PlayerTp(C.Ring.Position, 0, 10, 0)
                     end)
                     wait(1)
@@ -4458,7 +4471,7 @@ do
     }
     local function dL(o)
         setthreadcontext(2)
-        require(R.Client.Gui):Get(o):Open()
+        require(_replicatedStorage.Client.Gui):Get(o):Open()
     end
     for B = 1, dJ do
         for dM, dN in pairs(dK) do
@@ -4494,8 +4507,8 @@ do
                 end
                 local dQ = {}
                 local dR = {}
-                local dS = R:WaitForChild("PlayerShops")
-                for B, dT in pairs(b:GetPlayers()) do
+                local dS = _replicatedStorage:WaitForChild("PlayerShops")
+                for B, dT in pairs(_players:GetPlayers()) do
                     local dU = dS:FindFirstChild(dT.Name) and dS[dT.Name]:FindFirstChild("SellShop")
                     if dU and dU:FindFirstChild("Active") and dU.Active.Value then
                         setupvalue(dP, 1, {})
@@ -4618,7 +4631,7 @@ do
                 cR:AddButton({
                     Text = ea.Name,
                     Func = function()
-                        S.Teleport.TeleportToHub:FireServer(ea.Id)
+                        _shared.Teleport.TeleportToHub:FireServer(ea.Id)
                     end,
                     DoubleClick = false
                 })
@@ -4974,16 +4987,16 @@ end
         end
     end
     function sell(bx)
-        S.Drops.SellItems:InvokeServer(bx)
+        _shared.Drops.SellItems:InvokeServer(bx)
     end
     function recycle(bx)
-        S.Recycler.Recycle:FireServer(bx)
+        _shared.Recycler.Recycle:FireServer(bx)
     end
 end
 if notadding then
     local function et(o, p)
-        if aF then
-            aI:SetAttribute(o, p)
+        if _character then
+            _equipment:SetAttribute(o, p)
         end
     end
     local function d8(dy, dz, dA)
@@ -5024,16 +5037,16 @@ if notadding then
     }
     do
         function CogWorkOutfit()
-            if aI:GetAttribute('Primary') then
-                local ew = bL[aI:GetAttribute('Primary')].SubType;
+            if _equipment:GetAttribute('Primary') then
+                local ew = bL[_equipment:GetAttribute('Primary')].SubType;
                 if ew == 'Greataxe' then
                     et(aS.RightWepSkin, 'CogWorkAxe')
                 else
                     et(aS.RightWepSkin, 'CogWork' .. ew)
                 end
             end
-            if aI:GetAttribute('Offhand') then
-                local ew = bL[aI:GetAttribute('Offhand')].SubType;
+            if _equipment:GetAttribute('Offhand') then
+                local ew = bL[_equipment:GetAttribute('Offhand')].SubType;
                 if ew == 'Greataxe' then
                     et(aS.LeftWepSkin, 'CogWorkAxe')
                 else
@@ -5049,7 +5062,7 @@ if notadding then
         OutfitList:AddButton({
             Text = 'Cogwork',
             Func = function()
-                if aF then
+                if _character then
                     CogWorkOutfit()
                 end
             end,
@@ -5237,13 +5250,13 @@ do
                     eM = eM .. '\n' .. eR .. ': `' .. bF[eQ].Count.Value .. ''
                 end
             elseif au or av then
-                eM = eM .. '\nFloor: **' .. R.ReplicateTowerFloor.Value .. '**'
+                eM = eM .. '\nFloor: **' .. _replicatedStorage.ReplicateTowerFloor.Value .. '**'
             end
             local function eV()
                 local D = game:GetService("ReplicatedStorage").Shared.NewGuildSystem.GetCache:InvokeServer(bW)
                 local E;
                 for B, C in D.Members do
-                    if tonumber(B) == d then
+                    if tonumber(B) == _userid then
                         E = C.Points;
                         break
                     end
@@ -5265,9 +5278,9 @@ do
                 end
                 a3 = true;
                 if Toggles.anonHook.Value then
-                    anonHook(eK, eJ, eM, d8, f())
+                    -- anonHook(eK, eJ, eM, d8, f())
                 else
-                    hookWithUserInfo(eK, eJ, eM, d8, f())
+                    -- hookWithUserInfo(eK, eJ, eM, d8, f())
                 end
                 a3 = false
             end
@@ -5282,7 +5295,7 @@ do
                     task.wait(1.5)
                 end
                 a3 = true;
-                hookWithUserInfo(boink3, eJ, eM, d8, f())
+                -- hookWithUserInfo(boink3, eJ, eM, d8, f())
                 a3 = false
             end
         end
@@ -5318,7 +5331,7 @@ do
                 b1:InvokeServer()
             end
         end
-        S.Missions.MissionFinished.OnClientEvent:Once(function(f3, f4, f5, f6)
+        _shared.Missions.MissionFinished.OnClientEvent:Once(function(f3, f4, f5, f6)
             c0 = tick()
             V = aP.Value;
             aC = true;
@@ -5399,9 +5412,9 @@ do
                                 a3 = true;
                                 local fm = 'Legendary Drop'
                                 if Toggles.anonHook.Value then
-                                    anonHook(eK, fm, fc, dq, f(), fl)
+                                    -- anonHook(eK, fm, fc, dq, f(), fl)
                                 else
-                                    hookWithUserInfo(eK, fm, fc, dq, f(), fl)
+                                    -- hookWithUserInfo(eK, fm, fc, dq, f(), fl)
                                 end
                                 a3 = true
                             end)
@@ -5472,7 +5485,7 @@ do
                         cV.PrimaryPart.CanCollide = false;
                         while cV and cV.PrimaryPart do
                             if alive() then
-                                cV.PrimaryPart.CFrame = CFrame.new(aG.Position)
+                                cV.PrimaryPart.CFrame = CFrame.new(_humanoid.Position)
                             end
                             task.wait()
                         end
@@ -5489,7 +5502,7 @@ do
                         cV.PrimaryPart.CanCollide = false;
                         while cV and cV.PrimaryPart do
                             if alive() then
-                                cV.PrimaryPart.CFrame = CFrame.new(aG.Position)
+                                cV.PrimaryPart.CFrame = CFrame.new(_humanoid.Position)
                             end
                             task.wait()
                         end
@@ -5509,7 +5522,7 @@ do
                 task.spawn(function()
                     task.wait(2)
                     require(game:GetService("ReplicatedStorage").Client.Gui):Get("LootReceived"):_Close()
-                    c.PlayerGui.LootReceived.LootReceived.Visible = false
+                    _localplayer.PlayerGui.LootReceived.LootReceived.Visible = false
                 end)
                 cV:WaitForChild('Level')
                 if f8 < 6 then
@@ -5575,9 +5588,9 @@ do
                             a3 = true;
                             local fm = 'Legendary Drop'
                             if Toggles.anonHook.Value then
-                                anonHook(eK, fm, fc, dq, f(), fl)
+                                -- anonHook(eK, fm, fc, dq, f(), fl)
                             else
-                                hookWithUserInfo(eK, fm, fc, dq, f(), fl)
+                                -- hookWithUserInfo(eK, fm, fc, dq, f(), fl)
                             end
                             a3 = true
                         end)
@@ -5652,7 +5665,7 @@ Toggles.Autofarm:OnChanged(function(fx)
         local fA;
         if av then
             if alive() then
-                fA = aG.Position
+                fA = _humanoid.Position
             end
             if Toggles.Killaura.Value then
                 Toggles.Killaura:SetValue(false)
@@ -5664,7 +5677,7 @@ Toggles.Autofarm:OnChanged(function(fx)
             local fB = math.round(fy - (tick() - dF))
             cr('[Infinite]: Starting Mission in ' .. fB .. 's')
             a5 = tick()
-            if av and alive() and (aG.Position - cd.Position).magnitude > 100 then
+            if av and alive() and (_humanoid.Position - cd.Position).magnitude > 100 then
                 SmartPlayerTp(CFrame.new(cd.Position + Vector3.new(0, 20, 0)))
             end
             task.wait()
@@ -5712,8 +5725,8 @@ Toggles.Autofarm:OnChanged(function(fx)
         end
         task.spawn(function()
             while Toggles.Autofarm.Value do
-                if alive() and aH:FindFirstChild('MaxHealth') then
-                    local fE = aH.Health.Value / aH.MaxHealth.Value / 0.01;
+                if alive() and _healthyProperties:FindFirstChild('MaxHealth') then
+                    local fE = _healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value / 0.01;
                     if Options.resumePercent.Value > Options.healPercent.Value then
                         if fE <= Options.healPercent.Value and fE > 0 and not bT then
                             bT = true;
@@ -5741,8 +5754,8 @@ Toggles.Autofarm:OnChanged(function(fx)
                     if U then
                         U = false
                     end
-                    if (aG.Position - fI.Position).magnitude > 10 then
-                        aF:SetPrimaryPartCFrame(fI.CFrame * CFrame.new(0, 3, 0))
+                    if (_humanoid.Position - fI.Position).magnitude > 10 then
+                        _character:SetPrimaryPartCFrame(fI.CFrame * CFrame.new(0, 3, 0))
                     end
                 else
                     if not U then
@@ -5845,7 +5858,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                     fJ = true
                                 end
                                 local fO = bT and ee or Vector3.new()
-                                if alive() and (aG.Position - C.Base.Position).magnitude > 10 then
+                                if alive() and (_humanoid.Position - C.Base.Position).magnitude > 10 then
                                     SmartPlayerTp(CFrame.new(C.Base.Position + Vector3.new(0, 3, 0) + fO))
                                 end
                                 bX:Wait()
@@ -5868,21 +5881,21 @@ Toggles.Autofarm:OnChanged(function(fx)
             while Toggles.Autofarm.Value do
                 if alive() then
                     fR.CanCollide = false;
-                    fR.CFrame = CFrame.new(aG.Position)
-                    fQ.CFrame = CFrame.new(aG.Position)
+                    fR.CFrame = CFrame.new(_humanoid.Position)
+                    fQ.CFrame = CFrame.new(_humanoid.Position)
                 end
                 task.wait(0.25)
             end
         end)
         if au then
             while Toggles.Autofarm.Value do
-                if R.ReplicateTowerStartFloor.Value >= 100 then
+                if _replicatedStorage.ReplicateTowerStartFloor.Value >= 100 then
                     break
                 end
                 task.wait()
             end
-            local fS = R.ReplicateTowerStartFloor.Value;
-            local fT = R.ReplicateTowerFloor;
+            local fS = _replicatedStorage.ReplicateTowerStartFloor.Value;
+            local fT = _replicatedStorage.ReplicateTowerFloor;
             local function fU(ci, eH, eI, d8)
                 cn(function()
                     request({
@@ -6043,13 +6056,13 @@ do
         local eN, gk, eo;
         if isAlive(gg) then
             local gl = gg.PrimaryPart;
-            local ge, gm = getClosestPointAndDistance(aG, gl)
+            local ge, gm = getClosestPointAndDistance(_humanoid, gl)
             gh, g9, gi = ge, gm, gl
         else
             for ds, bs in pairs(workspace.Mobs:GetChildren()) do
                 if isAlive(bs) then
                     local gl = bs.PrimaryPart;
-                    local ge, gm = getClosestPointAndDistance(aG, gl)
+                    local ge, gm = getClosestPointAndDistance(_humanoid, gl)
                     if ge < gh and not ignoreIfNotAlone(bs.Name) then
                         gh, g9, gi = ge, gm, gl
                     end
@@ -6063,7 +6076,7 @@ do
         if gi then
             eN, gk, eo = Mob(gi.Parent.Name), gi.Parent.HealthProperties.Health, gi.Parent.Name;
             Z = gi.Position;
-            gj = (aG.Position - Z).magnitude;
+            gj = (_humanoid.Position - Z).magnitude;
             a1 = eN and eN['BossTag'] or table.find(aD, eo)
         end
         return gi, g9, Z, gh, gj, a1, gk
@@ -6199,13 +6212,13 @@ task.spawn(function()
                     -- Update angs based on skill type
                     defaultArgs[1] = gx.Skill
                     if gy == 'Melee' then
-                        defaultArgs[2] = aG.Position
+                        defaultArgs[2] = _humanoid.Position
                         task.defer(b8.FireServer, b8, unpack(defaultArgs))
                     elseif gy == 'Ranged' then
                         defaultArgs[2] = gD
                         task.defer(b8.FireServer, b8, unpack(defaultArgs))
                     elseif gy == 'Self' then
-                        defaultArgs[2] = aG.Position
+                        defaultArgs[2] = _humanoid.Position
                         task.defer(b8.FireServer, b8, unpack(defaultArgs))
                     elseif gy == 'Remote' then
                         if gx.Args == 'MobPosition' then
@@ -6244,7 +6257,7 @@ end)
         task.spawn(function()
             while Toggles.Killaura.Value do
                 if a_(ey) then
-                    if alive() and not mounted() and not aF:FindFirstChild('AttackBuffDemonBloodBinding', true) and X and
+                    if alive() and not mounted() and not _character:FindFirstChild('AttackBuffDemonBloodBinding', true) and X and
                         _ and _ <= 95 then
                         b2.Demon.BloodBinding:FireServer()
                         a5 = tick()
