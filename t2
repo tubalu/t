@@ -4382,10 +4382,10 @@ do
         if dB then
 
             _humanoid.CFrame = CFrame.lookAt(bq.Position, Vector3.new(dB.Position.x, bq.Position.y, dB.Position.z))
-            print("SmartPlayerTp: " .. bq.Position.y .. "1")
+            print("SmartPlayerTp: " .. bq.Position.y .. "-1")
         else
             _humanoid.CFrame = bq
-            print("SmartPlayerTp: " .. bq.Position.y .. "2")
+            print("SmartPlayerTp: " .. bq.Position.y .. "-2")
         end
     end
 
