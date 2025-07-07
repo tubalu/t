@@ -526,7 +526,7 @@ end)
 local a7 = _localplayer.Name;
 local a8 = 2727067538;
 local a9 = false;
-local aa = {
+local _currentDungeon = {
     Kicked = false,
     WasInDungeon = false,
     Dungeon = false,
@@ -546,20 +546,20 @@ local ac = {21, 23, 27, 29, 34, 43, 39, 38}
 function save()
     local ad;
     if writefile then
-        ad = e:JSONEncode(aa)
+        ad = e:JSONEncode(_currentDungeon)
         writefile(ab, ad)
     end
 end
 function load()
     if readfile and isfile and isfile(ab) then
-        aa = e:JSONDecode(readfile(ab))
+        _currentDungeon = e:JSONDecode(readfile(ab))
     end
 end
 if game.PlaceId == a8 then
     load()
-    if aa.Kicked or aa.RejoinLastDungeon and tick() - aa.Timestamp <= aa.RejoinLastDungeonThreshold then
-        aa.Kicked = false;
-        aa.CameFromMenu = true;
+    if _currentDungeon.Kicked or _currentDungeon.RejoinLastDungeon and tick() - _currentDungeon.Timestamp <= _currentDungeon.RejoinLastDungeonThreshold then
+        _currentDungeon.Kicked = false;
+        _currentDungeon.CameFromMenu = true;
         save()
         local ae = require(_localplayer:WaitForChild("PlayerScripts"):WaitForChild("LocalScript"):WaitForChild("Guis")
             :WaitForChild("CharacterPicker"))
@@ -653,7 +653,7 @@ if _replicatedStorage:FindFirstChild("ActiveMission") then
     ai = game:GetService("Workspace"):WaitForChild("MissionObjects")
     aj = _replicatedStorage:WaitForChild("MissionScripts")
     ak = _replicatedStorage:WaitForChild("ActiveMission").Value;
-    aa.Dungeon = _replicatedStorage:WaitForChild("ActiveMission").Value;
+    _currentDungeon.Dungeon = _replicatedStorage:WaitForChild("ActiveMission").Value;
     if table.find(am, ak) then
         at = true
     elseif ak == 38 then
@@ -668,7 +668,7 @@ if _replicatedStorage:FindFirstChild("ActiveMission") then
     else
         ar = true;
         al = _shared.Missions.GetDifficulty:InvokeServer()
-        aa.Difficulty = _shared.Missions.GetDifficulty:InvokeServer()
+        _currentDungeon.Difficulty = _shared.Missions.GetDifficulty:InvokeServer()
     end
     if ak == 23 then
         as = true
@@ -703,7 +703,7 @@ while true do
     end
     task.wait()
 end
-
+re
 _localplayer.CharacterAdded:Connect(function(aJ)
     _character = aJ;
     _humanoid = _character:WaitForChild('HumanoidRootPart')
@@ -897,7 +897,7 @@ local bP = {}
 local bQ = require(_shared:WaitForChild('Settings'))
 local bR = aO:WaitForChild('Settings')
 local bS;
-local bT;
+local _inHeal;
 local bU;
 local bV;
 local bW;
@@ -920,34 +920,34 @@ _shared.Missions.MissionStart.OnClientEvent:Once(function()
 end)
 load()
 if not ao then
-    if aa.Kicked and aa.WasInDungeon or aa.RejoinLastDungeon and tick() - aa.Timestamp <= aa.RejoinLastDungeonThreshold and
-        aa.CameFromMenu or aa.WasInDungeon and aa.Dungeon and table.find(am, aa.Dungeon) and aa.ForceRestartLastTower then
-        aa.CameFromMenu = false;
+    if _currentDungeon.Kicked and _currentDungeon.WasInDungeon or _currentDungeon.RejoinLastDungeon and tick() - _currentDungeon.Timestamp <= _currentDungeon.RejoinLastDungeonThreshold and
+        _currentDungeon.CameFromMenu or _currentDungeon.WasInDungeon and _currentDungeon.Dungeon and table.find(am, _currentDungeon.Dungeon) and _currentDungeon.ForceRestartLastTower then
+        _currentDungeon.CameFromMenu = false;
         save()
-        if aa.Dungeon then
+        if _currentDungeon.Dungeon then
             local c1 = _shared:WaitForChild('Teleport'):WaitForChild('StartRaid')
             while true do
-                if table.find(ac, aa.Dungeon) then
-                    c1:FireServer(aa.Dungeon)
+                if table.find(ac, _currentDungeon.Dungeon) then
+                    c1:FireServer(_currentDungeon.Dungeon)
                 else
-                    c1:FireServer(aa.Dungeon, aa.Difficulty)
+                    c1:FireServer(_currentDungeon.Dungeon, _currentDungeon.Difficulty)
                 end
                 task.wait(1)
             end
         end
     else
-        aa.Kicked = false;
-        aa.CameFromMenu = false;
-        aa.WasInDungeon = false;
+        _currentDungeon.Kicked = false;
+        _currentDungeon.CameFromMenu = false;
+        _currentDungeon.WasInDungeon = false;
         save()
     end
 elseif ao then
     bW = getPlrGuild()
-    aa.WasInDungeon = true;
-    aa.Dungeon = ak;
-    aa.Difficulty = al;
-    aa.CameFromMenu = false;
-    aa.Timestamp = tick()
+    _currentDungeon.WasInDungeon = true;
+    _currentDungeon.Dungeon = ak;
+    _currentDungeon.Difficulty = al;
+    _currentDungeon.CameFromMenu = false;
+    _currentDungeon.Timestamp = tick()
     save()
 end
 local c2 = {
@@ -3460,7 +3460,7 @@ do
         Default = false
     })
     Toggles.rejoinDungeon:OnChanged(function(cV)
-        aa.RejoinLastDungeon = cV;
+        _currentDungeon.RejoinLastDungeon = cV;
         save()
     end)
     local cW = {
@@ -3478,7 +3478,7 @@ do
         Multi = false
     })
     Options.rjdLimit:OnChanged(function(cV)
-        aa.RejoinLastDungeonThreshold = cW[cV]
+        _currentDungeon.RejoinLastDungeonThreshold = cW[cV]
         save()
     end)
     cF:AddToggle('forceRestartLastTower', {
@@ -3487,7 +3487,7 @@ do
         Default = false
     })
     Toggles.forceRestartLastTower:OnChanged(function(cV)
-        aa.ForceRestartLastTower = cV;
+        _currentDungeon.ForceRestartLastTower = cV;
         save()
     end)
     cF:AddSlider('playerCountKick', {
@@ -4560,16 +4560,16 @@ do
     local e3 = cQ:AddLabel('Total Gold: ' .. formatNumberWithCommas(aP.Value))
     local e4 = cQ:AddLabel('Session Time: 0s')
     cQ:AddDivider()
-    local e5 = aa.CrossSessionTimestamp or tick()
+    local e5 = _currentDungeon.CrossSessionTimestamp or tick()
     local e6 = cQ:AddLabel('Cross-Session Time: ' .. timeElapsed(tick() - e5))
     local e7 = cQ:AddLabel('CS Gold Gain: ' ..
-                               formatNumberWithCommas(aa.CrossSessionGold and aR - aa.CrossSessionGold or 0))
-    local e8 = aa.CrossSessionGold or aR;
+                               formatNumberWithCommas(_currentDungeon.CrossSessionGold and aR - _currentDungeon.CrossSessionGold or 0))
+    local e8 = _currentDungeon.CrossSessionGold or aR;
     cQ:AddButton({
         Text = 'Reset Cross-Session Time',
         Func = function()
             e5 = tick()
-            aa.CrossSessionTimestamp = e5;
+            _currentDungeon.CrossSessionTimestamp = e5;
             save()
         end,
         DoubleClick = true
@@ -4578,19 +4578,19 @@ do
         Text = 'Reset Cross-Session Gold',
         Func = function()
             e8 = aR;
-            aa.CrossSessionGold = e8;
+            _currentDungeon.CrossSessionGold = e8;
             save()
             e7:SetText('CS Gold Gain: 0')
         end,
         DoubleClick = true
     })
     local e9;
-    if not aa.CrossSessionTimestamp then
-        aa.CrossSessionTimestamp = e5;
+    if not _currentDungeon.CrossSessionTimestamp then
+        _currentDungeon.CrossSessionTimestamp = e5;
         e9 = true
     end
-    if not aa.CrossSessionGold then
-        aa.CrossSessionGold = e8;
+    if not _currentDungeon.CrossSessionGold then
+        _currentDungeon.CrossSessionGold = e8;
         e9 = true
     end
     if e9 then
@@ -4700,14 +4700,21 @@ do
                         while isAlive(C) and Toggles.Autofarm.Value and U and not b7 do
                             bV = C;
                             ei = X.Position;
-                            if bT then
-                                resetCamera()
+                            if _inHeal then
+                                if _currentDungeon.Dungeon == 44 then
+                                    setMobCamera(Toggles.mobCamera.Value, X)
+                                else
+                                    resetCamera()
+                                end
                             else
                                 setMobCamera(Toggles.mobCamera.Value, X)
                             end
                             eg = (X.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
+                            if _inHeal then
+                                eg = eg + 30
+                            end
                             eh = CFrame.new(X.Position +
-                                                (table.find(aE, C) and ef or Vector3.new(0, eg, 0) + (bT and ee or ef))) +
+                                                (table.find(aE, C) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) +
                                      X.CFrame.lookVector * 2;
                             SmartPlayerTp(eh, X)
                             bX:Wait()
@@ -4742,7 +4749,7 @@ do
                             while isAlive(C) and Toggles.Autofarm.Value and U and
                                 (C.Name ~= el or C.Name == el and b3 == 1) do
                                 bV = C;
-                                if bT then
+                                if _inHeal then
                                     resetCamera()
                                 else
                                     setMobCamera(Toggles.mobCamera.Value, X)
@@ -4750,7 +4757,7 @@ do
                                 eg = (X.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                                 eh = CFrame.new(X.Position +
                                                     (table.find(aE, C) and ef or Vector3.new(0, eg, 0) +
-                                                        (bT and ee or ef))) + X.CFrame.lookVector * 2;
+                                                        (_inHeal and ee or ef))) + X.CFrame.lookVector * 2;
                                 SmartPlayerTp(eh, X)
                                 bX:Wait()
                             end
@@ -4824,14 +4831,14 @@ do
                         task.wait(waittime)
                         ek = true
                     end
-                    if bT then
+                    if _inHeal then
                         resetCamera()
                     else
                         setMobCamera(Toggles.mobCamera.Value, er)
                     end
                     eg = (er.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                     eh = CFrame.new(er.Position +
-                                        (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (bT and ee or ef))) +
+                                        (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) +
                              er.CFrame.lookVector * 2;
                     SmartPlayerTp(eh, er)
                 else
@@ -5200,15 +5207,15 @@ do
                 end
             end
             if a4 then
-                if aa.LastDungeonCompletion then
-                    eM = eM .. '\nTime Since Last Completion: `' .. math.round((c0 - aa.LastDungeonCompletion) / 0.1) /
+                if _currentDungeon.LastDungeonCompletion then
+                    eM = eM .. '\nTime Since Last Completion: `' .. math.round((c0 - _currentDungeon.LastDungeonCompletion) / 0.1) /
                              10 .. 's`'
                 end
-                if aa.Gold and V >= aa.Gold then
-                    eM = eM .. '\nGold Gained: `' .. formatNumberWithCommas(V - aa.Gold) .. ''
+                if _currentDungeon.Gold and V >= _currentDungeon.Gold then
+                    eM = eM .. '\nGold Gained: `' .. formatNumberWithCommas(V - _currentDungeon.Gold) .. ''
                 end
-                aa.Gold = V;
-                aa.LastDungeonCompletion = c0;
+                _currentDungeon.Gold = V;
+                _currentDungeon.LastDungeonCompletion = c0;
                 save()
             end
             eM = eM .. '\nGold: `' .. formatNumberWithCommas(aP.Value) .. ''
@@ -5642,7 +5649,7 @@ if au then
 end
 Toggles.Autofarm:OnChanged(function(fx)
     a5 = tick()
-    bT = false;
+    _inHeal = false;
     if fx and ConfigAutoLoaded and ao then
         local dF = tick()
         while (bi < 2 or bh < 2 or bj < 2) and Toggles.Autofarm.Value and tick() - dF < 3 do
@@ -5726,18 +5733,18 @@ Toggles.Autofarm:OnChanged(function(fx)
         task.spawn(function()
             while Toggles.Autofarm.Value do
                 if alive() and _healthyProperties:FindFirstChild('MaxHealth') then
-                    local fE = _healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value / 0.01;
+                    local _myHealthy = _healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value / 0.01;
                     if Options.resumePercent.Value > Options.healPercent.Value then
-                        if fE <= Options.healPercent.Value and fE > 0 and not bT then
-                            bT = true;
+                        if _myHealthy <= Options.healPercent.Value and _myHealthy > 0 and not _inHeal then
+                            _inHeal = true;
                             cq('Pausing To Heal!', 2)
-                        elseif fE >= Options.resumePercent.Value and bT then
-                            bT = false;
+                        elseif _myHealthy >= Options.resumePercent.Value and _inHeal then
+                            _inHeal = false;
                             cq('Resuming Attack!', 2)
                         end
                     else
-                        if fE == 100 and bT then
-                            bT = false;
+                        if _myHealthy == 100 and _inHeal then
+                            _inHeal = false;
                             cq('Resuming Attack!', 2)
                         end
                     end
@@ -5790,7 +5797,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                         if tick() - dF >= 0.4 then
                                             break
                                         end
-                                        local fO = bT and ee or Vector3.new()
+                                        local fO = _inHeal and ee or Vector3.new()
                                         SmartPlayerTp(CFrame.new(X.Position + Vector3.new(0, 40, 0) + fO) +
                                                           X.CFrame.lookVector * 30, X)
                                         bX:Wait()
@@ -5822,8 +5829,8 @@ Toggles.Autofarm:OnChanged(function(fx)
                                     fL = true
                                 end
                                 local eg = 5 + Options.Offset.Value;
-                                local fO = bT and ee or Vector3.new()
-                                if bT then
+                                local fO = _inHeal and ee or Vector3.new()
+                                if _inHeal then
                                     resetCamera()
                                 else
                                     setMobCamera(Toggles.mobCamera.Value, nil, fP)
@@ -5857,7 +5864,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 if not fJ then
                                     fJ = true
                                 end
-                                local fO = bT and ee or Vector3.new()
+                                local fO = _inHeal and ee or Vector3.new()
                                 if alive() and (_humanoid.Position - C.Base.Position).magnitude > 10 then
                                     SmartPlayerTp(CFrame.new(C.Base.Position + Vector3.new(0, 3, 0) + fO))
                                 end
@@ -6295,7 +6302,7 @@ end)
     if ao then
         task.spawn(function()
             while Toggles.Killaura.Value and not aC do
-                if Toggles.Autofarm.Value and not bT then
+                if Toggles.Autofarm.Value and not _inHeal then
                     task.wait(0.5)
                     if tick() - a5 >= Options.timeoutTimer.Value then
                         local gH = Options.Offset.Value;
