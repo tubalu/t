@@ -513,6 +513,7 @@ end)
 local _replicatedStorage = game:GetService("ReplicatedStorage")
 local _shared = _replicatedStorage:WaitForChild('Shared')
 local T = game:GetService('TeleportService')
+local workspace = game:GetService("Workspace")
 local U = true;
 local V;
 local W = false;
