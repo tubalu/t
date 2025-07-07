@@ -513,7 +513,7 @@ end)
 local _replicatedStorage = game:GetService("ReplicatedStorage")
 local _shared = _replicatedStorage:WaitForChild('Shared')
 local T = game:GetService('TeleportService')
-local workspace = game:GetService("Workspace")
+local _workspace = game:GetService("Workspace")
 local U = true;
 local V;
 local W = false;
@@ -656,7 +656,7 @@ end
 
 if _replicatedStorage:FindFirstChild("ActiveMission") then
     ao = true;
-    ai = game:GetService("Workspace"):WaitForChild("MissionObjects")
+    ai = _workspace:WaitForChild("MissionObjects")
     aj = _replicatedStorage:WaitForChild("MissionScripts")
     ak = _replicatedStorage:WaitForChild("ActiveMission").Value;
     _currentDungeon.Dungeon = _replicatedStorage:WaitForChild("ActiveMission").Value;
@@ -702,10 +702,10 @@ end
 local _character = _localplayer.Character or _localplayer.CharacterAdded:Wait() or _localplayer.Character;
 local _humanoid = _character:WaitForChild('HumanoidRootPart')
 
-if not workspace:FindFirstChild("Poop") then
+if not _workspace:FindFirstChild("Poop") then
     local Poop = Instance.new("Part")
     Poop.Name = "Poop"
-    Poop.Parent = workspace
+    Poop.Parent = _workspace
     Poop.Anchored = true
     Poop.Position = _humanoid.Position
     Poop.Transparency = 1
@@ -721,7 +721,7 @@ if not workspace:FindFirstChild("Poop") then
     Collider.Transparency = 0.5
 end
 
-local Poop = workspace:FindFirstChild("Poop")
+local Poop = _workspace:FindFirstChild("Poop")
 local _healthyProperties, _equipment;
 local VaneBossLocation = nil
 local _inHeal = false
@@ -4369,12 +4369,13 @@ do
         end
     end
     function SmartPlayerTp(v1, x, y, z)
-    local targetCFrame = v1.CFrame + (v1.CFrame.lookVector*(x)+v1.CFrame.upVector*(y)+v1.CFrame.rightVector*(z))
-    if _inHeal then
-        targetCFrame = targetCFrame + Vector3.new(0, 30, 0)
+        local targetCFrame = v1.CFrame + (v1.CFrame.lookVector*(x)+v1.CFrame.upVector*(y)+v1.CFrame.rightVector*(z))
+        if _inHeal then
+            targetCFrame = targetCFrame + Vector3.new(0, 30, 0)
+        end
+        _localplayer.Character.HumanoidRootPart.CFrame = targetCFrame
+        _localplayer.Character.HumanoidRootPart.CFrame = CFrame.lookAt(_localplayer.Character.HumanoidRootPart.Position, v1.Position)
     end
-    _localplayer.Character.HumanoidRootPart.CFrame = targetCFrame
-    _localplayer.Character.HumanoidRootPart.CFrame = CFrame.lookAt(_localplayer.Character.HumanoidRootPart.Position, v1.Position)
     cL:AddToggle('NVD', {
         Text = 'No Visual Damage',
         Default = true
