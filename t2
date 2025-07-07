@@ -708,7 +708,6 @@ while true do
     end
     task.wait()
 end
-re
 _localplayer.CharacterAdded:Connect(function(aJ)
     _character = aJ;
     _humanoid = _character:WaitForChild('HumanoidRootPart')
