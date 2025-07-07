@@ -4368,7 +4368,25 @@ do
             _humanoid.CFrame = CFrame.new(o + Vector3.new(dy, dz, dA))
         end
     end
-    function SmartPlayerTp(v1, x, y, z)
+
+
+    function SmartPlayerTp(bq, dB)
+        if not alive() then
+            return
+        end
+        noclip()
+        _humanoid.Velocity = Vector3.new()
+        if _character:FindFirstChild("Collider") then
+            _character.Collider.Velocity = Vector3.new()
+        end
+        if dB then
+            _humanoid.CFrame = CFrame.lookAt(bq.Position, Vector3.new(dB.Position.x, bq.Position.y, dB.Position.z))
+        else
+            _humanoid.CFrame = bq
+        end
+    end
+
+    function SmartPlayerTpOffset(v1, x, y, z)
         local targetCFrame = v1.CFrame + (v1.CFrame.lookVector*(x)+v1.CFrame.upVector*(y)+v1.CFrame.rightVector*(z))
         if _inHeal then
             targetCFrame = targetCFrame + Vector3.new(0, 30, 0)
@@ -4885,7 +4903,7 @@ function AutoCheckpoint()
                     if character then
                         local hrp = character:FindFirstChild("HumanoidRootPart")
                         if hrp then
-                            local missionObjects = workspace:FindFirstChild("MissionObjects")
+                            local missionObjects = _workspace:FindFirstChild("MissionObjects")
                             local missionStart = missionObjects and missionObjects:FindFirstChild("MissionStart")
                             local missionTimer = missionStart and missionStart:FindFirstChild("MissionTimer")
                             local surfaceGui = missionTimer and missionTimer:FindFirstChild("SurfaceGui")
@@ -4900,7 +4918,7 @@ function AutoCheckpoint()
                                 hrp.CFrame = collider.CFrame + Vector3.new(0, 5, 0)
                                 movedToTimer = true
                                 shouldSkip = true
-                                warn("✅ Đã dịch chuyển đến Timer checkpoint")
+                                warn("✅ Teleported to Timer checkpoint")
                                 task.wait(1)
                             end
 
@@ -6084,7 +6102,7 @@ do
         local eN, gk, eo;
 
         if ak == 44 then
-            local vaneBoss = workspace.Mobs:FindFirstChild('EVENTBOSSVane')
+            local vaneBoss = _workspace.Mobs:FindFirstChild('EVENTBOSSVane')
             if vaneBoss then
                 VaneBossLocation = vaneBoss.PrimaryPart.CFrame
                 return vaneBoss.Collider
@@ -6096,7 +6114,7 @@ do
             local ge, gm = getClosestPointAndDistance(_humanoid, gl)
             gh, g9, gi = ge, gm, gl
         else
-            for ds, bs in pairs(workspace.Mobs:GetChildren()) do
+            for ds, bs in pairs(_workspace.Mobs:GetChildren()) do
                 if isAlive(bs) then
                     local gl = bs.PrimaryPart;
                     local ge, gm = getClosestPointAndDistance(_humanoid, gl)
@@ -6127,8 +6145,8 @@ do
             end
         end
     end
-    if Workspace:FindFirstChild('TargetDummies') then
-        for ds, gp in pairs(Workspace.TargetDummies:GetChildren()) do
+    if _workspace:FindFirstChild('TargetDummies') then
+        for ds, gp in pairs(_workspace.TargetDummies:GetChildren()) do
             gp.Parent = b9
         end
     end
