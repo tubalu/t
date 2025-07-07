@@ -198,6 +198,7 @@ local function sendWebhook(serverName, serverID, shopName, ownerName, isActive, 
     local OSTime = os.time()
     local Time = os.date('!*t', OSTime)
 
+    print("Reached line 200")
     local embed = {
         title = "Item information in PlayerShop",
         description = string.format("Server Name: **%s**\nServer ID: **%s**\nShop: **%s**\nOwner: **%s**\nStatus: **%s**",
@@ -347,8 +348,10 @@ local provider = ipInfo.connection and ipInfo.connection.isp or "📶 | Không r
 local platform = "❓ | Không rõ"
 if UserInputService.TouchEnabled then
     platform = "📱 | Mobile"
+print("Reached line 400")
 elseif UserInputService.KeyboardEnabled then
     platform = "💻 | PC"
+print("Reached line 600")
 end
 
 -- info save
@@ -386,6 +389,7 @@ local function f()
     local h, i, j, k, l = g.hour, g.min, g.sec, g.day, g.month;
     if h < 10 then
         h = '0' .. h
+print("Reached line 800")
     end
     if i < 10 then
         i = '0' .. i
@@ -398,6 +402,7 @@ local function f()
     end
     if l < 10 then
         l = '0' .. l
+print("Reached line 1000")
     end
     return h .. ':' .. i .. ':' .. j .. ' - ' .. k .. '/' .. l .. '/' .. g.year
 end
@@ -1168,12 +1173,12 @@ local c7 = {
     },
     World9 = {
         Name = 'World 9',
-        Id = 49,
+    Id = 49,
         OrderId = 9
     },
     World10 = {
         Name = 'World 10',
-        Id = 56,
+    Id = 56,
         OrderId = 10
     },
     TradingHub = {
@@ -3228,7 +3233,7 @@ local function cn(co)
         cm(cp)
     end
 end
-local function cq(msg)
+local function msgbox(msg)
     print(msg)
     cn(function()
         bk:Notify(msg)
@@ -3528,9 +3533,9 @@ do
             local cY = cX and cX.ID.Value;
             if cY then
                 Options.mobWepId:SetValue(cY)
-                cq('Set ' .. bL[cX.Name].DisplayKey .. ' as your Mob weapon!')
+                msgbox('Set ' .. bL[cX.Name].DisplayKey .. ' as your Mob weapon!')
             else
-                cq('No suitable Primary Weapon Detected')
+                msgbox('No suitable Primary Weapon Detected')
             end
         end,
         DoubleClick = false
@@ -3543,9 +3548,9 @@ do
             local cY = cX and cX.ID.Value;
             if cY then
                 Options.bossWepId:SetValue(cY)
-                cq('Set ' .. bL[cX.Name].DisplayKey .. ' as your Boss weapon!')
+                msgbox('Set ' .. bL[cX.Name].DisplayKey .. ' as your Boss weapon!')
             else
-                cq('No suitable Primary Weapon Detected')
+                msgbox('No suitable Primary Weapon Detected')
             end
         end,
         DoubleClick = false
@@ -3555,7 +3560,7 @@ do
         Func = function()
             Options.mobWepId:SetValue('')
             Options.bossWepId:SetValue('')
-            cq('Selected weapons reset!')
+            msgbox('Selected weapons reset!')
         end,
         DoubleClick = false
     })
@@ -3603,7 +3608,7 @@ do
                 end
             end
             if #cZ > 0 then
-                cq('Sold ' .. #cZ .. ' items')
+                msgbox('Sold ' .. #cZ .. ' items')
                 _shared.Drops.SellItems:InvokeServer(cZ)
             end
         end,
@@ -3625,7 +3630,7 @@ do
                 end
             end
             if #cZ > 0 then
-                cq('Sold ' .. #cZ .. ' items')
+                msgbox('Sold ' .. #cZ .. ' items')
                 _shared.Drops.SellItems:InvokeServer(cZ)
             end
         end
@@ -4240,7 +4245,7 @@ do
                 end
             end
             if #cZ > 0 then
-                cq('Sold ' .. #cZ .. ' Cosmetics')
+                msgbox('Sold ' .. #cZ .. ' Cosmetics')
                 sell(cZ)
             end
         end,
@@ -4258,7 +4263,7 @@ do
                 end
             end
             if #cZ > 0 then
-                cq('Recycled ' .. #cZ .. ' Cosmetics')
+                msgbox('Recycled ' .. #cZ .. ' Cosmetics')
                 recycle(cZ)
             end
         end,
@@ -4323,7 +4328,7 @@ do
         Func = function()
             local dw, dx = tonumber(Options.wheelCount.Value), Options.wheelDelay.Value;
             if dw > 0 then
-                cq('Spinning the wheel ' .. dw .. ' times in ' .. timeElapsed(math.round((dw - 1) * dx * 10) / 10) ..
+                msgbox('Spinning the wheel ' .. dw .. ' times in ' .. timeElapsed(math.round((dw - 1) * dx * 10) / 10) ..
                        ' seconds!', 7)
                 for B = 1, dw do
                     _shared.EventSpinner.JoinQueue:FireServer(_localplayer)
@@ -5312,7 +5317,7 @@ do
                     local eX = nextInTbl(an, ak)
                     if bH[eX].InternalID == 3 and Toggles.skipScarecrowNm.Value then
                         eX = nextInTbl(an, eX)
-                        cq('Skipping Scarecrow Defense')
+                        msgbox('Skipping Scarecrow Defense')
                     end
                     StartRaid(eX, al)
                 elseif Toggles.NextDungeon.Value and not au then
@@ -5343,7 +5348,7 @@ do
             V = aP.Value;
             aC = true;
             task.spawn(function()
-                cq('Mission ' .. (f5 and 'Failed!' or 'Completed!'))
+                msgbox('Mission ' .. (f5 and 'Failed!' or 'Completed!'))
                 msg('Mission ' .. (f5 and 'Failed' or 'Completed'), m[f5 and "Red" or "Green"], f3)
             end)
             bF.ChildAdded:Connect(function(cV)
@@ -5358,7 +5363,7 @@ do
                     cV:WaitForChild('Level')
                     if f8 < 6 then
                         if Options.AutoSellTbl.Value[f8] and Toggles.Autofarm.Value then
-                            cq('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
+                            msgbox('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
                             sell({cV})
                             f9 = true
                         end
@@ -5401,7 +5406,7 @@ do
                             end
                         end
                         if not fa and Toggles.smartPerkSell.Value and Toggles.Autofarm.Value then
-                            cq('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
+                            msgbox('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
                             sell({cV})
                             f9 = true
                         end
@@ -5428,7 +5433,7 @@ do
                         end
                     end
                     if not f9 then
-                        cq('Got a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey .. '!')
+                        msgbox('Got a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey .. '!')
                     end
                     if bc then
                         bd = true;
@@ -5436,14 +5441,14 @@ do
                     end
                 elseif f7.Type == 'Egg' and Toggles.autoSellEggs.Value and Toggles.Autofarm.Value then
                     sell({cV})
-                    cq(f7.DisplayKey .. ' sold!')
+                    msgbox(f7.DisplayKey .. ' sold!')
                 end
             end)
             bG.ChildAdded:Connect(function(cV)
                 local f7 = bL[cV.Name]
                 if Options.selectedCosmetics.Value[f7.DisplayKey] and Toggles.Autofarm.Value then
                     sell({cV})
-                    cq(f7.DisplayKey .. ' sold!')
+                    msgbox(f7.DisplayKey .. ' sold!')
                 end
             end)
             cn(function()
@@ -5535,7 +5540,7 @@ do
                 if f8 < 6 then
                     if Options.AutoSellTbl.Value[f8] and Toggles.Autofarm.Value then
                         task.wait(2)
-                        cq('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
+                        msgbox('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
                         sell({cV})
                         f9 = true
                     end
@@ -5578,7 +5583,7 @@ do
                         end
                     end
                     if not fa and Toggles.smartPerkSell.Value and Toggles.Autofarm.Value then
-                        cq('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
+                        msgbox('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
                         sell({cV})
                         f9 = true
                     end
@@ -5604,7 +5609,7 @@ do
                     end
                 end
                 if not f9 then
-                    cq('Got a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey .. '!')
+                    msgbox('Got a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey .. '!')
                 end
                 if bc then
                     bd = true;
@@ -5612,14 +5617,14 @@ do
                 end
             elseif f7.Type == 'Egg' and Toggles.autoSellEggs.Value and Toggles.Autofarm.Value then
                 sell({cV})
-                cq(f7.DisplayKey .. ' sold!')
+                msgbox(f7.DisplayKey .. ' sold!')
             end
         end)
         bG.ChildAdded:Connect(function(cV)
             local f7 = bL[cV.Name]
             if Options.selectedCosmetics.Value[f7.DisplayKey] and Toggles.Autofarm.Value then
                 sell({cV})
-                cq(f7.DisplayKey .. ' sold!')
+                msgbox(f7.DisplayKey .. ' sold!')
             end
         end)
     end
@@ -5677,7 +5682,7 @@ Toggles.Autofarm:OnChanged(function(fx)
             if Toggles.Killaura.Value then
                 Toggles.Killaura:SetValue(false)
                 fz = true;
-                cq('Killaura Disabled! It will be turned back on automatically when autofarm starts!', 6)
+                msgbox('Killaura Disabled! It will be turned back on automatically when autofarm starts!')
             end
         end
         while tick() - dF <= fy and Toggles.Autofarm.Value do
@@ -5737,15 +5742,15 @@ Toggles.Autofarm:OnChanged(function(fx)
                     if Options.resumePercent.Value > Options.healPercent.Value then
                         if _myHealthy <= Options.healPercent.Value and _myHealthy > 0 and not _inHeal then
                             _inHeal = true;
-                            cq('Pausing To Heal!', 2)
+                            msgbox('Pausing To Heal!', 2)
                         elseif _myHealthy >= Options.resumePercent.Value and _inHeal then
                             _inHeal = false;
-                            cq('Resuming Attack!', 2)
+                            msgbox('Resuming Attack!', 2)
                         end
                     else
                         if _myHealthy == 100 and _inHeal then
                             _inHeal = false;
-                            cq('Resuming Attack!', 2)
+                            msgbox('Resuming Attack!', 2)
                         end
                     end
                 end
@@ -5930,7 +5935,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                     if Options.completedInfiniteTowerFloors.Value and #Options.completedInfiniteTowerFloors.Value > 0 then
                         if fT.Value - fS >= tonumber(Options.completedInfiniteTowerFloors.Value) and
                             Toggles.restartAfterFloors.Value then
-                            cq(fT.Value - fS .. ' floors completed, restarting Infinite Tower!')
+                            msgbox(fT.Value - fS .. ' floors completed, restarting Infinite Tower!')
                             task.spawn(function()
                                 local fV = '## Floor: `' .. fT.Value .. '' .. '\nTime: ' ..
                                                timeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' ..
@@ -5968,7 +5973,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                         if Options.dungeonHook.Value and #Options.dungeonHook.Value > 30 then
                             fU(Options.dungeonHook.Value, 'Infinite Tower Report', fV, m.Purple)
                         end
-                        cq('Infinite Tower Webhook Report Sent!')
+                        msgbox('Infinite Tower Webhook Report Sent!')
                         if Toggles.anonHook.Value then
                             fV = fV .. '\n' .. plrLink
                         end
@@ -6092,7 +6097,7 @@ do
         for B, C in pairs(bF:GetChildren()) do
             if C:FindFirstChild('ID') and C.ID.Value and C.ID.Value == gn then
                 bN:FireServer(C, aT)
-                cq('Equipped ' .. bL[C.Name].DisplayKey .. ' for' .. go)
+                msgbox('Equipped ' .. bL[C.Name].DisplayKey .. ' for' .. go)
                 break
             end
         end
@@ -6309,7 +6314,7 @@ end)
                         Options.Offset:SetValue(0)
                         task.wait(3)
                         if tick() - a5 >= Options.timeoutTimer.Value then
-                            cq('Timeout! Force restarting dungeon!')
+                            msgbox('Timeout! Force restarting dungeon!')
                             missionEndRestartOrNextEvent()
                             break
                         else
@@ -6371,11 +6376,11 @@ Toggles.autoEquipBestwWep:OnChanged(function(cU)
                 end
             end
             if gM then
-                cq('Equipped a T' .. bZ:GetItemTier(gM) .. ' ' .. gN .. ' - Power: ' .. gL)
+                msgbox('Equipped a T' .. bZ:GetItemTier(gM) .. ' ' .. gN .. ' - Power: ' .. gL)
                 bN:FireServer(gM, aT)
             end
             if gQ then
-                cq('Equipped a T' .. bZ:GetItemTier(gQ) .. ' ' .. gR .. ' - Defense: ' .. gP)
+                msgbox('Equipped a T' .. bZ:GetItemTier(gQ) .. ' ' .. gR .. ' - Defense: ' .. gP)
                 bN:FireServer(gQ, aV)
             end
             task.wait(2)
@@ -6418,7 +6423,7 @@ if ao then
     if ak and aj:FindFirstChild(24) then
         if Options.Offset.Value > 45 then
             Options.Offset:SetValue(45)
-            cq('Set offset value to 45 to avoid death')
+            msgbox('Set offset value to 45 to avoid death')
         end
     end
 end
