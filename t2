@@ -513,7 +513,7 @@ end)
 local _replicatedStorage = game:GetService("ReplicatedStorage")
 local _shared = _replicatedStorage:WaitForChild('Shared')
 local T = game:GetService('TeleportService')
-_G.workspace = game:GetService("Workspace")
+local _workspace = game:GetService("Workspace")
 local U = true;
 local V;
 local W = false;
@@ -656,7 +656,7 @@ end
 
 if _replicatedStorage:FindFirstChild("ActiveMission") then
     _functiondefined = true;
-    ai = orkspace:WaitForChild("MissionObjects")
+    ai = _workspace:WaitForChild("MissionObjects")
     aj = _replicatedStorage:WaitForChild("MissionScripts")
     ak = _replicatedStorage:WaitForChild("ActiveMission").Value;
     _currentDungeon.Dungeon = _replicatedStorage:WaitForChild("ActiveMission").Value;
@@ -702,10 +702,10 @@ end
 local _character = _localplayer.Character or _localplayer.CharacterAdded:Wait() or _localplayer.Character;
 local _humanoid = _character:WaitForChild('HumanoidRootPart')
 
-if not _G.workspace:FindFirstChild("Poop") then
+if not _workspace:FindFirstChild("Poop") then
     local Poop = Instance.new("Part")
     Poop.Name = "Poop"
-    Poop.Parent = _G.workspace
+    Poop.Parent = _workspace
     Poop.Anchored = true
     Poop.Position = _humanoid.Position
     Poop.Transparency = 1
@@ -721,7 +721,7 @@ if not _G.workspace:FindFirstChild("Poop") then
     Collider.Transparency = 0.5
 end
 
-local Poop = _G.workspace:FindFirstChild("Poop")
+local Poop = _workspace:FindFirstChild("Poop")
 local _healthyProperties, _equipment;
 local VaneBossLocation = nil
 local _inHeal = false
@@ -763,7 +763,7 @@ local aT = aS:WaitForChild('Primary')
 local aU = aS:WaitForChild('Offhand')
 local aV = aS:WaitForChild('Armor')
 local aW = _shared:WaitForChild('ItemUpgrade'):WaitForChild('Upgrade')
-local aX = _G.workspace:WaitForChild("Characters")
+local aX = _workspace:WaitForChild("Characters")
 local aY = aO:WaitForChild("Class")
 local aZ = aY.Value;
 local function a_(b0)
@@ -778,9 +778,9 @@ local b5 = 'RaidChestSilver'
 local b6 = 'RaidChestGold'
 local b7 = false;
 local b8 = _shared:WaitForChild("Combat"):WaitForChild("Attack")
-local b9 = _G.workspace:FindFirstChild("Mobs")
+local b9 = _workspace:FindFirstChild("Mobs")
 local ba = _shared.Mobs.Mobs;
-local bb = _G.workspace.Camera;
+local bb = _workspace.Camera;
 local bc;
 local bd;
 local be = tick()
@@ -816,7 +816,7 @@ do
                 bb.CameraSubject = bn
             end
         else
-            local br = _G.workspace:FindFirstChild('InfiniteCameraPart')
+            local br = _workspace:FindFirstChild('InfiniteCameraPart')
             if br and br.Position ~= bq then
                 br.CFrame = CFrame.new(bq)
             end
@@ -828,7 +828,7 @@ do
                 br.Size = Vector3.new(1, 1, 1)
                 br.Position = bq;
                 br.Name = 'InfiniteCameraPart'
-                br.Parent = _G.workspace
+                br.Parent = _workspace
             end
             if bb.CameraSubject ~= br then
                 bb.CameraSubject = br
@@ -1008,7 +1008,7 @@ local function ProcessAllTouchInterests()
     if character then
         local hrp = character:FindFirstChild("HumanoidRootPart")
         if hrp then
-            for _, C in pairs(_G.workspace:GetDescendants()) do
+            for _, C in pairs(_workspace:GetDescendants()) do
                 if C and C.Name == "TouchInterest" and C.Parent and
                     (table.find(c3, C.Parent.Name) or (C.Parent.Parent and table.find(c3, C.Parent.Parent.Name))) then
                     task.spawn(function()
@@ -1053,7 +1053,7 @@ if not isBossDoorAdded then
     task.spawn(function()
         while true do
             task.wait(1)
-            local missionObjects = _G.workspace:FindFirstChild("MissionObjects")
+            local missionObjects = _workspace:FindFirstChild("MissionObjects")
             if missionObjects then
                 local waveStartGate = missionObjects:FindFirstChild("WaveStartGate")
                 if waveStartGate then
@@ -3206,10 +3206,10 @@ local ca = {
 }
 local cb = Instance.new('Folder')
 cb.Name = 'SummonFolder'
-cb.Parent = _G.workspace;
+cb.Parent = _workspace;
 local cc = Instance.new('Folder')
 cc.Name = 'infiniteboy'
-cc.Parent = _G.workspace;
+cc.Parent = _workspace;
 local cd;
 if _in39 then
     cd = Instance.new('Part')
@@ -3220,7 +3220,7 @@ if _in39 then
     cd.Transparency = 0;
     cd.Material = 'SmoothPlastic'
     cd.BrickColor = BrickColor.new('Cyan')
-    cd.Parent = _G.workspace
+    cd.Parent = _workspace
 end
 local ce = 'https://raw.githubusercontent.com/maihoangphi2531/infscriptv2/main/'
 local cf;
@@ -4442,7 +4442,7 @@ do
         Text = 'Discover Dungeons (BLATANT)',
         Func = function()
             if alive() and not _functiondefined then
-                local dG = _G.workspace.PhysicalDungeonLocations;
+                local dG = _workspace.PhysicalDungeonLocations;
                 for B, C in pairs(dG:GetChildren()) do
                     _shared.Teleport.WaystoneTeleport:FireServer(1)
                     _humanoid:GetPropertyChangedSignal("Position"):Once(function()
@@ -4900,7 +4900,7 @@ function AutoCheckpoint()
                     if character then
                         local hrp = character:FindFirstChild("HumanoidRootPart")
                         if hrp then
-                            local missionObjects = _G.workspace:FindFirstChild("MissionObjects")
+                            local missionObjects = _workspace:FindFirstChild("MissionObjects")
                             local missionStart = missionObjects and missionObjects:FindFirstChild("MissionStart")
                             local missionTimer = missionStart and missionStart:FindFirstChild("MissionTimer")
                             local surfaceGui = missionTimer and missionTimer:FindFirstChild("SurfaceGui")
@@ -4948,7 +4948,7 @@ function AutoCheckpoint()
                             end
 
                             -- Process TouchInterest if BossDoorTrigger has not been added
-                            for _, C in pairs(_G.workspace:GetDescendants()) do
+                            for _, C in pairs(_workspace:GetDescendants()) do
                                 if C and C.Name == "TouchInterest" and C.Parent and
                                     (table.find(c3, C.Parent.Name) or (C.Parent.Parent and table.find(c3, C.Parent.Parent.Name))) then
                                     task.spawn(function()
@@ -5137,8 +5137,8 @@ do
     if _functiondefined then
         if aj:FindFirstChild(6) then
             task.spawn(function()
-                local eA, eB, eC = _G.workspace:WaitForChild('Pillar1'), _G.workspace:WaitForChild('Pillar2'),
-                    _G.workspace:WaitForChild('Pillar3')
+                local eA, eB, eC = _workspace:WaitForChild('Pillar1'), _workspace:WaitForChild('Pillar2'),
+                    _workspace:WaitForChild('Pillar3')
                 eC:WaitForChild('HealthProperties')
                 eA.Name = 'Pillar'
                 eB.Name = 'Pillar'
@@ -5154,8 +5154,8 @@ do
                     if eD then
                         local eE = Instance.new('Folder')
                         eE.Name = 'WaterFolder'
-                        eE.Parent = _G.workspace;
-                        eD.Parent = _G.workspace.WaterFolder;
+                        eE.Parent = _workspace;
+                        eD.Parent = _workspace.WaterFolder;
                         if as then
                             b7 = true
                         end
@@ -5516,7 +5516,7 @@ do
         end
     end
     if at or au or _in39 then
-        _G.workspace.ChildAdded:Connect(function(cV)
+        _workspace.ChildAdded:Connect(function(cV)
             if Toggles.Autofarm.Value then
                 if cV.Name == b5 then
                     bf = tick()
@@ -5673,7 +5673,7 @@ local fw = {
     BlastIndicator = 'BlastIndicator'
 }
 if au then
-    _G.workspace.ChildAdded:Connect(function(cV)
+    _workspace.ChildAdded:Connect(function(cV)
         if Toggles.Autofarm.Value then
             for B, C in fw do
                 if cV.Name == B and cV:IsA(C) then
@@ -5693,7 +5693,7 @@ Toggles.Autofarm:OnChanged(function(fx)
         end
     end
     if fx and au and _functiondefined then
-        for ds, cV in _G.workspace:GetChildren() do
+        for ds, cV in _workspace:GetChildren() do
             for B, C in fw do
                 if cV.Name == B and cV:IsA(C) then
                     cV:Destroy()
@@ -5738,7 +5738,7 @@ Toggles.Autofarm:OnChanged(function(fx)
             local fC = Instance.new("Part")
             fC.Anchored = true;
             fC.Size = Vector3.new(20, 1, 20)
-            fC.Parent = _G.workspace;
+            fC.Parent = _workspace;
             fC.Transparency = 1;
             fu = true
         end
@@ -5785,13 +5785,13 @@ Toggles.Autofarm:OnChanged(function(fx)
                         end
                     end
                 end
-                local fF = _G.workspace:FindFirstChild('IceWall') or _G.workspace:FindFirstChild('IgnisShield')
+                local fF = _workspace:FindFirstChild('IceWall') or _workspace:FindFirstChild('IgnisShield')
                 fF = fF and fF:FindFirstChild('Ring')
                 local fG =
-                    _G.workspace:FindFirstChild('KrakenCannon') and _G.workspace.KrakenCannon:FindFirstChild('Base') and
-                        _G.workspace.KrakenCannon.Base.Transparency < 1 and _G.workspace.KrakenCannon.Base;
-                local fH = _G.workspace:FindFirstChild('CureFountainFallenKing') and
-                               _G.workspace.CureFountainFallenKing:FindFirstChild('ArcanePanel')
+                    _workspace:FindFirstChild('KrakenCannon') and _workspace.KrakenCannon:FindFirstChild('Base') and
+                        _workspace.KrakenCannon.Base.Transparency < 1 and _workspace.KrakenCannon.Base;
+                local fH = _workspace:FindFirstChild('CureFountainFallenKing') and
+                               _workspace.CureFountainFallenKing:FindFirstChild('ArcanePanel')
                 local fI = fF or fG or fH;
                 if fI and alive() then
                     if U then
@@ -5890,8 +5890,8 @@ Toggles.Autofarm:OnChanged(function(fx)
         end)
         task.spawn(function()
             while Toggles.Autofarm.Value do
-                if b7 and _G.workspace:FindFirstChild('KrakenPipe') and not Toggles.ignoreCannon.Value and alive() then
-                    for _, C in pairs(_G.workspace:GetChildren()) do
+                if b7 and _workspace:FindFirstChild('KrakenPipe') and not Toggles.ignoreCannon.Value and alive() then
+                    for _, C in pairs(_workspace:GetChildren()) do
                         if C.Name == 'KrakenPipe' and C:FindFirstChild('GuiPart') and
                             C.GuiPart:FindFirstChild('SurfaceGui') and C.GuiPart.SurfaceGui:FindFirstChild('Percent') and
                             C:FindFirstChild('Base') then
@@ -5918,8 +5918,8 @@ Toggles.Autofarm:OnChanged(function(fx)
     end
     if (au or _in39) and Toggles.Autofarm.Value and _functiondefined then
         MobTeleport()
-        local fQ = _G.workspace.LobbyTeleport.Interaction;
-        local fR = _G.workspace.Boss_Gate.Interactions.Bounds;
+        local fQ = _workspace.LobbyTeleport.Interaction;
+        local fR = _workspace.Boss_Gate.Interactions.Bounds;
         task.spawn(function()
             while Toggles.Autofarm.Value do
                 if alive() then
@@ -6019,18 +6019,18 @@ Toggles.Autofarm:OnChanged(function(fx)
     end
 end)
 coroutine.wrap(function()
-    _G.workspace:WaitForChild("Mobs").ChildAdded:Connect(function(bs)
+    _workspace:WaitForChild("Mobs").ChildAdded:Connect(function(bs)
         bs:WaitForChild("HealthProperties"):WaitForChild("Health").Changed:Connect(function(cU)
             if cU == 0 then
                 game:GetService("Debris"):AddItem(bs, 0.2)
             end
         end)
     end)
-    if _G.workspace:FindFirstChild('Assets_FX') then
-        for _, C in pairs(_G.workspace.Assets_FX:GetChildren()) do
+    if _workspace:FindFirstChild('Assets_FX') then
+        for _, C in pairs(_workspace.Assets_FX:GetChildren()) do
             C:Destroy()
         end
-        _G.workspace.Assets_FX.ChildAdded:Connect(function(cV)
+        _workspace.Assets_FX.ChildAdded:Connect(function(cV)
             cV:Destroy()
         end)
     end
@@ -6099,7 +6099,7 @@ do
         local eN, gk, eo;
 
         -- if ak == 44 then
-        --     local vaneBoss = _G.workspace.Mobs:FindFirstChild('EVENTBOSSVane')
+        --     local vaneBoss = _workspace.Mobs:FindFirstChild('EVENTBOSSVane')
         --     if vaneBoss then
         --         VaneBossLocation = vaneBoss.PrimaryPart.CFrame
         --         return vaneBoss.Collider
@@ -6111,7 +6111,7 @@ do
             local ge, gm = getClosestPointAndDistance(_humanoid, gl)
             gh, g9, gi = ge, gm, gl
         else
-            for ds, bs in pairs(_G.workspace.Mobs:GetChildren()) do
+            for ds, bs in pairs(_workspace.Mobs:GetChildren()) do
                 if isAlive(bs) then
                     local gl = bs.PrimaryPart;
                     local ge, gm = getClosestPointAndDistance(_humanoid, gl)
@@ -6142,8 +6142,8 @@ do
             end
         end
     end
-    if _G.workspace:FindFirstChild('TargetDummies') then
-        for ds, gp in pairs(_G.workspace.TargetDummies:GetChildren()) do
+    if _workspace:FindFirstChild('TargetDummies') then
+        for ds, gp in pairs(_workspace.TargetDummies:GetChildren()) do
             gp.Parent = b9
         end
     end
