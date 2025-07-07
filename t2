@@ -4380,20 +4380,15 @@ do
             _character.Collider.Velocity = Vector3.new()
         end
         if dB then
+
             _humanoid.CFrame = CFrame.lookAt(bq.Position, Vector3.new(dB.Position.x, bq.Position.y, dB.Position.z))
+            print("SmartPlayerTp: " .. bq.Position .. " " .. Vector3.new(dB.Position.x, bq.Position.y, dB.Position.z))
         else
             _humanoid.CFrame = bq
+            print("SmartPlayerTp: " .. bq.Position)
         end
     end
 
-    function SmartPlayerTpOffset(v1, x, y, z)
-        local targetCFrame = v1.CFrame + (v1.CFrame.lookVector*(x)+v1.CFrame.upVector*(y)+v1.CFrame.rightVector*(z))
-        if _inHeal then
-            targetCFrame = targetCFrame + Vector3.new(0, 30, 0)
-        end
-        _localplayer.Character.HumanoidRootPart.CFrame = targetCFrame
-        _localplayer.Character.HumanoidRootPart.CFrame = CFrame.lookAt(_localplayer.Character.HumanoidRootPart.Position, v1.Position)
-    end
     cL:AddToggle('NVD', {
         Text = 'No Visual Damage',
         Default = true
@@ -4741,7 +4736,8 @@ do
                             bV = C;
                             ei = X.Position;
                             if _inHeal then
-                                ResetCamera()
+                                -- ResetCamera()
+                                SetMobCamera(Toggles.mobCamera.Value, X)
                             else
                                 SetMobCamera(Toggles.mobCamera.Value, X)
                             end
@@ -4758,7 +4754,7 @@ do
                     end
                 end
                 bV = nil;
-                ResetCamera()
+                -- ResetCamera()
                 Unnoclip()
                 if au and U and ej then
                     SmartPlayerTp(CFrame.new(10000, 10000, 10000))
