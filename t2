@@ -6088,23 +6088,23 @@ do
         return ge, g9
     end
     local gf = {'CorruptedGreaterTree'}
-    function ignoreIfNotAlone(eo)
+    function IgnoreIfNotAlone(eo)
         if b3 and b3 > 1 and table.find(gf, eo) then
             return true
         end
     end
-    function getClosestMob(gg)
+    function GetClosestMob(gg)
         local gh = math.huge;
         local gi, g9, gj, Z, a1;
         local eN, gk, eo;
 
-        if ak == 44 then
-            local vaneBoss = _workspace.Mobs:FindFirstChild('EVENTBOSSVane')
-            if vaneBoss then
-                VaneBossLocation = vaneBoss.PrimaryPart.CFrame
-                return vaneBoss.Collider
-            end
-        end
+        -- if ak == 44 then
+        --     local vaneBoss = _workspace.Mobs:FindFirstChild('EVENTBOSSVane')
+        --     if vaneBoss then
+        --         VaneBossLocation = vaneBoss.PrimaryPart.CFrame
+        --         return vaneBoss.Collider
+        --     end
+        -- end
 
         if isAlive(gg) then
             local gl = gg.PrimaryPart;
@@ -6115,7 +6115,7 @@ do
                 if isAlive(bs) then
                     local gl = bs.PrimaryPart;
                     local ge, gm = getClosestPointAndDistance(_humanoid, gl)
-                    if ge < gh and not ignoreIfNotAlone(bs.Name) then
+                    if ge < gh and not IgnoreIfNotAlone(bs.Name) then
                         gh, g9, gi = ge, gm, gl
                     end
                 end
@@ -6253,7 +6253,7 @@ Toggles.Killaura:OnChanged(function(cU)
 task.spawn(function()
     while Toggles.Killaura.Value and _functiondefined do
         -- Get the nearest mob
-        X, Y, Z, _, a0, a1, a2 = getClosestMob(bV)
+        X, Y, Z, _, a0, a1, a2 = GetClosestMob(bV)
         if alive() and not mounted() and X and not table.find(bl, aZ) then
             for _, gx in pairs(ca[aZ].Skills) do
                 local gy = gx.MeleeOnBoss and a1 and 'Melee' or gx.Type or ca[aZ].Type
