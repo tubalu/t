@@ -513,7 +513,6 @@ end)
 local _replicatedStorage = game:GetService("ReplicatedStorage")
 local _shared = _replicatedStorage:WaitForChild('Shared')
 local T = game:GetService('TeleportService')
-local _workspace = game:GetService("Workspace")
 local U = true;
 local V;
 local W = false;
@@ -585,14 +584,14 @@ local ak = "TowerFinished"
 local al;
 local am = {21, 23, 27, 29, 34, 43}
 local an = {1005, 1006, 1007}
-local _functiondefined;
+local ao;
 local ap = {5862275930, 4526768266}
 local aq = table.find(ap, game.PlaceId)
 local ar;
 local as;
 local at;
 local au;
-local _in39;
+local av;
 local aw;
 local ax;
 local ay;
@@ -655,8 +654,8 @@ else
 end
 
 if _replicatedStorage:FindFirstChild("ActiveMission") then
-    _functiondefined = true;
-    ai = _workspace:WaitForChild("MissionObjects")
+    ao = true;
+    ai = game:GetService("Workspace"):WaitForChild("MissionObjects")
     aj = _replicatedStorage:WaitForChild("MissionScripts")
     ak = _replicatedStorage:WaitForChild("ActiveMission").Value;
     _currentDungeon.Dungeon = _replicatedStorage:WaitForChild("ActiveMission").Value;
@@ -670,7 +669,7 @@ if _replicatedStorage:FindFirstChild("ActiveMission") then
     ax = true
 
     elseif ak == 39 then
-        _in39 = true
+        av = true
     else
         ar = true;
         al = _shared.Missions.GetDifficulty:InvokeServer()
@@ -701,30 +700,7 @@ if _replicatedStorage:FindFirstChild("ActiveMission") then
 end
 local _character = _localplayer.Character or _localplayer.CharacterAdded:Wait() or _localplayer.Character;
 local _humanoid = _character:WaitForChild('HumanoidRootPart')
-
-if not _workspace:FindFirstChild("Poop") then
-    local Poop = Instance.new("Part")
-    Poop.Name = "Poop"
-    Poop.Parent = _workspace
-    Poop.Anchored = true
-    Poop.Position = _humanoid.Position
-    Poop.Transparency = 1
-    Poop.Size = Vector3.new(0.1, 0.1, 0.1)
-
-    local Collider = Instance.new("Part")
-    Collider.Name = "Collider"
-    Collider.Parent = Poop
-    Collider.Anchored = true
-    Collider.CanCollide = true
-    Collider.Size = Vector3.new(0.1, 0.1, 0.1)
-    Collider.Position = Poop.Position
-    Collider.Transparency = 0.5
-end
-
-local Poop = _workspace:FindFirstChild("Poop")
 local _healthyProperties, _equipment;
-local VaneBossLocation = nil
-local _inHeal = false
 while true do
     if _localplayer.Character and _localplayer.Character:FindFirstChild('HealthProperties') then
         _healthyProperties = _localplayer.Character.HealthProperties;
@@ -763,7 +739,7 @@ local aT = aS:WaitForChild('Primary')
 local aU = aS:WaitForChild('Offhand')
 local aV = aS:WaitForChild('Armor')
 local aW = _shared:WaitForChild('ItemUpgrade'):WaitForChild('Upgrade')
-local aX = _workspace:WaitForChild("Characters")
+local aX = game:GetService("Workspace"):WaitForChild("Characters")
 local aY = aO:WaitForChild("Class")
 local aZ = aY.Value;
 local function a_(b0)
@@ -771,16 +747,16 @@ local function a_(b0)
 end
 local b1 = _shared.Missions.GetMissionPrize;
 _equipment = _character.Equipment;
-local _skillsets = _shared:WaitForChild('Combat'):WaitForChild('Skillsets')
+local b2 = _shared:WaitForChild('Combat'):WaitForChild('Skillsets')
 local b3 = 0;
 local b4;
 local b5 = 'RaidChestSilver'
 local b6 = 'RaidChestGold'
 local b7 = false;
 local b8 = _shared:WaitForChild("Combat"):WaitForChild("Attack")
-local b9 = _workspace:FindFirstChild("Mobs")
+local b9 = game:GetService("Workspace"):FindFirstChild("Mobs")
 local ba = _shared.Mobs.Mobs;
-local bb = _workspace.Camera;
+local bb = workspace.Camera;
 local bc;
 local bd;
 local be = tick()
@@ -793,30 +769,30 @@ local bk;
 local bl = {}
 local bm = 1;
 do
-    function ResetCamera()
+    function resetCamera()
         local bn = _humanoid and (_humanoid:FindFirstChild("Part") or _humanoid)
         if bn and not (bb.CameraSubject == bn) then
             bb.CameraSubject = bn
         end
     end
-    function Noclip()
+    function noclip()
         if _humanoid and _humanoid.CanCollide then
             _humanoid.CanCollide = false
         end
     end
-    function Unnoclip()
+    function unnoclip()
         if _humanoid and not _humanoid.CanCollide then
             _humanoid.CanCollide = true
         end
     end
-    function SetMobCamera(bo, bp, bq)
+    function setMobCamera(bo, bp, bq)
         if not bq or not bo then
             local bn = bo and bp or _humanoid and (_humanoid:FindFirstChild("Part") or _humanoid)
             if bn and bb.CameraSubject ~= bn then
                 bb.CameraSubject = bn
             end
         else
-            local br = _workspace:FindFirstChild('InfiniteCameraPart')
+            local br = workspace:FindFirstChild('InfiniteCameraPart')
             if br and br.Position ~= bq then
                 br.CFrame = CFrame.new(bq)
             end
@@ -828,7 +804,7 @@ do
                 br.Size = Vector3.new(1, 1, 1)
                 br.Position = bq;
                 br.Name = 'InfiniteCameraPart'
-                br.Parent = _workspace
+                br.Parent = workspace
             end
             if bb.CameraSubject ~= br then
                 bb.CameraSubject = br
@@ -947,7 +923,7 @@ _shared.Missions.MissionStart.OnClientEvent:Once(function()
     b_ = tick()
 end)
 load()
-if not _functiondefined then
+if not ao then
     if _currentDungeon.Kicked and _currentDungeon.WasInDungeon or _currentDungeon.RejoinLastDungeon and tick() - _currentDungeon.Timestamp <= _currentDungeon.RejoinLastDungeonThreshold and
         _currentDungeon.CameFromMenu or _currentDungeon.WasInDungeon and _currentDungeon.Dungeon and table.find(am, _currentDungeon.Dungeon) and _currentDungeon.ForceRestartLastTower then
         _currentDungeon.CameFromMenu = false;
@@ -969,7 +945,7 @@ if not _functiondefined then
         _currentDungeon.WasInDungeon = false;
         save()
     end
-elseif _functiondefined then
+elseif ao then
     bW = getPlrGuild()
     _currentDungeon.WasInDungeon = true;
     _currentDungeon.Dungeon = ak;
@@ -1008,7 +984,7 @@ local function ProcessAllTouchInterests()
     if character then
         local hrp = character:FindFirstChild("HumanoidRootPart")
         if hrp then
-            for _, C in pairs(_workspace:GetDescendants()) do
+            for _, C in pairs(workspace:GetDescendants()) do
                 if C and C.Name == "TouchInterest" and C.Parent and
                     (table.find(c3, C.Parent.Name) or (C.Parent.Parent and table.find(c3, C.Parent.Parent.Name))) then
                     task.spawn(function()
@@ -1053,7 +1029,7 @@ if not isBossDoorAdded then
     task.spawn(function()
         while true do
             task.wait(1)
-            local missionObjects = _workspace:FindFirstChild("MissionObjects")
+            local missionObjects = workspace:FindFirstChild("MissionObjects")
             if missionObjects then
                 local waveStartGate = missionObjects:FindFirstChild("WaveStartGate")
                 if waveStartGate then
@@ -1528,11 +1504,11 @@ local ca = {
             Cooldown = 6.1,
             Range = 59
         }, {
-            Skill = _skillsets:WaitForChild('Assassin'):WaitForChild('EventStealthWalk'),
+            Skill = b2:WaitForChild('Assassin'):WaitForChild('EventStealthWalk'),
             Cooldown = 0.25,
             Type = 'Remote'
         }, {
-            Skill = _skillsets:WaitForChild('Assassin'):WaitForChild('Ultimate'),
+            Skill = b2:WaitForChild('Assassin'):WaitForChild('Ultimate'),
             Cooldown = 1,
             Type = 'Remote'
         }, {
@@ -1585,16 +1561,16 @@ local ca = {
             Skill = 'MageOfLightBlastCharged',
             Cooldown = 0.33
         }, {
-            Skill = _skillsets:WaitForChild('MageOfLight'):WaitForChild('HealCircle'),
+            Skill = b2:WaitForChild('MageOfLight'):WaitForChild('HealCircle'),
             Cooldown = 14.2,
             Type = 'Heal'
         }, {
-            Skill = _skillsets:WaitForChild('MageOfLight'):WaitForChild('Barrier'),
+            Skill = b2:WaitForChild('MageOfLight'):WaitForChild('Barrier'),
             Args = _localplayer,
             Cooldown = 15.2,
             Type = 'Heal'
         }, {
-            Skill = _skillsets:WaitForChild('MageOfLight'):WaitForChild('Ultimate'),
+            Skill = b2:WaitForChild('MageOfLight'):WaitForChild('Ultimate'),
             Cooldown = 1,
             Type = 'Heal'
         }}
@@ -1729,7 +1705,7 @@ local ca = {
             Cooldown = 9,
             Range = 19
         }, {
-            Skill = _skillsets:WaitForChild('Paladin'):WaitForChild('GuildedLight'),
+            Skill = b2:WaitForChild('Paladin'):WaitForChild('GuildedLight'),
             Cooldown = 15.2,
             Type = 'Heal'
         }}
@@ -1842,7 +1818,7 @@ local ca = {
             Cooldown = 10.2,
             Range = 9
         }, {
-            Skill = _skillsets:WaitForChild('Berserker'):WaitForChild('Ultimate'),
+            Skill = b2:WaitForChild('Berserker'):WaitForChild('Ultimate'),
             Cooldown = 1,
             Type = 'Remote'
         }}
@@ -1920,7 +1896,7 @@ local ca = {
             Range = 44,
             Type = 'Ranged'
         }, {
-            Skill = _skillsets:WaitForChild('Guardian'):WaitForChild('AggroDraw'),
+            Skill = b2:WaitForChild('Guardian'):WaitForChild('AggroDraw'),
             Cooldown = 14.5,
             Type = 'Remote'
         }, {
@@ -2168,7 +2144,7 @@ local ca = {
             Type = 'Ranged',
             Range = 56
         }, {
-            Skill = _skillsets:WaitForChild('Demon'):WaitForChild('Ultimate'),
+            Skill = b2:WaitForChild('Demon'):WaitForChild('Ultimate'),
             Cooldown = 1,
             Type = 'Remote'
         }, {
@@ -2383,7 +2359,7 @@ local ca = {
             Skill = 'DualWield10',
             Cooldown = 0.75
         }, {
-            Skill = _skillsets:WaitForChild('DualWielder'):WaitForChild('AttackBuff'),
+            Skill = b2:WaitForChild('DualWielder'):WaitForChild('AttackBuff'),
             Cooldown = 12.2,
             Type = 'Remote'
         }, {
@@ -2440,7 +2416,7 @@ local ca = {
             Type = 'Ranged',
             Range = 47
         }, {
-            Skill = _skillsets:WaitForChild('DualWielder'):WaitForChild('Ultimate'),
+            Skill = b2:WaitForChild('DualWielder'):WaitForChild('Ultimate'),
             Cooldown = 31,
             Type = 'Remote'
         }, {
@@ -2790,7 +2766,7 @@ local ca = {
             Cooldown = 8.2,
             Range = 5
         }, {
-            Skill = _skillsets:WaitForChild('Dragoon'):WaitForChild('Ultimate'),
+            Skill = b2:WaitForChild('Dragoon'):WaitForChild('Ultimate'),
             Cooldown = 1,
             Type = 'Remote'
         }, {
@@ -3020,17 +2996,17 @@ local ca = {
             Type = 'Melee',
             Range = 21
         }, {
-            Skill = _skillsets:WaitForChild('Summoner'):WaitForChild('SoulHarvest'),
+            Skill = b2:WaitForChild('Summoner'):WaitForChild('SoulHarvest'),
             Cooldown = 10.2,
             Type = 'Remote',
             Args = "MobPosition",
             Range = 39
         }, {
-            Skill = _skillsets:WaitForChild('Summoner'):WaitForChild('Summon'),
+            Skill = b2:WaitForChild('Summoner'):WaitForChild('Summon'),
             Cooldown = 0.5,
             Type = 'Remote'
         }, {
-            Skill = _skillsets:WaitForChild('Summoner'):WaitForChild('Ultimate'),
+            Skill = b2:WaitForChild('Summoner'):WaitForChild('Ultimate'),
             Cooldown = 1,
             Type = 'Remote'
         }}
@@ -3148,7 +3124,7 @@ local ca = {
             Range = 98,
             Type = 'Ranged'
         }, {
-            Skill = _skillsets:WaitForChild('Necromancer'):WaitForChild('Ultimate'),
+            Skill = b2:WaitForChild('Necromancer'):WaitForChild('Ultimate'),
             Cooldown = 31,
             Type = 'Remote'
         }}
@@ -3183,12 +3159,12 @@ local ca = {
             Skill = 'MageOfShadowsDamageCircle',
             Cooldown = 0.33
         }, {
-            Skill = _skillsets:WaitForChild('MageOfShadows'):WaitForChild('ShadowChains'),
+            Skill = b2:WaitForChild('MageOfShadows'):WaitForChild('ShadowChains'),
             Cooldown = 6,
             Type = 'Remote',
             Args = 'mobTbl'
         }, {
-            Skill = _skillsets:WaitForChild('MageOfShadows'):WaitForChild('Ultimate'),
+            Skill = b2:WaitForChild('MageOfShadows'):WaitForChild('Ultimate'),
             Cooldown = 2,
             Type = 'Remote'
         }}
@@ -3206,12 +3182,12 @@ local ca = {
 }
 local cb = Instance.new('Folder')
 cb.Name = 'SummonFolder'
-cb.Parent = _workspace;
+cb.Parent = Workspace;
 local cc = Instance.new('Folder')
 cc.Name = 'infiniteboy'
-cc.Parent = _workspace;
+cc.Parent = Workspace;
 local cd;
-if _in39 then
+if av then
     cd = Instance.new('Part')
     cd.Name = 'InfiniteKillPart'
     cd.Size = Vector3.new(50, 20, 50)
@@ -3220,7 +3196,7 @@ if _in39 then
     cd.Transparency = 0;
     cd.Material = 'SmoothPlastic'
     cd.BrickColor = BrickColor.new('Cyan')
-    cd.Parent = _workspace
+    cd.Parent = workspace
 end
 local ce = 'https://raw.githubusercontent.com/maihoangphi2531/infscriptv2/main/'
 local cf;
@@ -3336,7 +3312,7 @@ do
         Text = 'Offset',
         Default = cv() and 50 or 6,
         Min = 0,
-        Max = _functiondefined and (cv() and 75 or 25) or 75,
+        Max = ao and (cv() and 75 or 25) or 75,
         Rounding = 1,
         Compact = true
     })
@@ -3400,7 +3376,7 @@ do
     cE:AddButton({
         Text = 'Restart Dungeon',
         Func = function()
-            if _functiondefined then
+            if ao then
                 StartRaid(ak, al)
             end
         end,
@@ -3529,7 +3505,7 @@ do
         Compact = true
     })
     task.spawn(function()
-        while _functiondefined do
+        while ao do
             if #_players:GetPlayers() >= Options.playerCountKick.Value then
                 task.wait(0.5)
                 _localplayer:Kick('Someone might have joined your mission!')
@@ -4368,25 +4344,21 @@ do
             _humanoid.CFrame = CFrame.new(o + Vector3.new(dy, dz, dA))
         end
     end
-
-
     function SmartPlayerTp(bq, dB)
         if not alive() then
             return
         end
-        Noclip()
+        noclip()
         _humanoid.Velocity = Vector3.new()
         if _character:FindFirstChild("Collider") then
             _character.Collider.Velocity = Vector3.new()
         end
         if dB then
-
             _humanoid.CFrame = CFrame.lookAt(bq.Position, Vector3.new(dB.Position.x, bq.Position.y, dB.Position.z))
         else
             _humanoid.CFrame = bq
         end
     end
-
     cL:AddToggle('NVD', {
         Text = 'No Visual Damage',
         Default = true
@@ -4434,8 +4406,8 @@ do
     cN:AddButton({
         Text = 'Discover Dungeons (BLATANT)',
         Func = function()
-            if alive() and not _functiondefined then
-                local dG = _workspace.PhysicalDungeonLocations;
+            if alive() and not ao then
+                local dG = Workspace.PhysicalDungeonLocations;
                 for B, C in pairs(dG:GetChildren()) do
                     _shared.Teleport.WaystoneTeleport:FireServer(1)
                     _humanoid:GetPropertyChangedSignal("Position"):Once(function()
@@ -4721,7 +4693,6 @@ do
             while Toggles.Autofarm.Value and not b7 do
                 for B, C in pairs(b9:GetChildren()) do
                     if isAlive(C) then
-                        -- todo, mobWaitTbl
                         if mobWaitTbl and table.find(mobWaitTbl, C.Name) and (not ek or alwaysWait) then
                             task.wait(waittime)
                             ek = true
@@ -4734,10 +4705,13 @@ do
                             bV = C;
                             ei = X.Position;
                             if _inHeal then
-                                -- ResetCamera()
-                                SetMobCamera(Toggles.mobCamera.Value, X)
+                                if _currentDungeon.Dungeon == 44 then
+                                    setMobCamera(Toggles.mobCamera.Value, X)
+                                else
+                                    resetCamera()
+                                end
                             else
-                                SetMobCamera(Toggles.mobCamera.Value, X)
+                                setMobCamera(Toggles.mobCamera.Value, X)
                             end
                             eg = (X.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                             if _inHeal then
@@ -4752,8 +4726,8 @@ do
                     end
                 end
                 bV = nil;
-                -- ResetCamera()
-                Unnoclip()
+                resetCamera()
+                unnoclip()
                 if au and U and ej then
                     SmartPlayerTp(CFrame.new(10000, 10000, 10000))
                 end
@@ -4780,9 +4754,9 @@ do
                                 (C.Name ~= el or C.Name == el and b3 == 1) do
                                 bV = C;
                                 if _inHeal then
-                                    ResetCamera()
+                                    resetCamera()
                                 else
-                                    SetMobCamera(Toggles.mobCamera.Value, X)
+                                    setMobCamera(Toggles.mobCamera.Value, X)
                                 end
                                 eg = (X.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                                 eh = CFrame.new(X.Position +
@@ -4795,8 +4769,8 @@ do
                     end
                 end
                 bV = nil;
-                ResetCamera()
-                Unnoclip()
+                resetCamera()
+                unnoclip()
                 task.wait()
             end
         end)
@@ -4862,9 +4836,9 @@ do
                         ek = true
                     end
                     if _inHeal then
-                        ResetCamera()
+                        resetCamera()
                     else
-                        SetMobCamera(Toggles.mobCamera.Value, er)
+                        setMobCamera(Toggles.mobCamera.Value, er)
                     end
                     eg = (er.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                     eh = CFrame.new(er.Position +
@@ -4873,8 +4847,8 @@ do
                     SmartPlayerTp(eh, er)
                 else
                     bV = nil;
-                    ResetCamera()
-                    Unnoclip()
+                    resetCamera()
+                    unnoclip()
                 end
                 bX:Wait()
             end
@@ -4894,7 +4868,7 @@ function AutoCheckpoint()
                     if character then
                         local hrp = character:FindFirstChild("HumanoidRootPart")
                         if hrp then
-                            local missionObjects = _workspace:FindFirstChild("MissionObjects")
+                            local missionObjects = workspace:FindFirstChild("MissionObjects")
                             local missionStart = missionObjects and missionObjects:FindFirstChild("MissionStart")
                             local missionTimer = missionStart and missionStart:FindFirstChild("MissionTimer")
                             local surfaceGui = missionTimer and missionTimer:FindFirstChild("SurfaceGui")
@@ -4909,7 +4883,7 @@ function AutoCheckpoint()
                                 hrp.CFrame = collider.CFrame + Vector3.new(0, 5, 0)
                                 movedToTimer = true
                                 shouldSkip = true
-                                warn("✅ Teleported to Timer checkpoint")
+                                warn("✅ Đã dịch chuyển đến Timer checkpoint")
                                 task.wait(1)
                             end
 
@@ -4942,7 +4916,7 @@ function AutoCheckpoint()
                             end
 
                             -- Process TouchInterest if BossDoorTrigger has not been added
-                            for _, C in pairs(_workspace:GetDescendants()) do
+                            for _, C in pairs(workspace:GetDescendants()) do
                                 if C and C.Name == "TouchInterest" and C.Parent and
                                     (table.find(c3, C.Parent.Name) or (C.Parent.Parent and table.find(c3, C.Parent.Parent.Name))) then
                                     task.spawn(function()
@@ -5128,11 +5102,11 @@ ez = ez .. ex(101, 0, 0)
 ez = ez .. ex(97, 0, 0)
 ez = ez .. ex(108, 0, 0)
 do
-    if _functiondefined then
+    if ao then
         if aj:FindFirstChild(6) then
             task.spawn(function()
-                local eA, eB, eC = _workspace:WaitForChild('Pillar1'), _workspace:WaitForChild('Pillar2'),
-                    _workspace:WaitForChild('Pillar3')
+                local eA, eB, eC = Workspace:WaitForChild('Pillar1'), Workspace:WaitForChild('Pillar2'),
+                    Workspace:WaitForChild('Pillar3')
                 eC:WaitForChild('HealthProperties')
                 eA.Name = 'Pillar'
                 eB.Name = 'Pillar'
@@ -5148,8 +5122,8 @@ do
                     if eD then
                         local eE = Instance.new('Folder')
                         eE.Name = 'WaterFolder'
-                        eE.Parent = _workspace;
-                        eD.Parent = _workspace.WaterFolder;
+                        eE.Parent = Workspace;
+                        eD.Parent = Workspace.WaterFolder;
                         if as then
                             b7 = true
                         end
@@ -5179,7 +5153,7 @@ do
         local missionName = eG.NameTag .. (al == 1 and ' Normal' or al == 5 and ' Challenge' or '')
         missionName = string.gsub(missionName, '%(NIGHTMARE%) ', 'Nightmare ')
         getgenv().missionName = missionName;
-        getgenv().codeStr = eG.EventDungeon and 'Event' or (au or _in39) and 'Special' or eG.TowerID and 'Tower ' ..
+        getgenv().codeStr = eG.EventDungeon and 'Event' or (au or av) and 'Special' or eG.TowerID and 'Tower ' ..
                                 eG.TowerID or eG.DisplayWorldID .. '-' .. eG.WorldMissionID;
         function hookWithUserInfo(ci, eH, eI, d8, g, cl)
             request({
@@ -5286,7 +5260,7 @@ do
                 if bF:FindFirstChild(eQ) and bF[eQ]:FindFirstChild('Count') then
                     eM = eM .. '\n' .. eR .. ': `' .. bF[eQ].Count.Value .. ''
                 end
-            elseif au or _in39 then
+            elseif au or av then
                 eM = eM .. '\nFloor: **' .. _replicatedStorage.ReplicateTowerFloor.Value .. '**'
             end
             local function eV()
@@ -5348,7 +5322,7 @@ do
                 elseif Toggles.NextDungeon.Value and not au then
                     local eY = nextInTbl(c8, ak)
                     local eZ = table.find(ac, eY)
-                    local e_ = aO.Level.Value >= bI(eY) and (al == 5 or at or au or _in39)
+                    local e_ = aO.Level.Value >= bI(eY) and (al == 5 or at or au or av)
                     local f0 = e_ and eY or ak;
                     local f1 = e_ and (eZ and 'tower' or c2[al] or 1) or al == 1 and 5 or al;
                     if f1 == 'tower' then
@@ -5483,7 +5457,7 @@ do
             missionEndRestartOrNextEvent()
         end)
         local TowerFinished = game:GetService("ReplicatedStorage").Shared.Towers:WaitForChild("TowerFinished")
-        if at or _in39 then
+        if at or av then
             TowerFinished.OnClientEvent:Once(function(fn, f3)
                 task.spawn(function()
                     task.wait(40)
@@ -5509,8 +5483,8 @@ do
             end)
         end
     end
-    if at or au or _in39 then
-        _workspace.ChildAdded:Connect(function(cV)
+    if at or au or av then
+        Workspace.ChildAdded:Connect(function(cV)
             if Toggles.Autofarm.Value then
                 if cV.Name == b5 then
                     bf = tick()
@@ -5667,7 +5641,7 @@ local fw = {
     BlastIndicator = 'BlastIndicator'
 }
 if au then
-    _workspace.ChildAdded:Connect(function(cV)
+    workspace.ChildAdded:Connect(function(cV)
         if Toggles.Autofarm.Value then
             for B, C in fw do
                 if cV.Name == B and cV:IsA(C) then
@@ -5680,14 +5654,14 @@ end
 Toggles.Autofarm:OnChanged(function(fx)
     a5 = tick()
     _inHeal = false;
-    if fx and ConfigAutoLoaded and _functiondefined then
+    if fx and ConfigAutoLoaded and ao then
         local dF = tick()
         while (bi < 2 or bh < 2 or bj < 2) and Toggles.Autofarm.Value and tick() - dF < 3 do
             task.wait()
         end
     end
-    if fx and au and _functiondefined then
-        for ds, cV in _workspace:GetChildren() do
+    if fx and au and ao then
+        for ds, cV in workspace:GetChildren() do
             for B, C in fw do
                 if cV.Name == B and cV:IsA(C) then
                     cV:Destroy()
@@ -5695,12 +5669,12 @@ Toggles.Autofarm:OnChanged(function(fx)
             end
         end
     end
-    local fy = fx and _functiondefined and (ar and Options.dungeonStartTimer.Value or (at or _in39) and Options.towerStartTimer.Value)
+    local fy = fx and ao and (ar and Options.dungeonStartTimer.Value or (at or av) and Options.towerStartTimer.Value)
     if fy and fy > 0 then
         local dF = tick()
         local fz;
         local fA;
-        if _in39 then
+        if av then
             if alive() then
                 fA = _humanoid.Position
             end
@@ -5714,7 +5688,7 @@ Toggles.Autofarm:OnChanged(function(fx)
             local fB = math.round(fy - (tick() - dF))
             cr('[Infinite]: Starting Mission in ' .. fB .. 's')
             a5 = tick()
-            if _in39 and alive() and (_humanoid.Position - cd.Position).magnitude > 100 then
+            if av and alive() and (_humanoid.Position - cd.Position).magnitude > 100 then
                 SmartPlayerTp(CFrame.new(cd.Position + Vector3.new(0, 20, 0)))
             end
             task.wait()
@@ -5723,16 +5697,16 @@ Toggles.Autofarm:OnChanged(function(fx)
         if fz and Toggles.Autofarm.Value and not Toggles.Killaura.Value then
             Toggles.Killaura:SetValue(true)
         end
-        if _in39 then
+        if av then
             SmartPlayerTp(CFrame.new(fA + Vector3.new(0, 5, 0)))
         end
     end
-    if _functiondefined and Toggles.Autofarm.Value then
+    if ao and Toggles.Autofarm.Value then
         if not fu then
             local fC = Instance.new("Part")
             fC.Anchored = true;
             fC.Size = Vector3.new(20, 1, 20)
-            fC.Parent = _workspace;
+            fC.Parent = workspace;
             fC.Transparency = 1;
             fu = true
         end
@@ -5779,13 +5753,13 @@ Toggles.Autofarm:OnChanged(function(fx)
                         end
                     end
                 end
-                local fF = _workspace:FindFirstChild('IceWall') or _workspace:FindFirstChild('IgnisShield')
+                local fF = workspace:FindFirstChild('IceWall') or workspace:FindFirstChild('IgnisShield')
                 fF = fF and fF:FindFirstChild('Ring')
                 local fG =
-                    _workspace:FindFirstChild('KrakenCannon') and _workspace.KrakenCannon:FindFirstChild('Base') and
-                        _workspace.KrakenCannon.Base.Transparency < 1 and _workspace.KrakenCannon.Base;
-                local fH = _workspace:FindFirstChild('CureFountainFallenKing') and
-                               _workspace.CureFountainFallenKing:FindFirstChild('ArcanePanel')
+                    workspace:FindFirstChild('KrakenCannon') and workspace.KrakenCannon:FindFirstChild('Base') and
+                        workspace.KrakenCannon.Base.Transparency < 1 and workspace.KrakenCannon.Base;
+                local fH = workspace:FindFirstChild('CureFountainFallenKing') and
+                               workspace.CureFountainFallenKing:FindFirstChild('ArcanePanel')
                 local fI = fF or fG or fH;
                 if fI and alive() then
                     if U then
@@ -5803,9 +5777,9 @@ Toggles.Autofarm:OnChanged(function(fx)
             end
         end)
     end
-    if at and Toggles.Autofarm.Value and _functiondefined then
+    if at and Toggles.Autofarm.Value and ao then
     end
-    if fx and as and _functiondefined then
+    if fx and as and ao then
         local fJ;
         local fK;
         local fL;
@@ -5839,7 +5813,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 if tick() - dF >= 0.4 then
                                     break
                                 end
-                                SmartPlayerTp(CFrame.new(1571, 73, -331))
+                                SmartPlayerTp(CFrame.new(3371, 73, -331))
                                 bX:Wait()
                             end
                             fM = false
@@ -5861,9 +5835,9 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 local eg = 5 + Options.Offset.Value;
                                 local fO = _inHeal and ee or Vector3.new()
                                 if _inHeal then
-                                    ResetCamera()
+                                    resetCamera()
                                 else
-                                    SetMobCamera(Toggles.mobCamera.Value, nil, fP)
+                                    setMobCamera(Toggles.mobCamera.Value, nil, fP)
                                 end
                                 SmartPlayerTp(
                                     CFrame.new(X.Position + Vector3.new(0, eg, 0) + fO) + X.CFrame.lookVector * 45, X)
@@ -5876,16 +5850,16 @@ Toggles.Autofarm:OnChanged(function(fx)
                         fL = false
                     end
                     bV = nil;
-                    Unnoclip()
-                    ResetCamera()
+                    unnoclip()
+                    resetCamera()
                 end
                 task.wait()
             end
         end)
         task.spawn(function()
             while Toggles.Autofarm.Value do
-                if b7 and _workspace:FindFirstChild('KrakenPipe') and not Toggles.ignoreCannon.Value and alive() then
-                    for _, C in pairs(_workspace:GetChildren()) do
+                if b7 and Workspace:FindFirstChild('KrakenPipe') and not Toggles.ignoreCannon.Value and alive() then
+                    for B, C in pairs(Workspace:GetChildren()) do
                         if C.Name == 'KrakenPipe' and C:FindFirstChild('GuiPart') and
                             C.GuiPart:FindFirstChild('SurfaceGui') and C.GuiPart.SurfaceGui:FindFirstChild('Percent') and
                             C:FindFirstChild('Base') then
@@ -5910,10 +5884,10 @@ Toggles.Autofarm:OnChanged(function(fx)
             end
         end)
     end
-    if (au or _in39) and Toggles.Autofarm.Value and _functiondefined then
+    if (au or av) and Toggles.Autofarm.Value and ao then
         MobTeleport()
-        local fQ = _workspace.LobbyTeleport.Interaction;
-        local fR = _workspace.Boss_Gate.Interactions.Bounds;
+        local fQ = game:GetService("Workspace").LobbyTeleport.Interaction;
+        local fR = game:GetService("Workspace").Boss_Gate.Interactions.Bounds;
         task.spawn(function()
             while Toggles.Autofarm.Value do
                 if alive() then
@@ -6013,18 +5987,18 @@ Toggles.Autofarm:OnChanged(function(fx)
     end
 end)
 coroutine.wrap(function()
-    _workspace:WaitForChild("Mobs").ChildAdded:Connect(function(bs)
+    workspace:WaitForChild("Mobs").ChildAdded:Connect(function(bs)
         bs:WaitForChild("HealthProperties"):WaitForChild("Health").Changed:Connect(function(cU)
             if cU == 0 then
                 game:GetService("Debris"):AddItem(bs, 0.2)
             end
         end)
     end)
-    if _workspace:FindFirstChild('Assets_FX') then
-        for _, C in pairs(_workspace.Assets_FX:GetChildren()) do
+    if workspace:FindFirstChild('Assets_FX') then
+        for B, C in pairs(workspace.Assets_FX:GetChildren()) do
             C:Destroy()
         end
-        _workspace.Assets_FX.ChildAdded:Connect(function(cV)
+        workspace.Assets_FX.ChildAdded:Connect(function(cV)
             cV:Destroy()
         end)
     end
@@ -6082,34 +6056,25 @@ do
         return ge, g9
     end
     local gf = {'CorruptedGreaterTree'}
-    function IgnoreIfNotAlone(eo)
+    function ignoreIfNotAlone(eo)
         if b3 and b3 > 1 and table.find(gf, eo) then
             return true
         end
     end
-    function GetClosestMob(gg)
+    function getClosestMob(gg)
         local gh = math.huge;
         local gi, g9, gj, Z, a1;
         local eN, gk, eo;
-
-        -- if ak == 44 then
-        --     local vaneBoss = _workspace.Mobs:FindFirstChild('EVENTBOSSVane')
-        --     if vaneBoss then
-        --         VaneBossLocation = vaneBoss.PrimaryPart.CFrame
-        --         return vaneBoss.Collider
-        --     end
-        -- end
-
         if isAlive(gg) then
             local gl = gg.PrimaryPart;
             local ge, gm = getClosestPointAndDistance(_humanoid, gl)
             gh, g9, gi = ge, gm, gl
         else
-            for ds, bs in pairs(_workspace.Mobs:GetChildren()) do
+            for ds, bs in pairs(workspace.Mobs:GetChildren()) do
                 if isAlive(bs) then
                     local gl = bs.PrimaryPart;
                     local ge, gm = getClosestPointAndDistance(_humanoid, gl)
-                    if ge < gh and not IgnoreIfNotAlone(bs.Name) then
+                    if ge < gh and not ignoreIfNotAlone(bs.Name) then
                         gh, g9, gi = ge, gm, gl
                     end
                 end
@@ -6127,7 +6092,7 @@ do
         end
         return gi, g9, Z, gh, gj, a1, gk
     end
-    function EquipWepWithId(gn, go)
+    function equipWepWithId(gn, go)
         for B, C in pairs(bF:GetChildren()) do
             if C:FindFirstChild('ID') and C.ID.Value and C.ID.Value == gn then
                 bN:FireServer(C, aT)
@@ -6136,17 +6101,17 @@ do
             end
         end
     end
-    if _workspace:FindFirstChild('TargetDummies') then
-        for ds, gp in pairs(_workspace.TargetDummies:GetChildren()) do
+    if Workspace:FindFirstChild('TargetDummies') then
+        for ds, gp in pairs(Workspace.TargetDummies:GetChildren()) do
             gp.Parent = b9
         end
     end
 end
 Toggles.Killaura:OnChanged(function(cU)
     bj = bj + 1;
-    local gq = _skillsets[ey][ez]
+    local gq = b2[ey][ez]
     a5 = tick()
-    if _functiondefined and a_(ey) and cU then
+    if ao and a_(ey) and cU then
         local gr;
         for dM, p in pairs(c5) do
             if ak == p.Id and p.ignoreMob then
@@ -6207,7 +6172,7 @@ Toggles.Killaura:OnChanged(function(cU)
         end
     end
     task.spawn(function()
-        while Toggles.Killaura.Value and _functiondefined do
+        while Toggles.Killaura.Value and ao do
             if Toggles.PerkSwitcher.Value and ca[aZ].Offhand and X then
                 local gs = bY()
                 if a1 and not gs then
@@ -6224,11 +6189,11 @@ Toggles.Killaura:OnChanged(function(cU)
                     local gv = Options.mobWepId.Value and #Options.mobWepId.Value > 2 and Options.mobWepId.Value;
                     local gw = Options.bossWepId.Value and #Options.bossWepId.Value > 2 and Options.bossWepId.Value;
                     if gv and not a1 and gu ~= gv then
-                        EquipWepWithId(gv, ' Mobs!')
+                        equipWepWithId(gv, ' Mobs!')
                         task.wait(0.5)
                     end
                     if gw and a1 and gu ~= gw then
-                        EquipWepWithId(gw, ' Bosses!')
+                        equipWepWithId(gw, ' Bosses!')
                         task.wait(0.5)
                     end
                 end
@@ -6245,9 +6210,9 @@ Toggles.Killaura:OnChanged(function(cU)
     }
 
 task.spawn(function()
-    while Toggles.Killaura.Value and _functiondefined do
+    while Toggles.Killaura.Value and ao do
         -- Get the nearest mob
-        X, Y, Z, _, a0, a1, a2 = GetClosestMob(bV)
+        X, Y, Z, _, a0, a1, a2 = getClosestMob(bV)
         if alive() and not mounted() and X and not table.find(bl, aZ) then
             for _, gx in pairs(ca[aZ].Skills) do
                 local gy = gx.MeleeOnBoss and a1 and 'Melee' or gx.Type or ca[aZ].Type
@@ -6285,7 +6250,7 @@ task.spawn(function()
 end)
 
 
-    if _functiondefined and not aj:FindFirstChild(36) and _functiondefined then
+    if ao and not aj:FindFirstChild(36) and ao then
         task.spawn(function()
             while Toggles.Killaura.Value do
                 for B, C in pairs(ai:GetChildren()) do
@@ -6299,13 +6264,13 @@ end)
             end
         end)
     end
-    if a_(ey) and Toggles.Killaura.Value and bloodBindingEnabled and _functiondefined then
+    if a_(ey) and Toggles.Killaura.Value and bloodBindingEnabled and ao then
         task.spawn(function()
             while Toggles.Killaura.Value do
                 if a_(ey) then
                     if alive() and not mounted() and not _character:FindFirstChild('AttackBuffDemonBloodBinding', true) and X and
                         _ and _ <= 95 then
-                        _skillsets.Demon.BloodBinding:FireServer()
+                        b2.Demon.BloodBinding:FireServer()
                         a5 = tick()
                         task.wait(6)
                     end
@@ -6314,7 +6279,7 @@ end)
             end
         end)
     end
-    if a_('Summoner') and Toggles.Killaura.Value and _functiondefined then
+    if a_('Summoner') and Toggles.Killaura.Value and ao then
         task.spawn(function()
             while Toggles.Killaura.Value do
                 for ds, Mob in pairs(b9:GetChildren()) do
@@ -6330,7 +6295,7 @@ end)
                         if gG:FindFirstChild('HealthProperties') and gG.HealthProperties:FindFirstChild('Health') and
                             gG.HealthProperties.Health.Value > 0 and gG.HealthProperties.Health.Value /
                             gG.HealthProperties.MaxHealth.Value <= 0.25 then
-                            _skillsets.Summoner.ExplodeSummons:FireServer()
+                            b2.Summoner.ExplodeSummons:FireServer()
                         end
                     end
                 end
@@ -6338,7 +6303,7 @@ end)
             end
         end)
     end
-    if _functiondefined then
+    if ao then
         task.spawn(function()
             while Toggles.Killaura.Value and not aC do
                 if Toggles.Autofarm.Value and not _inHeal then
@@ -6452,7 +6417,7 @@ cf:SetFolder('MyScriptHub')
 cg:SetFolder('MyScriptHub')
 cg:BuildConfigSection(cA['Settings'])
 cf:ApplyToTab(cA['Settings'])
-if _functiondefined then
+if ao then
     cg:LoadAutoloadConfig()
     if ak and aj:FindFirstChild(24) then
         if Options.Offset.Value > 45 then
