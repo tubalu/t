@@ -6133,7 +6133,7 @@ do
         end
         return gi, g9, Z, gh, gj, a1, gk
     end
-    function equipWepWithId(gn, go)
+    function EquipWepWithId(gn, go)
         for B, C in pairs(bF:GetChildren()) do
             if C:FindFirstChild('ID') and C.ID.Value and C.ID.Value == gn then
                 bN:FireServer(C, aT)
@@ -6230,11 +6230,11 @@ Toggles.Killaura:OnChanged(function(cU)
                     local gv = Options.mobWepId.Value and #Options.mobWepId.Value > 2 and Options.mobWepId.Value;
                     local gw = Options.bossWepId.Value and #Options.bossWepId.Value > 2 and Options.bossWepId.Value;
                     if gv and not a1 and gu ~= gv then
-                        equipWepWithId(gv, ' Mobs!')
+                        EquipWepWithId(gv, ' Mobs!')
                         task.wait(0.5)
                     end
                     if gw and a1 and gu ~= gw then
-                        equipWepWithId(gw, ' Bosses!')
+                        EquipWepWithId(gw, ' Bosses!')
                         task.wait(0.5)
                     end
                 end
