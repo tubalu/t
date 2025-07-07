@@ -700,7 +700,30 @@ if _replicatedStorage:FindFirstChild("ActiveMission") then
 end
 local _character = _localplayer.Character or _localplayer.CharacterAdded:Wait() or _localplayer.Character;
 local _humanoid = _character:WaitForChild('HumanoidRootPart')
+
+if not workspace:FindFirstChild("Poop") then
+    local Poop = Instance.new("Part")
+    Poop.Name = "Poop"
+    Poop.Parent = workspace
+    Poop.Anchored = true
+    Poop.Position = _humanoid.Position
+    Poop.Transparency = 1
+    Poop.Size = Vector3.new(0.1, 0.1, 0.1)
+
+    local Collider = Instance.new("Part")
+    Collider.Name = "Collider"
+    Collider.Parent = Poop
+    Collider.Anchored = true
+    Collider.CanCollide = true
+    Collider.Size = Vector3.new(0.1, 0.1, 0.1)
+    Collider.Position = Poop.Position
+    Collider.Transparency = 0.5
+end
+
+local Poop = workspace:FindFirstChild("Poop")
 local _healthyProperties, _equipment;
+local VaneBossLocation = nil
+local _inHeal = false
 while true do
     if _localplayer.Character and _localplayer.Character:FindFirstChild('HealthProperties') then
         _healthyProperties = _localplayer.Character.HealthProperties;
@@ -4344,21 +4367,13 @@ do
             _humanoid.CFrame = CFrame.new(o + Vector3.new(dy, dz, dA))
         end
     end
-    function SmartPlayerTp(bq, dB)
-        if not alive() then
-            return
-        end
-        noclip()
-        _humanoid.Velocity = Vector3.new()
-        if _character:FindFirstChild("Collider") then
-            _character.Collider.Velocity = Vector3.new()
-        end
-        if dB then
-            _humanoid.CFrame = CFrame.lookAt(bq.Position, Vector3.new(dB.Position.x, bq.Position.y, dB.Position.z))
-        else
-            _humanoid.CFrame = bq
-        end
+    function SmartPlayerTp(v1, x, y, z)
+    local targetCFrame = v1.CFrame + (v1.CFrame.lookVector*(x)+v1.CFrame.upVector*(y)+v1.CFrame.rightVector*(z))
+    if _inHeal then
+        targetCFrame = targetCFrame + Vector3.new(0, 30, 0)
     end
+    _localplayer.Character.HumanoidRootPart.CFrame = targetCFrame
+    _localplayer.Character.HumanoidRootPart.CFrame = CFrame.lookAt(_localplayer.Character.HumanoidRootPart.Position, v1.Position)
     cL:AddToggle('NVD', {
         Text = 'No Visual Damage',
         Default = true
@@ -6065,6 +6080,15 @@ do
         local gh = math.huge;
         local gi, g9, gj, Z, a1;
         local eN, gk, eo;
+
+        if ak == 44 then
+            local vaneBoss = workspace.Mobs:FindFirstChild('EVENTBOSSVane')
+            if vaneBoss then
+                VaneBossLocation = vaneBoss.PrimaryPart.CFrame
+                return vaneBoss.Collider
+            end
+        end
+
         if isAlive(gg) then
             local gl = gg.PrimaryPart;
             local ge, gm = getClosestPointAndDistance(_humanoid, gl)
