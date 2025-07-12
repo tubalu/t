@@ -4731,7 +4731,13 @@ do
                 _ResetCamera()
                 _Unnoclip()
                 if au and U and ej then
-                    SmartPlayerTp(CFrame.new(10000, 10000, 10000))
+                    if firstMob then
+                        local pos = firstMob.Position
+                        pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
+                        SmartPlayerTp(CFrame.new(pos))
+                    else 
+                            SmartPlayerTp(CFrame.new(10000, 10000, 10000))
+                    end
                 end
                 task.wait()
             end
@@ -5820,6 +5826,11 @@ Toggles.Autofarm:OnChanged(function(fx)
                                     local pos = firstMob.Position
                                     pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
                                     SmartPlayerTp(CFrame.new(pos))
+
+                                    if cd then
+                                        cd.Position = pos
+                                    end
+
                                 else 
                                     SmartPlayerTp(CFrame.new(3371, 73, -331))
                                 end
