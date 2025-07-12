@@ -4859,8 +4859,8 @@ do
                                         (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) +
                              er.CFrame.lookVector * 2;
                     print("f..")
-                    if _currentDungeon and _currentDungeon.Dungeon == 44 then
-                        SmartPlayerTp(eh)
+                    if _currentDungeon and _currentDungeon.Dungeon == 44  and _firstMob then
+                        SmartPlayerTp(CFrame.new(_firstMob.Position + Vector3.new(0, 50, 0)))
                     else
                         SmartPlayerTp(eh, er)
                     end
