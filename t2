@@ -244,7 +244,7 @@ end
 -- Function to iterate through items and send information to webhook
 local function sendItems()
     local serverName, serverID = getServerDetails() -- Get server information
-    print("Tên server:", serverName, "ID server:", serverID)
+    print("Server name:", serverName, "Server ID:", serverID)
 
     local replicatedStorage = game:GetService("ReplicatedStorage")
     local playerShops = replicatedStorage:FindFirstChild("PlayerShops")
@@ -998,7 +998,7 @@ local function ProcessAllTouchInterests()
                     end)
                 end
             end
-            print("Đã xử lý tất cả TouchInterest trong c3 sau khi thêm BossDoorTrigger")
+            print("Processed all TouchInterest in c3 after adding BossDoorTrigger")
         end
     end
 end
@@ -1016,7 +1016,7 @@ if _dungeonId ~= nil then
         if not table.find(c3, "BossTrigger") then  
             table.insert(c3, "BossTrigger")
             ProcessAllTouchInterests()
-            print("Đã thêm part vào c3")
+            print("Added BossTrigger to c3")
         end
     end
 else
@@ -1039,7 +1039,7 @@ if not isBossDoorAdded then
                             if not table.find(c3, "BossDoorTrigger") then
                                 table.insert(c3, "BossDoorTrigger")
                                 isBossDoorAdded = true
-                                print("Đã thêm BossDoorTrigger do FINAL FLOOR.")
+                                print("Added BossDoorTrigger due to FINAL FLOOR.")
                                 ProcessAllTouchInterests()
                                 break
                             end
@@ -4342,7 +4342,6 @@ do
         end
     end
     function SmartPlayerTp(destination, lookAtTarget)
-        print("Teleporting to destination:", tostring(destination))
         if not _Alive() then
             return
         end
@@ -4729,7 +4728,6 @@ do
                             end
                             
                             
-                            print("a..")
                             SmartPlayerTp(eh, X)
                             bX:Wait()
                         end
@@ -4742,17 +4740,14 @@ do
                     if firstMob then
                         local pos = firstMob.Position
                         pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
-                        print("b..")
                         SmartPlayerTp(CFrame.new(pos))
                     else 
-                        print("c..")
                         SmartPlayerTp(CFrame.new(10000, 10000, 10000))
                     end
                 end
                 task.wait()
             end
             if ei and au then
-                print("d..")
                 SmartPlayerTp(CFrame.new(ei + Vector3.new(0, 10, 0)))
             end
         end)
@@ -4781,7 +4776,6 @@ do
                                 eh = CFrame.new(X.Position +
                                                     (table.find(aE, C) and ef or Vector3.new(0, eg, 0) +
                                                         (_inHeal and ee or ef))) + X.CFrame.lookVector * 2;
-                                print("e..")
                                 SmartPlayerTp(eh, X)
                                 bX:Wait()
                             end
@@ -4865,7 +4859,13 @@ do
                                         (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) +
                              er.CFrame.lookVector * 2;
                     print("f..")
-                    SmartPlayerTp(eh, er)
+                    if dungeon and dungeon == 44 then
+                        SmartPlayerTp(eh)
+                    else
+                        SmartPlayerTp(eh, er)
+                    end
+
+                    -- SmartPlayerTp(eh, er)
                 else
                     bV = nil;
                     _ResetCamera()
@@ -4998,7 +4998,6 @@ end
                     if bS and b3 == 0 then
                         local es = tick()
                         while tick() - es <= 0.1 and b3 == 0 do
-                            print("fb..")
                             SmartPlayerTp(bS)
                             bX:Wait()
                         end
