@@ -1,3 +1,4 @@
+
 -- << LOADING SCRIPT >>
 task.spawn(function()
     local player = game.Players.LocalPlayer
@@ -316,7 +317,7 @@ local _userInputService = game:GetService("UserInputService")
 
 local Executor = identifyexecutor and identifyexecutor() or "Unknown"
 
-
+local firstMob = nil
 
 -- Safe http req
 local function SafeHttpGet(url)
@@ -4714,9 +4715,13 @@ do
                             if _inHeal then
                                 eg = eg + 30
                             end
-                            eh = CFrame.new(X.Position +
-                                                (table.find(aE, C) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) +
-                                     X.CFrame.lookVector * 2;
+                            eh = CFrame.new(X.Position + (table.find(aE, C) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) + X.CFrame.lookVector * 2;
+
+                            if not firstMob then
+                                firstMob = eh
+                            end
+                            
+                            
                             SmartPlayerTp(eh, X)
                             bX:Wait()
                         end
@@ -5214,13 +5219,13 @@ do
                              10 .. 's`'
                 end
                 if _currentDungeon.Gold and V >= _currentDungeon.Gold then
-                    eM = eM .. '\nGold Gained: `' .. _FormatNumberWithCommass(V - _currentDungeon.Gold) .. ''
+                    eM = eM .. '\nGold Gained: `' .. _FormatNumberWithCommas(V - _currentDungeon.Gold) .. ''
                 end
                 _currentDungeon.Gold = V;
                 _currentDungeon.LastDungeonCompletion = c0;
                 _Save()
             end
-            eM = eM .. '\nGold: `' .. _FormatNumberWithCommass(aP.Value) .. ''
+            eM = eM .. '\nGold: `' .. _FormatNumberWithCommas(aP.Value) .. ''
             if ax then
                 local eO = {
                     KrakenRaid = {
@@ -5811,7 +5816,13 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 if tick() - dF >= 0.4 then
                                     break
                                 end
-                                SmartPlayerTp(CFrame.new(3371, 73, -331))
+                                if firstMob then
+                                    local pos = firstMob.Position
+                                    pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
+                                    SmartPlayerTp(CFrame.new(pos))
+                                else 
+                                    SmartPlayerTp(CFrame.new(3371, 73, -331))
+                                end
                                 bX:Wait()
                             end
                             fM = false
@@ -5840,7 +5851,13 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 SmartPlayerTp(CFrame.new(X.Position + Vector3.new(0, eg, 0) + fO) + X.CFrame.lookVector * 45, X)
                                 bX:Wait()
                             end
-                            SmartPlayerTp(CFrame.new(3371, 73, -331))
+                            if firstMob then
+                                local pos = firstMob.Position
+                                pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
+                                SmartPlayerTp(CFrame.new(pos))
+                            else 
+                                SmartPlayerTp(CFrame.new(3371, 73, -331))
+                            end
                         end
                     end
                     if fL then
@@ -5936,7 +5953,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 local fV = '## Floor: `' .. fT.Value .. '' .. '\nTime: ' ..
                                                _TimeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' ..
                                                ca[aZ].DisplayName .. '`'
-                                fV = fV .. '\nGold Gain: `' .._FormatNumberWithCommass(aR - aQ) .. ''
+                                fV = fV .. '\nGold Gain: `' .. _FormatNumberWithCommas(aR - aQ) .. ''
                                 if not Toggles.anonHook.Value then
                                     fV = fV .. '\n' .. plrLink
                                 end
@@ -5962,7 +5979,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                         local fV = '## Floor: `' .. fT.Value .. '' .. '\nTime: ' ..
                                        _TimeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' .. ca[aZ].DisplayName ..
                                        '`'
-                        fV = fV .. '\nGold Gain: `' .._FormatNumberWithCommass(aR - aQ) .. ''
+                        fV = fV .. '\nGold Gain: `' .. _FormatNumberWithCommas(aR - aQ) .. ''
                         if not Toggles.anonHook.Value then
                             fV = fV .. '\n' .. plrLink
                         end
