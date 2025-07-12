@@ -584,7 +584,7 @@ local aj = game:GetService("ReplicatedStorage").Shared.Towers
 local _dungeonId = "TowerFinished"
 local al;
 local am = {21, 23, 27, 29, 34, 43}
-local an = {1005, 1006, 1007}
+local _nms = {1005, 1006, 1007}
 local ao;
 local ap = {5862275930, 4526768266}
 local aq = table.find(ap, game.PlaceId)
@@ -593,7 +593,7 @@ local as;
 local at;
 local au;
 local av;
-local aw;
+local _isNM;
 local ax;
 local ay;
 local az;
@@ -678,8 +678,8 @@ if _replicatedStorage:FindFirstChild("ActiveMission") then
     if _dungeonId == 23 then
         as = true
     end
-    if table.find(an, _dungeonId) then
-        aw = true
+    if table.find(_nms, _dungeonId) then
+        _isNM = true
     end
     if _dungeonId == 45 then
         ay = true;
@@ -754,7 +754,7 @@ local b7 = false;
 local b8 = _shared:WaitForChild("Combat"):WaitForChild("Attack")
 local b9 = game:GetService("Workspace"):FindFirstChild("Mobs")
 local ba = _shared.Mobs.Mobs;
-local bb = workspace.Camera;
+local bb = _workspace.Camera;
 local bc;
 local bd;
 local be = tick()
@@ -842,16 +842,16 @@ do
             return bw .. 's'
         end
     end
-    function ping()
+    function _Ping()
         return math.round(_localplayer:GetNetworkPing() * 1000) .. ' ms'
     end
-    function ping2()
+    function _Ping2()
         return math.round(game.Stats.PerformanceStats.Ping:GetValue()) .. ' ms'
     end
-    function nextInTbl(bx, by)
+    function _NextInTbl(bx, by)
         return bx[table.find(bx, by) + 1] or bx[1]
     end
-    function formatNumberWithCommas(bz)
+    function _FormatNumberWithCommas(bz)
         local bA = tostring(bz)
         local bB;
         repeat
@@ -859,7 +859,7 @@ do
         until bB == 0;
         return bA
     end
-    function getServerGuilds()
+    function _GetServerGuilds()
         local bC = game:GetService("TextChatService"):WaitForChild('TextChannels')
         local bx = {}
         for B, C in bC:GetChildren() do
@@ -870,7 +870,7 @@ do
         table.sort(bx)
         return bx
     end
-    function getPlrGuild()
+    function _GetPlrGuild()
         local bC = game:GetService("TextChatService"):WaitForChild('TextChannels')
         local z;
         for B, C in bC:GetChildren() do
@@ -944,7 +944,7 @@ if not ao then
         _Save()
     end
 elseif ao then
-    bW = getPlrGuild()
+    bW = _GetPlrGuild()
     _currentDungeon.WasInDungeon = true;
     _currentDungeon.Dungeon = _dungeonId;
     _currentDungeon.Difficulty = al;
@@ -4404,7 +4404,7 @@ do
         Text = 'Discover Dungeons (BLATANT)',
         Func = function()
             if _Alive() and not ao then
-                local dG = Workspace.PhysicalDungeonLocations;
+                local dG = _workspace.PhysicalDungeonLocations;
                 for B, C in pairs(dG:GetChildren()) do
                     _shared.Teleport.WaystoneTeleport:FireServer(1)
                     _humanoid:GetPropertyChangedSignal("Position"):Once(function()
@@ -4558,13 +4558,13 @@ do
     local e0;
     local e1;
     local e2 = false;
-    local e3 = cQ:AddLabel('Total Gold: ' .. formatNumberWithCommas(aP.Value))
+    local e3 = cQ:AddLabel('Total Gold: ' .. _FormatNumberWithCommas(aP.Value))
     local e4 = cQ:AddLabel('Session Time: 0s')
     cQ:AddDivider()
     local e5 = _currentDungeon.CrossSessionTimestamp or tick()
     local e6 = cQ:AddLabel('Cross-Session Time: ' .. _TimeElapsed(tick() - e5))
     local e7 = cQ:AddLabel('CS Gold Gain: ' ..
-                               formatNumberWithCommas(_currentDungeon.CrossSessionGold and aR - _currentDungeon.CrossSessionGold or 0))
+                               _FormatNumberWithCommas(_currentDungeon.CrossSessionGold and aR - _currentDungeon.CrossSessionGold or 0))
     local e8 = _currentDungeon.CrossSessionGold or aR;
     cQ:AddButton({
         Text = 'Reset Cross-Session Time',
@@ -4610,9 +4610,9 @@ do
                     e0 = tick()
                     e1 = aR
                 end
-                dY:SetText('Gold Gained: ' .. formatNumberWithCommas(aR - aQ))
-                e3:SetText('Total Gold: ' .. formatNumberWithCommas(aR))
-                e7:SetText('CS Gold Gain: ' .. formatNumberWithCommas(aR - e8))
+                dY:SetText('Gold Gained: ' .. _FormatNumberWithCommas(aR - aQ))
+                e3:SetText('Total Gold: ' .. _FormatNumberWithCommas(aR))
+                e7:SetText('CS Gold Gain: ' .. _FormatNumberWithCommas(aR - e8))
             end
             task.wait()
         end
@@ -4654,7 +4654,7 @@ do
 end
 do
     local ec;
-    for B, C in pairs(an) do
+    for B, C in pairs(_nms) do
         local eb = bH[C]
         local ed = string.gsub(eb.NameTag, '%(NIGHTMARE%) ', '')
         cT:AddButton({
@@ -5102,8 +5102,8 @@ do
     if ao then
         if aj:FindFirstChild(6) then
             task.spawn(function()
-                local eA, eB, eC = Workspace:WaitForChild('Pillar1'), Workspace:WaitForChild('Pillar2'),
-                    Workspace:WaitForChild('Pillar3')
+                local eA, eB, eC = _workspace:WaitForChild('Pillar1'), Workspace:WaitForChild('Pillar2'),
+                    _workspace:WaitForChild('Pillar3')
                 eC:WaitForChild('HealthProperties')
                 eA.Name = 'Pillar'
                 eB.Name = 'Pillar'
@@ -5213,13 +5213,13 @@ do
                              10 .. 's`'
                 end
                 if _currentDungeon.Gold and V >= _currentDungeon.Gold then
-                    eM = eM .. '\nGold Gained: `' .. formatNumberWithCommas(V - _currentDungeon.Gold) .. ''
+                    eM = eM .. '\nGold Gained: `' .._FormatNumberWithCommass(V - _currentDungeon.Gold) .. ''
                 end
                 _currentDungeon.Gold = V;
                 _currentDungeon.LastDungeonCompletion = c0;
                 _Save()
             end
-            eM = eM .. '\nGold: `' .. formatNumberWithCommas(aP.Value) .. ''
+            eM = eM .. '\nGold: `' .._FormatNumberWithCommass(aP.Value) .. ''
             if ax then
                 local eO = {
                     KrakenRaid = {
@@ -5307,17 +5307,17 @@ do
                 a3 = false
             end
         end
-        function missionEndRestartOrNextEvent()
+        function _MissionEndRestartOrNextEvent()
             if Toggles.Autofarm.Value then
-                if Toggles.nightmareLoop.Value and aw then
-                    local eX = nextInTbl(an, _dungeonId)
+                if Toggles.nightmareLoop.Value and _isNM then
+                    local eX = _NextInTbl(_nms, _dungeonId)
                     if bH[eX].InternalID == 3 and Toggles.skipScarecrowNm.Value then
-                        eX = nextInTbl(an, eX)
+                        eX = _NextInTbl(_nms, eX)
                         msgbox('Skipping Scarecrow Defense')
                     end
                     StartRaid(eX, al)
                 elseif Toggles.NextDungeon.Value and not au then
-                    local eY = nextInTbl(c8, _dungeonId)
+                    local eY = _NextInTbl(c8, _dungeonId)
                     local eZ = table.find(ac, eY)
                     local e_ = aO.Level.Value >= bI(eY) and (al == 5 or at or au or av)
                     local f0 = e_ and eY or _dungeonId;
@@ -5451,14 +5451,14 @@ do
                 f2()
             end)
             task.wait(f5 and 2 or 3 + Options.dungeonRestartTimer.Value)
-            missionEndRestartOrNextEvent()
+            _MissionEndRestartOrNextEvent()
         end)
         local TowerFinished = game:GetService("ReplicatedStorage").Shared.Towers:WaitForChild("TowerFinished")
         if at or av then
             TowerFinished.OnClientEvent:Once(function(fn, f3)
                 task.spawn(function()
                     task.wait(40)
-                    missionEndRestartOrNextEvent()
+                    _MissionEndRestartOrNextEvent()
                 end)
                 c0 = tick()
                 aC = true;
@@ -5476,12 +5476,12 @@ do
                     task.wait()
                 end
                 task.wait(Options.towerRestartTimer.Value)
-                missionEndRestartOrNextEvent()
+                _MissionEndRestartOrNextEvent()
             end)
         end
     end
     if at or au or av then
-        Workspace.ChildAdded:Connect(function(cV)
+        _workspace.ChildAdded:Connect(function(cV)
             if Toggles.Autofarm.Value then
                 if cV.Name == b5 then
                     bf = tick()
@@ -5855,8 +5855,8 @@ Toggles.Autofarm:OnChanged(function(fx)
         end)
         task.spawn(function()
             while Toggles.Autofarm.Value do
-                if b7 and Workspace:FindFirstChild('KrakenPipe') and not Toggles.ignoreCannon.Value and _Alive() then
-                    for B, C in pairs(Workspace:GetChildren()) do
+                if b7 and _workspace:FindFirstChild('KrakenPipe') and not Toggles.ignoreCannon.Value and _Alive() then
+                    for B, C in pairs(_workspace:GetChildren()) do
                         if C.Name == 'KrakenPipe' and C:FindFirstChild('GuiPart') and
                             C.GuiPart:FindFirstChild('SurfaceGui') and C.GuiPart.SurfaceGui:FindFirstChild('Percent') and
                             C:FindFirstChild('Base') then
@@ -5936,7 +5936,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 local fV = '## Floor: `' .. fT.Value .. '' .. '\nTime: ' ..
                                                _TimeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' ..
                                                ca[aZ].DisplayName .. '`'
-                                fV = fV .. '\nGold Gain: `' .. formatNumberWithCommas(aR - aQ) .. ''
+                                fV = fV .. '\nGold Gain: `' .._FormatNumberWithCommass(aR - aQ) .. ''
                                 if not Toggles.anonHook.Value then
                                     fV = fV .. '\n' .. plrLink
                                 end
@@ -5962,7 +5962,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                         local fV = '## Floor: `' .. fT.Value .. '' .. '\nTime: ' ..
                                        _TimeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' .. ca[aZ].DisplayName ..
                                        '`'
-                        fV = fV .. '\nGold Gain: `' .. formatNumberWithCommas(aR - aQ) .. ''
+                        fV = fV .. '\nGold Gain: `' .._FormatNumberWithCommass(aR - aQ) .. ''
                         if not Toggles.anonHook.Value then
                             fV = fV .. '\n' .. plrLink
                         end
@@ -6089,7 +6089,7 @@ do
         end
         return gi, g9, Z, gh, gj, a1, gk
     end
-    function equipWepWithId(gn, go)
+    function _EquipWepWithId(gn, go)
         for B, C in pairs(bF:GetChildren()) do
             if C:FindFirstChild('ID') and C.ID.Value and C.ID.Value == gn then
                 bN:FireServer(C, aT)
@@ -6098,8 +6098,8 @@ do
             end
         end
     end
-    if Workspace:FindFirstChild('TargetDummies') then
-        for ds, gp in pairs(Workspace.TargetDummies:GetChildren()) do
+    if _workspace:FindFirstChild('TargetDummies') then
+        for ds, gp in pairs(_workspace.TargetDummies:GetChildren()) do
             gp.Parent = b9
         end
     end
@@ -6186,11 +6186,11 @@ Toggles.Killaura:OnChanged(function(cU)
                     local gv = Options.mobWepId.Value and #Options.mobWepId.Value > 2 and Options.mobWepId.Value;
                     local gw = Options.bossWepId.Value and #Options.bossWepId.Value > 2 and Options.bossWepId.Value;
                     if gv and not a1 and gu ~= gv then
-                        equipWepWithId(gv, ' Mobs!')
+                        _EquipWepWithId(gv, ' Mobs!')
                         task.wait(0.5)
                     end
                     if gw and a1 and gu ~= gw then
-                        equipWepWithId(gw, ' Bosses!')
+                        _EquipWepWithId(gw, ' Bosses!')
                         task.wait(0.5)
                     end
                 end
@@ -6311,7 +6311,7 @@ end)
                         task.wait(3)
                         if tick() - a5 >= Options.timeoutTimer.Value then
                             msgbox('Timeout! Force restarting dungeon!')
-                            missionEndRestartOrNextEvent()
+                            _MissionEndRestartOrNextEvent()
                             break
                         else
                             Options.Offset:SetValue(gH)
