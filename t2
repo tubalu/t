@@ -5226,6 +5226,12 @@ do
             })
         end
         function _Msg(eJ, d8, g)
+            print("Debugging _Msg:")
+            print("eJ:", eJ)
+            print("d8:", d8)
+            print("g:", g)
+            print("m:", m)
+            print("f5 in mission finished:", f5)
             local eK = Options.dungeonHook.Value;
             local eL = g > 600 and _TimeElapsed(g) or math.round(g / 0.1) / 10 .. 's'
             local eM = 'Code: `' .. codeStr .. '\nMission: ' .. missionName .. '\nTime: ' .. eL ..
@@ -5376,6 +5382,9 @@ do
             aC = true;
             task.spawn(function()
                 msgbox('Mission ' .. (f5 and 'Failed!' or 'Completed!'))
+                -- Debugging values before calling _Msg
+                print("f5 value:", f5)
+                print("Color value:", m[f5 and "Red" or "Green"])
                 _Msg('Mission ' .. (f5 and 'Failed' or 'Completed'), m[f5 and "Red" or "Green"], f3)
             end)
             bF.ChildAdded:Connect(function(cV)
