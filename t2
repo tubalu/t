@@ -4859,7 +4859,7 @@ do
                                         (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) +
                              er.CFrame.lookVector * 2;
                     print("f..")
-                    if dungeon and dungeon == 44 then
+                    if _currentDungeon and _currentDungeon.Dungeon == 44 then
                         SmartPlayerTp(eh)
                     else
                         SmartPlayerTp(eh, er)
