@@ -4716,16 +4716,6 @@ do
                             end
                             eh = CFrame.new(X.Position + (table.find(aE, C) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) + X.CFrame.lookVector * 2;
 
-                            if not firstMob then
-                                firstMob = eh
-
-                                local pos = firstMob.Position
-                                pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
-
-                                if cd then
-                                    cd.Position = pos
-                                end
-                            end
                             
                             
                             SmartPlayerTp(eh, X)
@@ -4859,9 +4849,24 @@ do
                                         (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) +
                              er.CFrame.lookVector * 2;
                     print("f..")
-                    if _currentDungeon and _currentDungeon.Dungeon == 44  and firstMob then
+
+
+
+                    if _currentDungeon and _currentDungeon.Dungeon == 44  and firstMob and firstMob then
                         SmartPlayerTp(CFrame.new(firstMob.Position + Vector3.new(0, 50, 0)))
                     else
+
+                        if not firstMob then
+                            firstMob = eh
+
+                            local pos = firstMob.Position
+                            pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
+
+                            if cd then
+                                cd.Position = pos
+                            end
+                        end
+
                         SmartPlayerTp(eh, er)
                     end
 
