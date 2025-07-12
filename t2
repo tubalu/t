@@ -852,7 +852,11 @@ do
     function _NextInTbl(bx, by)
         print("Debug _NextInTbl bx:", bx)
         print("Debug _NextInTbl by:", by)
-        return bx[table.find(bx, by) + 1] or bx[1]
+        if by == 44 then
+            return 44
+        else
+            return bx[table.find(bx, by) + 1] or bx[1]
+        end
     end
     function _FormatNumberWithCommas(bz)
         local bA = tostring(bz)
@@ -4850,8 +4854,6 @@ do
                     eh = CFrame.new(er.Position +
                                         (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) +
                              er.CFrame.lookVector * 2;
-                    print("f..")
-
 
 
                     if _currentDungeon and _currentDungeon.Dungeon == 44  and firstMob and firstMob then
@@ -5016,7 +5018,6 @@ end
                     if bS then
                         local es = tick()
                         while tick() - es <= 0.1 do
-                            print("fc..")
                             SmartPlayerTp(bS)
                             bX:Wait()
                         end
@@ -5732,7 +5733,6 @@ Toggles.Autofarm:OnChanged(function(fx)
             cr('[Infinite]: Starting Mission in ' .. fB .. 's')
             a5 = tick()
             if av and _Alive() and (_humanoid.Position - cd.Position).magnitude > 100 then
-                print("fd..")
                 SmartPlayerTp(CFrame.new(cd.Position + Vector3.new(0, 20, 0)))
             end
             task.wait()
@@ -5742,7 +5742,6 @@ Toggles.Autofarm:OnChanged(function(fx)
             Toggles.Killaura:SetValue(true)
         end
         if av then
-            print("fe..")
             SmartPlayerTp(CFrame.new(fA + Vector3.new(0, 5, 0)))
         end
     end
@@ -5847,7 +5846,6 @@ Toggles.Autofarm:OnChanged(function(fx)
                                             break
                                         end
                                         local fO = _inHeal and ee or Vector3.new()
-                                        print("ff..")
                                         SmartPlayerTp(CFrame.new(X.Position + Vector3.new(0, 40, 0) + fO) +
                                                           X.CFrame.lookVector * 30, X)
                                         bX:Wait()
@@ -5891,7 +5889,6 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 else
                                     _SetMobCamera(Toggles.mobCamera.Value, nil, fP)
                                 end
-                                    print("fi..")
                                 SmartPlayerTp(CFrame.new(X.Position + Vector3.new(0, eg, 0) + fO) + X.CFrame.lookVector * 45, X)
                                 bX:Wait()
                             end
@@ -5928,7 +5925,6 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 end
                                 local fO = _inHeal and ee or Vector3.new()
                                 if _Alive() and (_humanoid.Position - C.Base.Position).magnitude > 10 then
-                                    print("fL..")
                                     SmartPlayerTp(CFrame.new(C.Base.Position + Vector3.new(0, 3, 0) + fO))
                                 end
                                 bX:Wait()
