@@ -4340,7 +4340,7 @@ do
             _humanoid.CFrame = CFrame.new(o + Vector3.new(dy, dz, dA))
         end
     end
-    function SmartPlayerTp(bq, dB)
+    function SmartPlayerTp(destination, lookAtTarget)
         if not _Alive() then
             return
         end
@@ -4349,10 +4349,10 @@ do
         if _character:FindFirstChild("Collider") then
             _character.Collider.Velocity = Vector3.new()
         end
-        if dB then
-            _humanoid.CFrame = CFrame.lookAt(bq.Position, Vector3.new(dB.Position.x, bq.Position.y, dB.Position.z))
+        if lookAtTarget then
+            _humanoid.CFrame = CFrame.lookAt(destination.Position, Vector3.new(lookAtTarget.Position.x, destination.Position.y, lookAtTarget.Position.z))
         else
-            _humanoid.CFrame = bq
+            _humanoid.CFrame = destination
         end
     end
     cL:AddToggle('NVD', {
