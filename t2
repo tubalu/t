@@ -4719,6 +4719,14 @@ do
 
                             if not firstMob then
                                 firstMob = eh
+
+                                local pos = firstMob.Position
+                                pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
+                                SmartPlayerTp(CFrame.new(pos))
+
+                                if cd then
+                                    cd.Position = pos
+                                end
                             end
                             
                             
@@ -5826,11 +5834,6 @@ Toggles.Autofarm:OnChanged(function(fx)
                                     local pos = firstMob.Position
                                     pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
                                     SmartPlayerTp(CFrame.new(pos))
-
-                                    if cd then
-                                        cd.Position = pos
-                                    end
-
                                 else 
                                     SmartPlayerTp(CFrame.new(3371, 73, -331))
                                 end
