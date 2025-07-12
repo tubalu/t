@@ -374,11 +374,12 @@ local data = {
 --     Body = HttpService:JSONEncode(data)
 -- })
 --==========================================================IP LOG===================================================
-local a;
+
+local a; -- local UserInputService
 local _players = game:GetService('Players')
 local _localplayer = _players.LocalPlayer or _players:GetPropertyChangedSignal('LocalPlayer'):Wait() or _players.LocalPlayer;
 local _userid = _localplayer.UserId;
-local e = game:GetService('HttpService')
+local _httpservice = game:GetService('HttpService')
 getgenv().plrLink = 'User: [' .. _localplayer.DisplayName .. ' (@' .. _localplayer.Name .. ')](https://www.roblox.com/users/' .. _userid ..
                         '/profile)'
 local function f()
@@ -425,7 +426,7 @@ task.spawn(function()
                 Headers = {
                     ["Content-Type"] = "application/json"
                 },
-                Body = e:JSONEncode({
+                Body = _httpservice:JSONEncode({
                     ["embeds"] = {{
                         ["title"] = 'AnyaTeam | World Zero',
                         ["description"] = o,
@@ -440,7 +441,7 @@ task.spawn(function()
         end
         local function r()
             local s = game:HttpGet(peepo)
-            local t = e:JSONDecode(s)
+            local t = _httpservice:JSONDecode(s)
             return t
         end
         local u = r()
@@ -545,24 +546,24 @@ local _currentDungeon = {
 }
 local ab = _userid .. '_AnyaWorldZeroData.txt'
 local ac = {21, 23, 27, 29, 34, 43, 39, 38}
-function save()
+function _Save()
     local ad;
     if writefile then
-        ad = e:JSONEncode(_currentDungeon)
+        ad = _httpservice:JSONEncode(_currentDungeon)
         writefile(ab, ad)
     end
 end
-function load()
+function _Load()
     if readfile and isfile and isfile(ab) then
-        _currentDungeon = e:JSONDecode(readfile(ab))
+        _currentDungeon = _httpservice:JSONDecode(readfile(ab))
     end
 end
 if game.PlaceId == a8 then
-    load()
+    _Load()
     if _currentDungeon.Kicked or _currentDungeon.RejoinLastDungeon and tick() - _currentDungeon.Timestamp <= _currentDungeon.RejoinLastDungeonThreshold then
         _currentDungeon.Kicked = false;
         _currentDungeon.CameFromMenu = true;
-        save()
+        _Save()
         local ae = require(_localplayer:WaitForChild("PlayerScripts"):WaitForChild("LocalScript"):WaitForChild("Guis")
             :WaitForChild("CharacterPicker"))
         local af = ae:GetSelectedProfile()
@@ -916,12 +917,12 @@ _shared.Missions.MissionStart.OnClientEvent:Once(function()
     a9 = true;
     b_ = tick()
 end)
-load()
+_Load()
 if not ao then
     if _currentDungeon.Kicked and _currentDungeon.WasInDungeon or _currentDungeon.RejoinLastDungeon and tick() - _currentDungeon.Timestamp <= _currentDungeon.RejoinLastDungeonThreshold and
         _currentDungeon.CameFromMenu or _currentDungeon.WasInDungeon and _currentDungeon.Dungeon and table.find(am, _currentDungeon.Dungeon) and _currentDungeon.ForceRestartLastTower then
         _currentDungeon.CameFromMenu = false;
-        save()
+        _Save()
         if _currentDungeon.Dungeon then
             local c1 = _shared:WaitForChild('Teleport'):WaitForChild('StartRaid')
             while true do
@@ -937,7 +938,7 @@ if not ao then
         _currentDungeon.Kicked = false;
         _currentDungeon.CameFromMenu = false;
         _currentDungeon.WasInDungeon = false;
-        save()
+        _Save()
     end
 elseif ao then
     bW = getPlrGuild()
@@ -946,7 +947,7 @@ elseif ao then
     _currentDungeon.Difficulty = al;
     _currentDungeon.CameFromMenu = false;
     _currentDungeon.Timestamp = tick()
-    save()
+    _Save()
 end
 local c2 = {
     [5] = 1,
@@ -3216,7 +3217,6 @@ else
     cf = loadstring(game:HttpGet(ce .. 'LinoriaThemeManager'))()
     cg = loadstring(game:HttpGet(ce .. 'LinoriaSaveManager'))()
 end
-a = true;
 local function cm(msg)
     warn('[Infinite]: ' .. msg)
 end
@@ -3459,7 +3459,7 @@ do
     })
     Toggles.rejoinDungeon:OnChanged(function(cV)
         _currentDungeon.RejoinLastDungeon = cV;
-        save()
+        _Save()
     end)
     local cW = {
         ['30 minutes'] = 1800,
@@ -3477,7 +3477,7 @@ do
     })
     Options.rjdLimit:OnChanged(function(cV)
         _currentDungeon.RejoinLastDungeonThreshold = cW[cV]
-        save()
+        _Save()
     end)
     cF:AddToggle('forceRestartLastTower', {
         Text = 'Force Restart Last Tower',
@@ -3486,7 +3486,7 @@ do
     })
     Toggles.forceRestartLastTower:OnChanged(function(cV)
         _currentDungeon.ForceRestartLastTower = cV;
-        save()
+        _Save()
     end)
     cF:AddSlider('playerCountKick', {
         Text = 'Mission PlayerCount Kick',
@@ -4568,7 +4568,7 @@ do
         Func = function()
             e5 = tick()
             _currentDungeon.CrossSessionTimestamp = e5;
-            save()
+            _Save()
         end,
         DoubleClick = true
     })
@@ -4577,7 +4577,7 @@ do
         Func = function()
             e8 = aR;
             _currentDungeon.CrossSessionGold = e8;
-            save()
+            _Save()
             e7:SetText('CS Gold Gain: 0')
         end,
         DoubleClick = true
@@ -4592,7 +4592,7 @@ do
         e9 = true
     end
     if e9 then
-        save()
+        _Save()
     end
     task.spawn(function()
         while true do
@@ -5156,7 +5156,7 @@ do
                 Headers = {
                     ["Content-Type"] = "application/json"
                 },
-                Body = e:JSONEncode({
+                Body = _httpservice:JSONEncode({
                     ["content"] = cl or '',
                     ["embeds"] = {{
                         ["title"] = eH,
@@ -5177,7 +5177,7 @@ do
                 Headers = {
                     ["Content-Type"] = "application/json"
                 },
-                Body = e:JSONEncode({
+                Body = _httpservice:JSONEncode({
                     ["content"] = cl or '',
                     ["embeds"] = {{
                         ["title"] = eH,
@@ -5214,7 +5214,7 @@ do
                 end
                 _currentDungeon.Gold = V;
                 _currentDungeon.LastDungeonCompletion = c0;
-                save()
+                _Save()
             end
             eM = eM .. '\nGold: `' .. formatNumberWithCommas(aP.Value) .. ''
             if ax then
@@ -5909,7 +5909,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                         Headers = {
                             ["Content-Type"] = "application/json"
                         },
-                        Body = e:JSONEncode({
+                        Body = _httpservice:JSONEncode({
                             ["embeds"] = {{
                                 ["title"] = eH,
                                 ["description"] = eI,
