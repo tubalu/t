@@ -4853,14 +4853,14 @@ do
 
 
                     if _currentDungeon and _currentDungeon.Dungeon == 44  and firstMob and firstMob then
-                        SmartPlayerTp(CFrame.new(firstMob.Position + Vector3.new(0, 50, 0)))
+                        SmartPlayerTp(CFrame.new(firstMob.Position + Vector3.new(0, 20, 0)))
                     else
 
                         if not firstMob then
                             firstMob = eh
 
                             local pos = firstMob.Position
-                            pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
+                            pos = Vector3.new(pos.X, pos.Y + 20, pos.Z)
 
                             if cd then
                                 cd.Position = pos
