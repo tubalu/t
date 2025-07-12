@@ -850,6 +850,8 @@ do
         return math.round(game.Stats.PerformanceStats.Ping:GetValue()) .. ' ms'
     end
     function _NextInTbl(bx, by)
+        print("Debug _NextInTbl bx:", bx)
+        print("Debug _NextInTbl by:", by)
         return bx[table.find(bx, by) + 1] or bx[1]
     end
     function _FormatNumberWithCommas(bz)
@@ -5385,7 +5387,11 @@ do
                 -- Debugging values before calling _Msg
                 print("f5 value:", f5)
                 print("Color value:", m[f5 and "Red" or "Green"])
-                _Msg('Mission ' .. (f5 and 'Failed' or 'Completed'), m[f5 and "Red" or "Green"], f3)
+                if f5 then
+                    _Msg('Mission ' .. (f5 and 'Failed' or 'Completed'), m[f5 and "Red" or "Green"], f3)
+                else
+                    print("Mission completed, showing green message")
+                end
             end)
             bF.ChildAdded:Connect(function(cV)
                 local f7 = bL[cV.Name]
