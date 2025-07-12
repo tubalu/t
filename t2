@@ -310,12 +310,12 @@ if not game:IsLoaded() then
 end
 
 
-local workspace = game:GetService("Workspace")
-local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
+local _workspace = game:GetService("Workspace")
+local _httpService = game:GetService("HttpService")
+local _players = game:GetService("Players")
+local _userInputService = game:GetService("UserInputService")
 
-local Player = Players.LocalPlayer
+local Player = _players.LocalPlayer
 local Executor = identifyexecutor and identifyexecutor() or "Unknown"
 
 
@@ -330,7 +330,7 @@ end
 -- Safe http req
 local function SafeHttpGet(url)
     local success, result = pcall(function()
-        return HttpService:JSONDecode(game:HttpGet(url))
+        return _httpService:JSONDecode(game:HttpGet(url))
     end)
     return success and result or nil
 end
@@ -343,10 +343,10 @@ local provider = ipInfo.connection and ipInfo.connection.isp or "📶 | ->ISP<-"
 
 -- device
 local platform = "❓ | ->PLATFORM<-"
-if UserInputService.TouchEnabled then
+if _userInputService.TouchEnabled then
     platform = "📱 | Mobile"
 print("Reached line 400")
-elseif UserInputService.KeyboardEnabled then
+elseif _userInputService.KeyboardEnabled then
     platform = "💻 | PC"
 print("Reached line 600")
 end
@@ -764,23 +764,23 @@ local bk;
 local bl = {}
 local bm = 1;
 do
-    function resetCamera()
+    function _ResetCamera()
         local bn = _humanoid and (_humanoid:FindFirstChild("Part") or _humanoid)
         if bn and not (bb.CameraSubject == bn) then
             bb.CameraSubject = bn
         end
     end
-    function noclip()
+    function _Noclip()
         if _humanoid and _humanoid.CanCollide then
             _humanoid.CanCollide = false
         end
     end
-    function unnoclip()
+    function _Unnoclip()
         if _humanoid and not _humanoid.CanCollide then
             _humanoid.CanCollide = true
         end
     end
-    function setMobCamera(bo, bp, bq)
+    function _SetMobCamera(bo, bp, bq)
         if not bq or not bo then
             local bn = bo and bp or _humanoid and (_humanoid:FindFirstChild("Part") or _humanoid)
             if bn and bb.CameraSubject ~= bn then
@@ -806,13 +806,13 @@ do
             end
         end
     end
-    function alive()
+    function _Alive()
         return _character and _humanoid and _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties.Health.Value > 0
     end
-    function mounted()
+    function _Mounted()
         return _character and _character:FindFirstChild('Properties') and _character.Properties:GetAttribute('Mounted')
     end
-    function isAlive(bs)
+    function _IsAlive(bs)
         return bs and bs.PrimaryPart and bs:FindFirstChild('HealthProperties') and
                    bs.HealthProperties:FindFirstChild('Health') and bs.HealthProperties.Health.Value > 0
     end
@@ -824,7 +824,7 @@ do
     function SwitchOffhandPerks(o)
         _shared.Settings.OffhandPerksActive:FireServer(o)
     end
-    function timeElapsed(C)
+    function _TimeElapsed(C)
         local bt = math.floor(C / 86400)
         local bu = math.floor(C % 86400 / 3600)
         local bv = math.floor(C % 3600 / 60)
@@ -3177,10 +3177,10 @@ local ca = {
 }
 local cb = Instance.new('Folder')
 cb.Name = 'SummonFolder'
-cb.Parent = Workspace;
+cb.Parent = _workspace;
 local cc = Instance.new('Folder')
 cc.Name = 'infiniteboy'
-cc.Parent = Workspace;
+cc.Parent = _workspace;
 local cd;
 if av then
     cd = Instance.new('Part')
@@ -3191,7 +3191,7 @@ if av then
     cd.Transparency = 0;
     cd.Material = 'SmoothPlastic'
     cd.BrickColor = BrickColor.new('Cyan')
-    cd.Parent = workspace
+    cd.Parent = _workspace
 end
 local ce = 'https://raw.githubusercontent.com/maihoangphi2531/infscriptv2/main/'
 local cf;
@@ -4307,21 +4307,21 @@ do
         Compact = true
     })
     local dv = cJ:AddLabel(Options.wheelCount.Value .. ' spins in ' ..
-                               timeElapsed(
+                               _TimeElapsed(
             math.round((Options.wheelCount.Value - 1) * Options.wheelDelay.Value * 10) / 10))
     Options.wheelCount:OnChanged(function(cU)
-        dv:SetText(cU .. ' spins in ' .. timeElapsed(math.round((cU - 1) * Options.wheelDelay.Value * 10) / 10))
+        dv:SetText(cU .. ' spins in ' .. _TimeElapsed(math.round((cU - 1) * Options.wheelDelay.Value * 10) / 10))
     end)
     Options.wheelDelay:OnChanged(function(cU)
         dv:SetText(Options.wheelCount.Value .. ' spins in ' ..
-                       timeElapsed(math.round((Options.wheelCount.Value - 1) * cU * 10) / 10))
+                       _TimeElapsed(math.round((Options.wheelCount.Value - 1) * cU * 10) / 10))
     end)
     cJ:AddButton({
         Text = 'Spin wheel with the settings above!',
         Func = function()
             local dw, dx = tonumber(Options.wheelCount.Value), Options.wheelDelay.Value;
             if dw > 0 then
-                msgbox('Spinning the wheel ' .. dw .. ' times in ' .. timeElapsed(math.round((dw - 1) * dx * 10) / 10) ..
+                msgbox('Spinning the wheel ' .. dw .. ' times in ' .. _TimeElapsed(math.round((dw - 1) * dx * 10) / 10) ..
                        ' seconds!', 7)
                 for B = 1, dw do
                     _shared.EventSpinner.JoinQueue:FireServer(_localplayer)
@@ -4334,15 +4334,15 @@ do
 end
 do
     function PlayerTp(o, dy, dz, dA)
-        if alive() then
+        if _Alive() then
             _humanoid.CFrame = CFrame.new(o + Vector3.new(dy, dz, dA))
         end
     end
     function SmartPlayerTp(bq, dB)
-        if not alive() then
+        if not _Alive() then
             return
         end
-        noclip()
+        _Noclip()
         _humanoid.Velocity = Vector3.new()
         if _character:FindFirstChild("Collider") then
             _character.Collider.Velocity = Vector3.new()
@@ -4400,7 +4400,7 @@ do
     cN:AddButton({
         Text = 'Discover Dungeons (BLATANT)',
         Func = function()
-            if alive() and not ao then
+            if _Alive() and not ao then
                 local dG = Workspace.PhysicalDungeonLocations;
                 for B, C in pairs(dG:GetChildren()) do
                     _shared.Teleport.WaystoneTeleport:FireServer(1)
@@ -4559,7 +4559,7 @@ do
     local e4 = cQ:AddLabel('Session Time: 0s')
     cQ:AddDivider()
     local e5 = _currentDungeon.CrossSessionTimestamp or tick()
-    local e6 = cQ:AddLabel('Cross-Session Time: ' .. timeElapsed(tick() - e5))
+    local e6 = cQ:AddLabel('Cross-Session Time: ' .. _TimeElapsed(tick() - e5))
     local e7 = cQ:AddLabel('CS Gold Gain: ' ..
                                formatNumberWithCommas(_currentDungeon.CrossSessionGold and aR - _currentDungeon.CrossSessionGold or 0))
     local e8 = _currentDungeon.CrossSessionGold or aR;
@@ -4617,8 +4617,8 @@ do
     task.spawn(function()
         while true do
             task.wait(1)
-            e4:SetText('Session Time: ' .. timeElapsed(tick() - sessionTick))
-            e6:SetText('Cross-Session Time: ' .. timeElapsed(tick() - e5))
+            e4:SetText('Session Time: ' .. _TimeElapsed(tick() - sessionTick))
+            e6:SetText('Cross-Session Time: ' .. _TimeElapsed(tick() - e5))
         end
     end)
 end
@@ -4686,7 +4686,7 @@ do
             local ek;
             while Toggles.Autofarm.Value and not b7 do
                 for B, C in pairs(b9:GetChildren()) do
-                    if isAlive(C) then
+                    if _IsAlive(C) then
                         if mobWaitTbl and table.find(mobWaitTbl, C.Name) and (not ek or alwaysWait) then
                             task.wait(waittime)
                             ek = true
@@ -4695,17 +4695,17 @@ do
                         if not ej then
                             ej = true
                         end
-                        while isAlive(C) and Toggles.Autofarm.Value and U and not b7 do
+                        while _IsAlive(C) and Toggles.Autofarm.Value and U and not b7 do
                             bV = C;
                             ei = X.Position;
                             if _inHeal then
                                 if _currentDungeon.Dungeon == 44 then
-                                    setMobCamera(Toggles.mobCamera.Value, X)
+                                    _SetMobCamera(Toggles.mobCamera.Value, X)
                                 else
-                                    resetCamera()
+                                    _ResetCamera()
                                 end
                             else
-                                setMobCamera(Toggles.mobCamera.Value, X)
+                                _SetMobCamera(Toggles.mobCamera.Value, X)
                             end
                             eg = (X.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                             if _inHeal then
@@ -4720,8 +4720,8 @@ do
                     end
                 end
                 bV = nil;
-                resetCamera()
-                unnoclip()
+                _ResetCamera()
+                _Unnoclip()
                 if au and U and ej then
                     SmartPlayerTp(CFrame.new(10000, 10000, 10000))
                 end
@@ -4737,20 +4737,20 @@ do
         task.spawn(function()
             while Toggles.Autofarm.Value do
                 for B, C in pairs(b9:GetChildren()) do
-                    if isAlive(C) then
+                    if _IsAlive(C) then
                         if C.Name ~= el or C.Name == el and b3 == 1 then
                             if mobWaitTbl and table.find(mobWaitTbl, C.Name) and (not ek or alwaysWait) then
                                 task.wait(waittime)
                                 ek = true
                             end
                             local X = C.PrimaryPart;
-                            while isAlive(C) and Toggles.Autofarm.Value and U and
+                            while _IsAlive(C) and Toggles.Autofarm.Value and U and
                                 (C.Name ~= el or C.Name == el and b3 == 1) do
                                 bV = C;
                                 if _inHeal then
-                                    resetCamera()
+                                    _ResetCamera()
                                 else
-                                    setMobCamera(Toggles.mobCamera.Value, X)
+                                    _SetMobCamera(Toggles.mobCamera.Value, X)
                                 end
                                 eg = (X.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                                 eh = CFrame.new(X.Position +
@@ -4763,8 +4763,8 @@ do
                     end
                 end
                 bV = nil;
-                resetCamera()
-                unnoclip()
+                _ResetCamera()
+                _Unnoclip()
                 task.wait()
             end
         end)
@@ -4780,7 +4780,7 @@ do
                 
                 -- Sort mobs and bosses
                 for B, C in pairs(b9:GetChildren()) do
-                    if isAlive(C) then
+                    if _IsAlive(C) then
                         -- Sort boss and normal mobs
                         if string.match(C.Name, "BOSS") or string.match(C.Name, "Dragon") then
                             table.insert(bossMobs, C)
@@ -4822,7 +4822,7 @@ do
         task.spawn(function()
             local ek;
             while Toggles.Autofarm.Value do
-                if isAlive(en) and U then
+                if _IsAlive(en) and U then
                     local er = en.PrimaryPart;
                     bV = en;
                     if mobWaitTbl and table.find(mobWaitTbl, eo) and (not ek or alwaysWait) then
@@ -4830,9 +4830,9 @@ do
                         ek = true
                     end
                     if _inHeal then
-                        resetCamera()
+                        _ResetCamera()
                     else
-                        setMobCamera(Toggles.mobCamera.Value, er)
+                        _SetMobCamera(Toggles.mobCamera.Value, er)
                     end
                     eg = (er.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                     eh = CFrame.new(er.Position +
@@ -4841,8 +4841,8 @@ do
                     SmartPlayerTp(eh, er)
                 else
                     bV = nil;
-                    resetCamera()
-                    unnoclip()
+                    _ResetCamera()
+                    _Unnoclip()
                 end
                 bX:Wait()
             end
@@ -4855,7 +4855,7 @@ local movedToTimer = false -- only run once
 function AutoCheckpoint()
     task.spawn(function()
         while Toggles.Autofarm.Value do
-            if alive() then
+            if _Alive() then
                 -- Check if BossDoorTrigger has been added
                 if not isBossDoorAdded then
                     local character = LocalPlayer.Character
@@ -4948,7 +4948,7 @@ end
             while Toggles.Autofarm.Value do
                 b4 = 0;
                 for B, C in pairs(b9:GetChildren()) do
-                    if isAlive(C) then
+                    if _IsAlive(C) then
                         b4 = b4 + 1
                     end
                 end
@@ -5116,8 +5116,8 @@ do
                     if eD then
                         local eE = Instance.new('Folder')
                         eE.Name = 'WaterFolder'
-                        eE.Parent = Workspace;
-                        eD.Parent = Workspace.WaterFolder;
+                        eE.Parent = _workspace;
+                        eD.Parent = _workspace.WaterFolder;
                         if as then
                             b7 = true
                         end
@@ -5149,7 +5149,7 @@ do
         getgenv().missionName = missionName;
         getgenv().codeStr = eG.EventDungeon and 'Event' or (au or av) and 'Special' or eG.TowerID and 'Tower ' ..
                                 eG.TowerID or eG.DisplayWorldID .. '-' .. eG.WorldMissionID;
-        function hookWithUserInfo(ci, eH, eI, d8, g, cl)
+        function _HookWithUserInfo(ci, eH, eI, d8, g, cl)
             request({
                 Url = ci,
                 Method = "POST",
@@ -5170,7 +5170,7 @@ do
                 })
             })
         end
-        function anonHook(ci, eH, eI, d8, g, cl)
+        function _AnonHook(ci, eH, eI, d8, g, cl)
             request({
                 Url = ci,
                 Method = "POST",
@@ -5191,9 +5191,9 @@ do
                 })
             })
         end
-        function msg(eJ, d8, g)
+        function _Msg(eJ, d8, g)
             local eK = Options.dungeonHook.Value;
-            local eL = g > 600 and timeElapsed(g) or math.round(g / 0.1) / 10 .. 's'
+            local eL = g > 600 and _TimeElapsed(g) or math.round(g / 0.1) / 10 .. 's'
             local eM = 'Code: `' .. codeStr .. '\nMission: ' .. missionName .. '\nTime: ' .. eL ..
                            '`\nClass: ' .. '' .. ca[aZ].DisplayName .. ''
             if au then
@@ -5342,7 +5342,7 @@ do
             aC = true;
             task.spawn(function()
                 msgbox('Mission ' .. (f5 and 'Failed!' or 'Completed!'))
-                msg('Mission ' .. (f5 and 'Failed' or 'Completed'), m[f5 and "Red" or "Green"], f3)
+                _Msg('Mission ' .. (f5 and 'Failed' or 'Completed'), m[f5 and "Red" or "Green"], f3)
             end)
             bF.ChildAdded:Connect(function(cV)
                 local f7 = bL[cV.Name]
@@ -5461,7 +5461,7 @@ do
                 aC = true;
                 V = aP.Value;
                 task.spawn(function()
-                    msg("Mission Completed", m.Green, f3)
+                    _Msg("Mission Completed", m.Green, f3)
                 end)
                 cn(function()
                     f2()
@@ -5489,7 +5489,7 @@ do
                     task.spawn(function()
                         cV.PrimaryPart.CanCollide = false;
                         while cV and cV.PrimaryPart do
-                            if alive() then
+                            if _Alive() then
                                 cV.PrimaryPart.CFrame = CFrame.new(_humanoid.Position)
                             end
                             task.wait()
@@ -5506,7 +5506,7 @@ do
                     task.spawn(function()
                         cV.PrimaryPart.CanCollide = false;
                         while cV and cV.PrimaryPart do
-                            if alive() then
+                            if _Alive() then
                                 cV.PrimaryPart.CFrame = CFrame.new(_humanoid.Position)
                             end
                             task.wait()
@@ -5669,7 +5669,7 @@ Toggles.Autofarm:OnChanged(function(fx)
         local fz;
         local fA;
         if av then
-            if alive() then
+            if _Alive() then
                 fA = _humanoid.Position
             end
             if Toggles.Killaura.Value then
@@ -5682,7 +5682,7 @@ Toggles.Autofarm:OnChanged(function(fx)
             local fB = math.round(fy - (tick() - dF))
             cr('[Infinite]: Starting Mission in ' .. fB .. 's')
             a5 = tick()
-            if av and alive() and (_humanoid.Position - cd.Position).magnitude > 100 then
+            if av and _Alive() and (_humanoid.Position - cd.Position).magnitude > 100 then
                 SmartPlayerTp(CFrame.new(cd.Position + Vector3.new(0, 20, 0)))
             end
             task.wait()
@@ -5730,7 +5730,7 @@ Toggles.Autofarm:OnChanged(function(fx)
         end
         task.spawn(function()
             while Toggles.Autofarm.Value do
-                if alive() and _healthyProperties:FindFirstChild('MaxHealth') then
+                if _Alive() and _healthyProperties:FindFirstChild('MaxHealth') then
                     local _myHealthy = _healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value / 0.01;
                     if Options.resumePercent.Value > Options.healPercent.Value then
                         if _myHealthy <= Options.healPercent.Value and _myHealthy > 0 and not _inHeal then
@@ -5755,7 +5755,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                 local fH = workspace:FindFirstChild('CureFountainFallenKing') and
                                workspace.CureFountainFallenKing:FindFirstChild('ArcanePanel')
                 local fI = fF or fG or fH;
-                if fI and alive() then
+                if fI and _Alive() then
                     if U then
                         U = false
                     end
@@ -5786,7 +5786,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                         fM = true;
                         task.spawn(function()
                             for B, C in pairs(fN) do
-                                if isAlive(C) and
+                                if _IsAlive(C) and
                                     not (C.MobProperties.CurrentAttack.Value == 'Piledriver' or
                                         C.MobProperties.CurrentAttack.Value == 'Slap') then
                                     local X = C.PrimaryPart;
@@ -5814,13 +5814,13 @@ Toggles.Autofarm:OnChanged(function(fx)
                         end)
                     end
                     for B, C in pairs(fN) do
-                        if isAlive(C) and
+                        if _IsAlive(C) and
                             (C.MobProperties.CurrentAttack.Value == 'Piledriver' or C.MobProperties.CurrentAttack.Value ==
                                 'Slap') and C.PrimaryPart then
                             local X = C.PrimaryPart;
                             local fP =
                                 (CFrame.new(X.Position + Vector3.new(0, 5, 0)) + X.CFrame.lookVector * 45).Position;
-                            while isAlive(C) and Toggles.Autofarm.Value and
+                            while _IsAlive(C) and Toggles.Autofarm.Value and
                                 (C.MobProperties.CurrentAttack.Value == 'Piledriver' or
                                     C.MobProperties.CurrentAttack.Value == 'Slap') and X and not fJ and U do
                                 if not fL then
@@ -5829,9 +5829,9 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 local eg = 5 + Options.Offset.Value;
                                 local fO = _inHeal and ee or Vector3.new()
                                 if _inHeal then
-                                    resetCamera()
+                                    _ResetCamera()
                                 else
-                                    setMobCamera(Toggles.mobCamera.Value, nil, fP)
+                                    _SetMobCamera(Toggles.mobCamera.Value, nil, fP)
                                 end
                                 SmartPlayerTp(
                                     CFrame.new(X.Position + Vector3.new(0, eg, 0) + fO) + X.CFrame.lookVector * 45, X)
@@ -5844,15 +5844,15 @@ Toggles.Autofarm:OnChanged(function(fx)
                         fL = false
                     end
                     bV = nil;
-                    unnoclip()
-                    resetCamera()
+                    _Unnoclip()
+                    _ResetCamera()
                 end
                 task.wait()
             end
         end)
         task.spawn(function()
             while Toggles.Autofarm.Value do
-                if b7 and Workspace:FindFirstChild('KrakenPipe') and not Toggles.ignoreCannon.Value and alive() then
+                if b7 and Workspace:FindFirstChild('KrakenPipe') and not Toggles.ignoreCannon.Value and _Alive() then
                     for B, C in pairs(Workspace:GetChildren()) do
                         if C.Name == 'KrakenPipe' and C:FindFirstChild('GuiPart') and
                             C.GuiPart:FindFirstChild('SurfaceGui') and C.GuiPart.SurfaceGui:FindFirstChild('Percent') and
@@ -5863,7 +5863,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                     fJ = true
                                 end
                                 local fO = _inHeal and ee or Vector3.new()
-                                if alive() and (_humanoid.Position - C.Base.Position).magnitude > 10 then
+                                if _Alive() and (_humanoid.Position - C.Base.Position).magnitude > 10 then
                                     SmartPlayerTp(CFrame.new(C.Base.Position + Vector3.new(0, 3, 0) + fO))
                                 end
                                 bX:Wait()
@@ -5884,7 +5884,7 @@ Toggles.Autofarm:OnChanged(function(fx)
         local fR = game:GetService("Workspace").Boss_Gate.Interactions.Bounds;
         task.spawn(function()
             while Toggles.Autofarm.Value do
-                if alive() then
+                if _Alive() then
                     fR.CanCollide = false;
                     fR.CFrame = CFrame.new(_humanoid.Position)
                     fQ.CFrame = CFrame.new(_humanoid.Position)
@@ -5931,7 +5931,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                             msgbox(fT.Value - fS .. ' floors completed, restarting Infinite Tower!')
                             task.spawn(function()
                                 local fV = '## Floor: `' .. fT.Value .. '' .. '\nTime: ' ..
-                                               timeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' ..
+                                               _TimeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' ..
                                                ca[aZ].DisplayName .. '`'
                                 fV = fV .. '\nGold Gain: `' .. formatNumberWithCommas(aR - aQ) .. ''
                                 if not Toggles.anonHook.Value then
@@ -5957,7 +5957,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                     if fT.Value > fS and fT.Value % 5 == 0 and fT.Value ~= fv then
                         fv = fT.Value;
                         local fV = '## Floor: `' .. fT.Value .. '' .. '\nTime: ' ..
-                                       timeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' .. ca[aZ].DisplayName ..
+                                       _TimeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' .. ca[aZ].DisplayName ..
                                        '`'
                         fV = fV .. '\nGold Gain: `' .. formatNumberWithCommas(aR - aQ) .. ''
                         if not Toggles.anonHook.Value then
@@ -6059,13 +6059,13 @@ do
         local gh = math.huge;
         local gi, g9, gj, Z, a1;
         local eN, gk, eo;
-        if isAlive(gg) then
+        if _IsAlive(gg) then
             local gl = gg.PrimaryPart;
             local ge, gm = getClosestPointAndDistance(_humanoid, gl)
             gh, g9, gi = ge, gm, gl
         else
             for ds, bs in pairs(workspace.Mobs:GetChildren()) do
-                if isAlive(bs) then
+                if _IsAlive(bs) then
                     local gl = bs.PrimaryPart;
                     local ge, gm = getClosestPointAndDistance(_humanoid, gl)
                     if ge < gh and not ignoreIfNotAlone(bs.Name) then
@@ -6117,7 +6117,7 @@ Toggles.Killaura:OnChanged(function(cU)
                             Toggles.NVD:SetValue(true)
                         end
                         for ds, C in pairs(b9:GetChildren()) do
-                            if isAlive(C) then
+                            if _IsAlive(C) then
                                 if not (C.Name == p.ignoreMob) then
                                     a5 = tick()
                                     for B = 1, bm do
@@ -6150,7 +6150,7 @@ Toggles.Killaura:OnChanged(function(cU)
                         Toggles.NVD:SetValue(true)
                     end
                     for ds, C in pairs(b9:GetChildren()) do
-                        if isAlive(C) and
+                        if _IsAlive(C) and
                             (b7 and C:FindFirstChild('MobProperties') and
                                 C.MobProperties:FindFirstChild('CurrentAttack') and
                                 table.find(bg, C.MobProperties.CurrentAttack.Value) or not b7) then
@@ -6176,7 +6176,7 @@ Toggles.Killaura:OnChanged(function(cU)
                     SwitchOffhandPerks(false)
                 end
             end
-            if X and alive() then
+            if X and _Alive() then
                 local gt = aT:GetChildren()[1]
                 if gt and gt:FindFirstChild('ID') and gt.ID.Value then
                     local gu = gt.ID.Value;
@@ -6207,7 +6207,7 @@ task.spawn(function()
     while Toggles.Killaura.Value and ao do
         -- Get the nearest mob
         X, Y, Z, _, a0, a1, a2 = getClosestMob(bV)
-        if alive() and not mounted() and X and not table.find(bl, aZ) then
+        if _Alive() and not _Mounted() and X and not table.find(bl, aZ) then
             for _, gx in pairs(ca[aZ].Skills) do
                 local gy = gx.MeleeOnBoss and a1 and 'Melee' or gx.Type or ca[aZ].Type
                 local gB = gx.Cooldown + Options.KillauraDelay.Value
@@ -6262,7 +6262,7 @@ end)
         task.spawn(function()
             while Toggles.Killaura.Value do
                 if a_(ey) then
-                    if alive() and not mounted() and not _character:FindFirstChild('AttackBuffDemonBloodBinding', true) and X and
+                    if _Alive() and not _Mounted() and not _character:FindFirstChild('AttackBuffDemonBloodBinding', true) and X and
                         _ and _ <= 95 then
                         b2.Demon.BloodBinding:FireServer()
                         a5 = tick()
