@@ -4324,8 +4324,7 @@ do
         Func = function()
             local dw, dx = tonumber(Options.wheelCount.Value), Options.wheelDelay.Value;
             if dw > 0 then
-                msgbox('Spinning the wheel ' .. dw .. ' times in ' .. _TimeElapsed(math.round((dw - 1) * dx * 10) / 10) ..
-                       ' seconds!', 7)
+                msgbox('Spinning the wheel ' .. dw .. ' times in ' .. _TimeElapsed(math.round((dw - 1) * dx * 10) / 10) ..  ' seconds!')
                 for B = 1, dw do
                     _shared.EventSpinner.JoinQueue:FireServer(_localplayer)
                     task.wait(dx)
