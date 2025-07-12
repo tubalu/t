@@ -4341,6 +4341,7 @@ do
         end
     end
     function SmartPlayerTp(destination, lookAtTarget)
+        print("Teleporting to destination:", tostring(destination))
         if not _Alive() then
             return
         end
@@ -5836,8 +5837,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 else
                                     _SetMobCamera(Toggles.mobCamera.Value, nil, fP)
                                 end
-                                SmartPlayerTp(
-                                    CFrame.new(X.Position + Vector3.new(0, eg, 0) + fO) + X.CFrame.lookVector * 45, X)
+                                SmartPlayerTp(CFrame.new(X.Position + Vector3.new(0, eg, 0) + fO) + X.CFrame.lookVector * 45, X)
                                 bX:Wait()
                             end
                             SmartPlayerTp(CFrame.new(3371, 73, -331))
