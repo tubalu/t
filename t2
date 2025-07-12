@@ -5213,13 +5213,13 @@ do
                              10 .. 's`'
                 end
                 if _currentDungeon.Gold and V >= _currentDungeon.Gold then
-                    eM = eM .. '\nGold Gained: `' .._FormatNumberWithCommass(V - _currentDungeon.Gold) .. ''
+                    eM = eM .. '\nGold Gained: `' .. _FormatNumberWithCommass(V - _currentDungeon.Gold) .. ''
                 end
                 _currentDungeon.Gold = V;
                 _currentDungeon.LastDungeonCompletion = c0;
                 _Save()
             end
-            eM = eM .. '\nGold: `' .._FormatNumberWithCommass(aP.Value) .. ''
+            eM = eM .. '\nGold: `' .. _FormatNumberWithCommass(aP.Value) .. ''
             if ax then
                 local eO = {
                     KrakenRaid = {
