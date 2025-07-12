@@ -752,7 +752,7 @@ local b5 = 'RaidChestSilver'
 local b6 = 'RaidChestGold'
 local b7 = false;
 local b8 = _shared:WaitForChild("Combat"):WaitForChild("Attack")
-local b9 = game:GetService("Workspace"):FindFirstChild("Mobs")
+local _Mobs = game:GetService("Workspace"):FindFirstChild("Mobs")
 local ba = _shared.Mobs.Mobs;
 local bb = _workspace.Camera;
 local bc;
@@ -4687,7 +4687,7 @@ do
             local ej;
             local ek;
             while Toggles.Autofarm.Value and not b7 do
-                for B, C in pairs(b9:GetChildren()) do
+                for B, C in pairs(_Mobs:GetChildren()) do
                     if _IsAlive(C) then
                         if mobWaitTbl and table.find(mobWaitTbl, C.Name) and (not ek or alwaysWait) then
                             task.wait(waittime)
@@ -4738,7 +4738,7 @@ do
         local ek;
         task.spawn(function()
             while Toggles.Autofarm.Value do
-                for B, C in pairs(b9:GetChildren()) do
+                for B, C in pairs(_Mobs:GetChildren()) do
                     if _IsAlive(C) then
                         if C.Name ~= el or C.Name == el and b3 == 1 then
                             if mobWaitTbl and table.find(mobWaitTbl, C.Name) and (not ek or alwaysWait) then
@@ -4781,7 +4781,7 @@ do
                 local normalMobs = {}
                 
                 -- Sort mobs and bosses
-                for B, C in pairs(b9:GetChildren()) do
+                for B, C in pairs(_Mobs:GetChildren()) do
                     if _IsAlive(C) then
                         -- Sort boss and normal mobs
                         if string.match(C.Name, "BOSS") or string.match(C.Name, "Dragon") then
@@ -4949,7 +4949,7 @@ end
         task.spawn(function()
             while Toggles.Autofarm.Value do
                 b4 = 0;
-                for B, C in pairs(b9:GetChildren()) do
+                for B, C in pairs(_Mobs:GetChildren()) do
                     if _IsAlive(C) then
                         b4 = b4 + 1
                     end
@@ -5108,14 +5108,14 @@ do
                 eA.Name = 'Pillar'
                 eB.Name = 'Pillar'
                 eC.Name = 'Pillar'
-                eA.Parent = b9;
-                eB.Parent = b9;
-                eC.Parent = b9
+                eA.Parent = _Mobs;
+                eB.Parent = _Mobs;
+                eC.Parent = _Mobs
             end)
         elseif as or ay then
             task.spawn(function()
                 while true do
-                    local eD = b9:FindFirstChild('BOSSKrakenMain') or b9:FindFirstChild('EVENTBOSSKraken')
+                    local eD = _Mobs:FindFirstChild('BOSSKrakenMain') or _Mobs:FindFirstChild('EVENTBOSSKraken')
                     if eD then
                         local eE = Instance.new('Folder')
                         eE.Name = 'WaterFolder'
@@ -5133,7 +5133,7 @@ do
             local eF = 0;
             task.spawn(function()
                 while true do
-                    for B, C in pairs(b9:GetChildren()) do
+                    for B, C in pairs(_Mobs:GetChildren()) do
                         if (C.PrimaryPart.Position - Vector3.new(533, 302, -123)).magnitude < 100 then
                             C:Destroy()
                             eF = eF + 1
@@ -5200,7 +5200,7 @@ do
             local eM = 'Code: `' .. codeStr .. '\nMission: ' .. missionName .. '\nTime: ' .. eL ..
                            '`\nClass: ' .. '' .. ca[aZ].DisplayName .. ''
             if au then
-                local bs = b9:GetChildren()[1]
+                local bs = _Mobs:GetChildren()[1]
                 local eN = bs and Mob(bs.Name)
                 local a1, eo = eN and eN.BossTag, eN and eN.NameTag;
                 if a1 and eo then
@@ -5784,7 +5784,7 @@ Toggles.Autofarm:OnChanged(function(fx)
         task.spawn(function()
             while Toggles.Autofarm.Value do
                 if b7 and U and not fJ then
-                    local fN = b9:GetChildren()
+                    local fN = _Mobs:GetChildren()
                     if not fL and not fM then
                         fM = true;
                         task.spawn(function()
@@ -6100,7 +6100,7 @@ do
     end
     if _workspace:FindFirstChild('TargetDummies') then
         for ds, gp in pairs(_workspace.TargetDummies:GetChildren()) do
-            gp.Parent = b9
+            gp.Parent = _Mobs
         end
     end
 end
@@ -6119,7 +6119,7 @@ Toggles.Killaura:OnChanged(function(cU)
                         if not Toggles.NVD.Value then
                             Toggles.NVD:SetValue(true)
                         end
-                        for ds, C in pairs(b9:GetChildren()) do
+                        for ds, C in pairs(_Mobs:GetChildren()) do
                             if _IsAlive(C) then
                                 if not (C.Name == p.ignoreMob) then
                                     a5 = tick()
@@ -6152,7 +6152,7 @@ Toggles.Killaura:OnChanged(function(cU)
                     if not Toggles.NVD.Value then
                         Toggles.NVD:SetValue(true)
                     end
-                    for ds, C in pairs(b9:GetChildren()) do
+                    for ds, C in pairs(_Mobs:GetChildren()) do
                         if _IsAlive(C) and
                             (b7 and C:FindFirstChild('MobProperties') and
                                 C.MobProperties:FindFirstChild('CurrentAttack') and
@@ -6254,7 +6254,7 @@ end)
                     local gF = C:FindFirstChild("HealthProperties", true)
                     if gF and not table.find(c4, gF.Parent.Name) then
                         table.insert(aE, gF.Parent)
-                        gF.Parent.Parent = b9
+                        gF.Parent.Parent = _Mobs
                     end
                 end
                 task.wait(0.1)
@@ -6279,7 +6279,7 @@ end)
     if a_('Summoner') and Toggles.Killaura.Value and ao then
         task.spawn(function()
             while Toggles.Killaura.Value do
-                for ds, Mob in pairs(b9:GetChildren()) do
+                for ds, Mob in pairs(_Mobs:GetChildren()) do
                     if Mob.Name == 'SummonerSummonWeak' or Mob.Name == 'SummonerSummonStrong' then
                         Mob.Parent = cb
                     end
