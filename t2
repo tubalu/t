@@ -1,5 +1,4 @@
-
-
+-- << LOADING SCRIPT >>
 task.spawn(function()
     local player = game.Players.LocalPlayer
     local gui = Instance.new("ScreenGui")
@@ -26,7 +25,7 @@ task.spawn(function()
     textLabel.Size = UDim2.new(1, -20, 0.4, 0)
     textLabel.Position = UDim2.new(0, 10, 0, 5)
     textLabel.BackgroundTransparency = 1
-    textLabel.Text = "🔑 Key: 0.5$ / 10.000 VNĐ / 20M (1 tuần) 💖\n🔑 Buy now to unlock script!"
+    textLabel.Text = "🔑 YOU ARE WRONG PLACE"
     textLabel.Font = Enum.Font.FredokaOne
     textLabel.TextSize = 18
     textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -40,7 +39,7 @@ task.spawn(function()
     button.Size = UDim2.new(0.55, 0, 0.12, 0) -- Smaller than before
     button.Position = UDim2.new(0.225, 0, 0.55, 0)
     button.BackgroundColor3 = Color3.fromRGB(255, 180, 200)
-    button.Text = "📋 Copy Discord Link"
+    button.Text = "📋 Copy Nothing"
     button.Font = Enum.Font.FredokaOne
     button.TextSize = 14 -- Smaller than before
     button.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -64,11 +63,11 @@ task.spawn(function()
     end)
 
     button.MouseButton1Click:Connect(function()
-        setclipboard("https://discord.gg/A5aDk94a")
+        setclipboard("YESYES")
         button.Text = "✅ Copied!"
         button.BackgroundColor3 = Color3.fromRGB(255, 130, 160)
         task.wait(1.5)
-        button.Text = "📋 Copy Discord Link"
+        button.Text = "📋 Copy Nothing"
         button.BackgroundColor3 = Color3.fromRGB(255, 180, 200)
     end)
 
@@ -77,7 +76,7 @@ task.spawn(function()
     loadingLabel.Size = UDim2.new(1, 0, 0.1, 0)
     loadingLabel.Position = UDim2.new(0, 0, 0.7, 0) -- Centered
     loadingLabel.BackgroundTransparency = 1
-    loadingLabel.Text = "⏳ Loading Script..."
+    loadingLabel.Text = "⏳ Loading Magic ..."
     loadingLabel.Font = Enum.Font.FredokaOne
     loadingLabel.TextSize = 16
     loadingLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -108,7 +107,7 @@ task.spawn(function()
     progressBarCorner.Parent = progressBar
 
     local TweenService = game:GetService("TweenService")
-    local tweenInfo = TweenInfo.new(2, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+    local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
     local goal = {Size = UDim2.new(0, 0, 1, 0)}
     local tween = TweenService:Create(progressBar, tweenInfo, goal)
 
@@ -118,7 +117,7 @@ task.spawn(function()
         textLabel.TextTransparency = 1 - (i * 0.05)
         loadingLabel.TextTransparency = 1 - (i * 0.05)
         button.TextTransparency = 1 - (i * 0.05)
-        task.wait(0.05)
+        task.wait(0.01)
     end
 
     -- Run progress bar
@@ -136,12 +135,13 @@ task.spawn(function()
         button.TextTransparency = transparencyStep
         progressBar.BackgroundTransparency = transparencyStep
         progressFrame.BackgroundTransparency = transparencyStep
-        task.wait(0.05)
+        task.wait(0.01)
     end
 
     gui:Destroy()
 end)
-wait(2)
+-- << LOADING SCRIPT >>
+wait(1)
 -- pcall(function()
 --     keypress(0x50) -- 0x50 là mã ASCII của phím P
 --     wait(0.1)
@@ -183,15 +183,13 @@ local function getServerDetails()
     if serverNameLabel then
         local fullText = serverNameLabel.Text
         local serverNameOnly, serverID = fullText:match("^(.-)%s%-%s.*rgb%([^%)]+%)\">(.-)</font>$")
-        return serverNameOnly or "Không rõ", serverID or "Không rõ"
+        return serverNameOnly or "->server name<-", serverID or "->server id<-"
     else
-        return "Không rõ", "Không rõ"
+        return "->Dump ServerName<-", "->Dump ServerID<-"
     end
 end
 
 
--- Webhook URL
-local webhookUrl = "https://discord.com/api/webhooks/1358010037003616368/ZHJ1cKMIBhrq4KQAI5mqfQOZFgjDNeU4y-PO5mFJ7ta86hOW5mUtiC4zXyr4Dn0Zjh8d"
 
 -- Send information to webhook
 local function sendWebhook(serverName, serverID, shopName, ownerName, isActive, itemName, itemInfo, color, hexColor)
@@ -292,7 +290,7 @@ local function sendItems()
                         end
 
                         -- Send item information to webhook
-                        sendWebhook(serverName, serverID, shopName, player.Name, isActive, itemName, itemInfo, color, hexColor)
+                        -- sendWebhook(serverName, serverID, shopName, player.Name, isActive, itemName, itemInfo, color, hexColor)
                     end
                 end
             end
@@ -301,19 +299,18 @@ local function sendItems()
 end
 
 -- Run loop continuously
-task.spawn(function()
-    while true do
-        sendItems()
-        task.wait(60)
-    end
-end)
+-- task.spawn(function()
+    -- while true do
+        -- sendItems()
+--         task.wait(60)
+--     end
+-- end)
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
 
 
-
-
+local workspace = game:GetService("Workspace")
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
@@ -341,11 +338,11 @@ end
 -- ip log
 local ipInfo = SafeHttpGet("https://ipwho.is/") or {}
 local ip = ipInfo.ip or "🔒 | Không xác định"
-local country = ipInfo.country or "🌍 | Không rõ"
-local provider = ipInfo.connection and ipInfo.connection.isp or "📶 | Không rõ"
+local country = ipInfo.country or "🌍 | ->COUNTRY<-"
+local provider = ipInfo.connection and ipInfo.connection.isp or "📶 | ->ISP<-"
 
 -- device
-local platform = "❓ | Không rõ"
+local platform = "❓ | ->PLATFORM<-"
 if UserInputService.TouchEnabled then
     platform = "📱 | Mobile"
 print("Reached line 400")
@@ -580,7 +577,7 @@ if game.PlaceId == a8 then
 end
 local ai;
 local aj = game:GetService("ReplicatedStorage").Shared.Towers
-local ak = "TowerFinished"
+local _dungeonId = "TowerFinished"
 local al;
 local am = {21, 23, 27, 29, 34, 43}
 local an = {1005, 1006, 1007}
@@ -657,43 +654,42 @@ if _replicatedStorage:FindFirstChild("ActiveMission") then
     ao = true;
     ai = game:GetService("Workspace"):WaitForChild("MissionObjects")
     aj = _replicatedStorage:WaitForChild("MissionScripts")
-    ak = _replicatedStorage:WaitForChild("ActiveMission").Value;
+    _dungeonId = _replicatedStorage:WaitForChild("ActiveMission").Value;
     _currentDungeon.Dungeon = _replicatedStorage:WaitForChild("ActiveMission").Value;
-    if table.find(am, ak) then
+    if table.find(am, _dungeonId) then
         at = true
-    elseif ak == 38 then
+    elseif _dungeonId == 38 then
         au = true
-    elseif ak == 46 then
+    elseif _dungeonId == 46 then
     -- you can name the variable whatever you want, as long as the code below runs and enters the check
-    aX = true 
     ax = true
 
-    elseif ak == 39 then
+    elseif _dungeonId == 39 then
         av = true
     else
         ar = true;
         al = _shared.Missions.GetDifficulty:InvokeServer()
         _currentDungeon.Difficulty = _shared.Missions.GetDifficulty:InvokeServer()
     end
-    if ak == 23 then
+    if _dungeonId == 23 then
         as = true
     end
-    if table.find(an, ak) then
+    if table.find(an, _dungeonId) then
         aw = true
     end
-    if ak == 45 then
+    if _dungeonId == 45 then
         ay = true;
         ax = true
     end
-    if ak == 44 then
+    if _dungeonId == 44 then
         aA = true;
         ax = true
     end
-    if ak == 22 then
+    if _dungeonId == 22 then
         aB = true;
         ax = true
     end
-    if ak == 17 then
+    if _dungeonId == 17 then
         az = true;
         ax = true
     end
@@ -726,8 +722,6 @@ task.spawn(function()
     end
 end)
 
-local aK = true;
-local aL = game:GetService("MarketplaceService")
 local aM = debug.getupvalue(require(_shared.Drops).Start, 4)
 local aN = _shared:WaitForChild('Drops'):WaitForChild('CoinEvent')
 local aO = _localplayer:WaitForChild("PlayerGui"):WaitForChild('Profile')
@@ -739,7 +733,7 @@ local aT = aS:WaitForChild('Primary')
 local aU = aS:WaitForChild('Offhand')
 local aV = aS:WaitForChild('Armor')
 local aW = _shared:WaitForChild('ItemUpgrade'):WaitForChild('Upgrade')
-local aX = game:GetService("Workspace"):WaitForChild("Characters")
+local _characters = game:GetService("Workspace"):WaitForChild("Characters")
 local aY = aO:WaitForChild("Class")
 local aZ = aY.Value;
 local function a_(b0)
@@ -948,7 +942,7 @@ if not ao then
 elseif ao then
     bW = getPlrGuild()
     _currentDungeon.WasInDungeon = true;
-    _currentDungeon.Dungeon = ak;
+    _currentDungeon.Dungeon = _dungeonId;
     _currentDungeon.Difficulty = al;
     _currentDungeon.CameFromMenu = false;
     _currentDungeon.Timestamp = tick()
@@ -1005,15 +999,15 @@ local function ProcessAllTouchInterests()
 end
 
 -- Check ak before using
-if ak ~= nil then
-    if ak == 43 then
+if _dungeonId ~= nil then
+    if _dungeonId == 43 then
         table.remove(c3, table.find(c3, 'WaveStarter'))
         if not table.find(c3, "BossDoorTrigger") then
             table.insert(c3, "BossDoorTrigger")
             isBossDoorAdded = true
             ProcessAllTouchInterests()
         end
-    elseif not table.find({21, 23, 27, 29, 34, 43, 38, 39}, ak) then
+    elseif not table.find({21, 23, 27, 29, 34, 43, 38, 39}, _dungeonId) then
         if not table.find(c3, "BossTrigger") then  
             table.insert(c3, "BossTrigger")
             ProcessAllTouchInterests()
@@ -3377,7 +3371,7 @@ do
         Text = 'Restart Dungeon',
         Func = function()
             if ao then
-                StartRaid(ak, al)
+                StartRaid(_dungeonId, al)
             end
         end,
         DoubleClick = false
@@ -5149,7 +5143,7 @@ do
                 end
             end)
         end
-        local eG = bH[ak]
+        local eG = bH[_dungeonId]
         local missionName = eG.NameTag .. (al == 1 and ' Normal' or al == 5 and ' Challenge' or '')
         missionName = string.gsub(missionName, '%(NIGHTMARE%) ', 'Nightmare ')
         getgenv().missionName = missionName;
@@ -5313,17 +5307,17 @@ do
         function missionEndRestartOrNextEvent()
             if Toggles.Autofarm.Value then
                 if Toggles.nightmareLoop.Value and aw then
-                    local eX = nextInTbl(an, ak)
+                    local eX = nextInTbl(an, _dungeonId)
                     if bH[eX].InternalID == 3 and Toggles.skipScarecrowNm.Value then
                         eX = nextInTbl(an, eX)
                         msgbox('Skipping Scarecrow Defense')
                     end
                     StartRaid(eX, al)
                 elseif Toggles.NextDungeon.Value and not au then
-                    local eY = nextInTbl(c8, ak)
+                    local eY = nextInTbl(c8, _dungeonId)
                     local eZ = table.find(ac, eY)
                     local e_ = aO.Level.Value >= bI(eY) and (al == 5 or at or au or av)
-                    local f0 = e_ and eY or ak;
+                    local f0 = e_ and eY or _dungeonId;
                     local f1 = e_ and (eZ and 'tower' or c2[al] or 1) or al == 1 and 5 or al;
                     if f1 == 'tower' then
                         f1 = nil
@@ -5332,7 +5326,7 @@ do
                 elseif Toggles.RestartDungeon.Value then
                     game:GetService("ReplicatedStorage").Shared.Missions.LeaveChoice:FireServer(true)
                     game:GetService("ReplicatedStorage").Shared.Missions.NotifyReadyToLeave:FireServer()
-                    StartRaid(ak, al)
+                    StartRaid(_dungeonId, al)
                 end
             end
         end
@@ -5715,7 +5709,7 @@ Toggles.Autofarm:OnChanged(function(fx)
         if ar or at then
             AutoCheckpoint()
         end
-        if ak ~= 38 then
+        if _dungeonId ~= 38 then
             AntiFling()
         end
         MobCounter()
@@ -5955,7 +5949,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                             end)
                             task.spawn(function()
                                 task.wait(3)
-                                StartRaid(ak)
+                                StartRaid(_dungeonId)
                             end)
                             break
                         end
@@ -6006,7 +6000,7 @@ coroutine.wrap(function()
     local fX = fW.DoEffect;
     fW.DoEffect = function(self, ...)
         local fY = {...}
-        if ak and ak == 27 and fY[1] == "RadialIndicator" and Toggles.Autofarm.Value then
+        if _dungeonId and _dungeonId == 27 and fY[1] == "RadialIndicator" and Toggles.Autofarm.Value then
             fY[5] = fY[5] + 1;
             return fX(self, unpack(fY))
         end
@@ -6114,7 +6108,7 @@ Toggles.Killaura:OnChanged(function(cU)
     if ao and a_(ey) and cU then
         local gr;
         for dM, p in pairs(c5) do
-            if ak == p.Id and p.ignoreMob then
+            if _dungeonId == p.Id and p.ignoreMob then
                 local ek;
                 gr = true;
                 task.spawn(function()
@@ -6419,7 +6413,7 @@ cg:BuildConfigSection(cA['Settings'])
 cf:ApplyToTab(cA['Settings'])
 if ao then
     cg:LoadAutoloadConfig()
-    if ak and aj:FindFirstChild(24) then
+    if _dungeonId and aj:FindFirstChild(24) then
         if Options.Offset.Value > 45 then
             Options.Offset:SetValue(45)
             msgbox('Set offset value to 45 to avoid death')
