@@ -216,7 +216,7 @@ local function sendWebhook(serverName, serverID, shopName, ownerName, isActive, 
 
     -- Add hex color to embed
     if hexColor then
-        table.insert(embed.fields, { name = "Màu sắc (hex)", value = string.format("`%s`", hexColor), inline = false })
+        table.insert(embed.fields, { name = "Color (hex)", value = string.format("`%s`", hexColor), inline = false })
     end
 
     -- Send request to webhook
@@ -249,7 +249,7 @@ local function sendItems()
     local playerShops = replicatedStorage:FindFirstChild("PlayerShops")
 
     if not playerShops then
-        warn("PlayerShops không tồn tại trong ReplicatedStorage.")
+        warn("PlayerShops does not exist in ReplicatedStorage.")
         return
     end
 
@@ -258,7 +258,7 @@ local function sendItems()
         if shop then
             local shopNameValue = shop:FindFirstChild("ShopName")
             local activeValue = shop:FindFirstChild("Active")
-            local shopName = shopNameValue and shopNameValue.Value or "Không rõ"
+            local shopName = shopNameValue and shopNameValue.Value or "Unknown"
             local isActive = activeValue and activeValue.Value or false
 
             local items = shop:FindFirstChild("Items")
@@ -275,7 +275,7 @@ local function sendItems()
                         color = color3ToDecimal(dye.Value)
                         hexColor = color3ToHex(dye.Value)
                         table.insert(itemInfo, {
-                            name = "Màu sắc",
+                            name = "Color",
                             value = hexColor,
                         })
 
@@ -4242,7 +4242,7 @@ do
             end
             if #cZ > 0 then
                 msgbox('Sold ' .. #cZ .. ' Cosmetics')
-                sell(cZ)
+                _Sell(cZ)
             end
         end,
         DoubleClick = true
@@ -4260,7 +4260,7 @@ do
             end
             if #cZ > 0 then
                 msgbox('Recycled ' .. #cZ .. ' Cosmetics')
-                recycle(cZ)
+                _Recycle(cZ)
             end
         end,
         DoubleClick = true
@@ -4273,10 +4273,10 @@ do
                     C:WaitForChild('Dye', 5)
                     if Options.selectedWheelCosmetics.Value[du] and not C:FindFirstChild('Locked') and not dn(C) then
                         if Toggles.autoSellCosmetics.Value then
-                            sell({C})
+                            _Sell({C})
                         end
                         if Toggles.autoRecycleCosmetics.Value then
-                            recycle({C})
+                            _Recycle({C})
                         end
                     end
                 end
@@ -4286,7 +4286,7 @@ do
             if Toggles.autoSellEggs.Value then
                 local dp = bL[C.Name]
                 if dp.Type == 'Egg' then
-                    sell({C})
+                    _Sell({C})
                 end
             end
         end)
@@ -4993,14 +4993,15 @@ end
             end)
         end
     end
-    function sell(bx)
+    function _Sell(bx)
         _shared.Drops.SellItems:InvokeServer(bx)
     end
-    function recycle(bx)
+    function _Recycle(bx)
         _shared.Recycler.Recycle:FireServer(bx)
     end
 end
-if notadding then
+
+if notadding then -- not defined anywhere else
     local function et(o, p)
         if _character then
             _equipment:SetAttribute(o, p)
@@ -5359,7 +5360,7 @@ do
                     if f8 < 6 then
                         if Options.AutoSellTbl.Value[f8] and Toggles.Autofarm.Value then
                             msgbox('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
-                            sell({cV})
+                            _Sell({cV})
                             f9 = true
                         end
                     end
@@ -5402,7 +5403,7 @@ do
                         end
                         if not fa and Toggles.smartPerkSell.Value and Toggles.Autofarm.Value then
                             msgbox('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
-                            sell({cV})
+                            _Sell({cV})
                             f9 = true
                         end
                         local eK = Options.drophook.Value;
@@ -5435,14 +5436,14 @@ do
                         be = tick()
                     end
                 elseif f7.Type == 'Egg' and Toggles.autoSellEggs.Value and Toggles.Autofarm.Value then
-                    sell({cV})
+                    _Sell({cV})
                     msgbox(f7.DisplayKey .. ' sold!')
                 end
             end)
             bG.ChildAdded:Connect(function(cV)
                 local f7 = bL[cV.Name]
                 if Options.selectedCosmetics.Value[f7.DisplayKey] and Toggles.Autofarm.Value then
-                    sell({cV})
+                    _Sell({cV})
                     msgbox(f7.DisplayKey .. ' sold!')
                 end
             end)
@@ -5536,7 +5537,7 @@ do
                     if Options.AutoSellTbl.Value[f8] and Toggles.Autofarm.Value then
                         task.wait(2)
                         msgbox('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
-                        sell({cV})
+                        _Sell({cV})
                         f9 = true
                     end
                 end
@@ -5579,7 +5580,7 @@ do
                     end
                     if not fa and Toggles.smartPerkSell.Value and Toggles.Autofarm.Value then
                         msgbox('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
-                        sell({cV})
+                        _Sell({cV})
                         f9 = true
                     end
                     local eK = Options.drophook.Value;
@@ -5611,14 +5612,14 @@ do
                     be = tick()
                 end
             elseif f7.Type == 'Egg' and Toggles.autoSellEggs.Value and Toggles.Autofarm.Value then
-                sell({cV})
+                _Sell({cV})
                 msgbox(f7.DisplayKey .. ' sold!')
             end
         end)
         bG.ChildAdded:Connect(function(cV)
             local f7 = bL[cV.Name]
             if Options.selectedCosmetics.Value[f7.DisplayKey] and Toggles.Autofarm.Value then
-                sell({cV})
+                _Sell({cV})
                 msgbox(f7.DisplayKey .. ' sold!')
             end
         end)
