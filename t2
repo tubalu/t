@@ -4844,7 +4844,6 @@ do
                     eh = CFrame.new(er.Position +
                                         (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) +
                              er.CFrame.lookVector * 2;
-                    print("e: -- tp")
                     SmartPlayerTp(eh, er)
                 else
                     bV = nil;
@@ -5840,7 +5839,6 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 else
                                     setMobCamera(Toggles.mobCamera.Value, nil, fP)
                                 end
-
                                 SmartPlayerTp(
                                     CFrame.new(X.Position + Vector3.new(0, eg, 0) + fO) + X.CFrame.lookVector * 45, X)
                                 bX:Wait()
