@@ -317,7 +317,7 @@ local _userInputService = game:GetService("UserInputService")
 
 local Executor = identifyexecutor and identifyexecutor() or "Unknown"
 
-local firstMob = nil
+local firstMob
 
 -- Safe http req
 local function SafeHttpGet(url)
@@ -4722,7 +4722,6 @@ do
 
                                 local pos = firstMob.Position
                                 pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
-                                SmartPlayerTp(CFrame.new(pos))
 
                                 if cd then
                                     cd.Position = pos
@@ -4730,6 +4729,7 @@ do
                             end
                             
                             
+                            print("a..")
                             SmartPlayerTp(eh, X)
                             bX:Wait()
                         end
@@ -4742,14 +4742,17 @@ do
                     if firstMob then
                         local pos = firstMob.Position
                         pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
+                        print("b..")
                         SmartPlayerTp(CFrame.new(pos))
                     else 
-                            SmartPlayerTp(CFrame.new(10000, 10000, 10000))
+                        print("c..")
+                        SmartPlayerTp(CFrame.new(10000, 10000, 10000))
                     end
                 end
                 task.wait()
             end
             if ei and au then
+                print("d..")
                 SmartPlayerTp(CFrame.new(ei + Vector3.new(0, 10, 0)))
             end
         end)
@@ -4778,6 +4781,7 @@ do
                                 eh = CFrame.new(X.Position +
                                                     (table.find(aE, C) and ef or Vector3.new(0, eg, 0) +
                                                         (_inHeal and ee or ef))) + X.CFrame.lookVector * 2;
+                                print("e..")
                                 SmartPlayerTp(eh, X)
                                 bX:Wait()
                             end
@@ -4860,6 +4864,7 @@ do
                     eh = CFrame.new(er.Position +
                                         (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) +
                              er.CFrame.lookVector * 2;
+                    print("f..")
                     SmartPlayerTp(eh, er)
                 else
                     bV = nil;
@@ -4993,6 +4998,7 @@ end
                     if bS and b3 == 0 then
                         local es = tick()
                         while tick() - es <= 0.1 and b3 == 0 do
+                            print("fb..")
                             SmartPlayerTp(bS)
                             bX:Wait()
                         end
@@ -5004,6 +5010,7 @@ end
                     if bS then
                         local es = tick()
                         while tick() - es <= 0.1 do
+                            print("fc..")
                             SmartPlayerTp(bS)
                             bX:Wait()
                         end
@@ -5706,6 +5713,7 @@ Toggles.Autofarm:OnChanged(function(fx)
             cr('[Infinite]: Starting Mission in ' .. fB .. 's')
             a5 = tick()
             if av and _Alive() and (_humanoid.Position - cd.Position).magnitude > 100 then
+                print("fd..")
                 SmartPlayerTp(CFrame.new(cd.Position + Vector3.new(0, 20, 0)))
             end
             task.wait()
@@ -5715,6 +5723,7 @@ Toggles.Autofarm:OnChanged(function(fx)
             Toggles.Killaura:SetValue(true)
         end
         if av then
+            print("fe..")
             SmartPlayerTp(CFrame.new(fA + Vector3.new(0, 5, 0)))
         end
     end
@@ -5819,6 +5828,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                             break
                                         end
                                         local fO = _inHeal and ee or Vector3.new()
+                                        print("ff..")
                                         SmartPlayerTp(CFrame.new(X.Position + Vector3.new(0, 40, 0) + fO) +
                                                           X.CFrame.lookVector * 30, X)
                                         bX:Wait()
@@ -5833,8 +5843,10 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 if firstMob then
                                     local pos = firstMob.Position
                                     pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
+                                    print("fg..")
                                     SmartPlayerTp(CFrame.new(pos))
                                 else 
+                                    print("fh..")
                                     SmartPlayerTp(CFrame.new(3371, 73, -331))
                                 end
                                 bX:Wait()
@@ -5862,14 +5874,17 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 else
                                     _SetMobCamera(Toggles.mobCamera.Value, nil, fP)
                                 end
+                                    print("fi..")
                                 SmartPlayerTp(CFrame.new(X.Position + Vector3.new(0, eg, 0) + fO) + X.CFrame.lookVector * 45, X)
                                 bX:Wait()
                             end
                             if firstMob then
                                 local pos = firstMob.Position
                                 pos = Vector3.new(pos.X, pos.Y + 50, pos.Z)
+                                    print("fj..")
                                 SmartPlayerTp(CFrame.new(pos))
                             else 
+                                    print("fk..")
                                 SmartPlayerTp(CFrame.new(3371, 73, -331))
                             end
                         end
@@ -5898,6 +5913,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 end
                                 local fO = _inHeal and ee or Vector3.new()
                                 if _Alive() and (_humanoid.Position - C.Base.Position).magnitude > 10 then
+                                    print("fL..")
                                     SmartPlayerTp(CFrame.new(C.Base.Position + Vector3.new(0, 3, 0) + fO))
                                 end
                                 bX:Wait()
