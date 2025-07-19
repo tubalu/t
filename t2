@@ -4852,15 +4852,13 @@ do
                     end
                     eg = (er.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                     eh = CFrame.new(er.Position +
-                                        (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) +
+                                        (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) -
                              er.CFrame.lookVector * 2;
 
-                    if _currentDungeon and _currentDungeon.Dungeon == 44 and firstMob and firstMob then
-                        local healthPercent = _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties:FindFirstChild('MaxHealth') and 
-                            (_healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value * 100) or 100
-                        
+                    if _currentDungeon and _currentDungeon.Dungeon == 44 and firstMob then
+                        local healthPercent = _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties:FindFirstChild('MaxHealth') and (_healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value * 100) or 100
                         local heightOffset = healthPercent < 70 and -15 or -10
-                        _humanoid.CFrame = CFrame.new(firstMob.Position + Vector3.new(0, heightOffset, 0))
+                        _humanoid.CFrame = eh --firstMob * CFrame.new(0, heightOffset, 5)
                     else
                         if not firstMob then
                             firstMob = eh
