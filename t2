@@ -6357,6 +6357,32 @@ end)
             end
         end)
     end
+    if a_('MageOfLight') and Toggles.Killaura.Value and ao then
+        task.spawn(function()
+            while Toggles.Killaura.Value do
+                if a_('MageOfLight') then
+                    -- Press E key (0x45)
+                    pcall(function()
+                        keypress(0x45)
+                        wait(0.1)
+                        keyrelease(0x45)
+                    end)
+                    
+                    wait(0.5) -- Small delay between keys
+                    
+                    -- Press F key (0x46)
+                    pcall(function()
+                        keypress(0x46)
+                        wait(0.1)
+                        keyrelease(0x46)
+                    end)
+                    
+                    task.wait(5) -- Wait 5 seconds before next cycle
+                end
+                task.wait()
+            end
+        end)
+    end
     if ao then
         task.spawn(function()
             while Toggles.Killaura.Value and not aC do
