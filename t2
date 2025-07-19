@@ -5687,88 +5687,10 @@ if au then
     _workspace.ChildAdded:Connect(function(cV)
         if Toggles.Autofarm.Value then
             for B, C in fw do
-                if C == 'EliteParticles' then
-                    if a_('MageOfLight') then
-                        -- Press E key only when health is below 70%
-                        local healthPercent = _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties:FindFirstChild('MaxHealth') and 
-                            (_healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value * 100) or 100
-                        
-                        if healthPercent < 70 then
-                            pcall(function()
-                                keypress(0x45)
-                                wait(0.1)
-                                keyrelease(0x45)
-                            end)
-                        end
-                        
-                        task.wait(0.5)
-                    end
-                end
-            end
-        end
-    end)
-end
-local fp = true;
-local fq = Vector3.new(-1700.391845703125, 1461.56591796875, -323.8279724121094)
-local fr = Vector3.new(-1879, 1071, -354)
-local fs;
-local ft;
-local fu;
-local fv;
-local fw = {
-    EliteParticles = 'Part',
-    Model = 'Model',
-    BlastIndicator = 'BlastIndicator'
-}
-if au then
-    _workspace.ChildAdded:Connect(function(cV)
-        if Toggles.Autofarm.Value then
-            for B, C in fw do
                 if cV.Name == B and cV:IsA(C) then
                     cV:Destroy()
                 end
             end
-        end
-    end)
-end
-if a_('MageOfLight') and Toggles.Killaura.Value and _activeMissiong then
-    task.spawn(function()
-        while Toggles.Killaura.Value do
-            if a_('MageOfLight') then
-                
-                -- Press F key (0x46)
-                pcall(function()
-                    keypress(0x46)
-                    wait(0.1)
-                    keyrelease(0x46)
-                end)
-                
-                task.wait(5) -- Wait 5 seconds before next cycle
-            end
-            task.wait()
-        end
-    end)
-
-    task.spawn(function()
-        while Toggles.Killaura.Value do
-            if a_('MageOfLight') then
-                -- Press E key (0x45)
-                -- Press E key only when health is below 70%
-                local healthPercent = _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties:FindFirstChild('MaxHealth') and 
-                            (_healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value * 100) or 100
-                            
-                if healthPercent < 70 then
-                    pcall(function()
-                        keypress(0x45)
-                        wait(0.1)
-                        keyrelease(0x45)
-                    end)
-                end
-                
-                
-                task.wait(0.01) -- Wait 5 seconds before next cycle
-            end
-            task.wait()
         end
     end)
 end
@@ -6411,43 +6333,10 @@ end)
             end
         end)
     end
-    if a_('Summoner') and Toggles.Killaura.Value and ao then
-        task.spawn(function()
-            while Toggles.Killaura.Value do
-                for ds, Mob in pairs(_Mobs:GetChildren()) do
-                    if Mob.Name == 'SummonerSummonWeak' or Mob.Name == 'SummonerSummonStrong' then
-                        Mob.Parent = cb
-                    end
-                end
-                for ds, gG in pairs(cb:GetChildren()) do
-                    if gG.PrimaryPart then
-                        if X then
-                            gG.PrimaryPart.CFrame = CFrame.new(Z)
-                        end
-                        if gG:FindFirstChild('HealthProperties') and gG.HealthProperties:FindFirstChild('Health') and
-                            gG.HealthProperties.Health.Value > 0 and gG.HealthProperties.Health.Value /
-                            gG.HealthProperties.MaxHealth.Value <= 0.25 then
-                            b2.Summoner.ExplodeSummons:FireServer()
-                        end
-                    end
-                end
-                bX:Wait()
-            end
-        end)
-    end
     if a_('MageOfLight') and Toggles.Killaura.Value and _activeMissiong then
         task.spawn(function()
             while Toggles.Killaura.Value do
                 if a_('MageOfLight') then
-                    -- Press E key (0x45)
-                    pcall(function()
-                        keypress(0x45)
-                        wait(0.1)
-                        keyrelease(0x45)
-                    end)
-                    
-                    wait(0.5) -- Small delay between keys
-                    
                     -- Press F key (0x46)
                     pcall(function()
                         keypress(0x46)
@@ -6456,6 +6345,28 @@ end)
                     end)
                     
                     task.wait(5) -- Wait 5 seconds before next cycle
+                end
+                task.wait()
+            end
+        end)
+        task.spawn(function()
+            while Toggles.Killaura.Value do
+                if a_('MageOfLight') then
+
+                    if _currentDungeon and _currentDungeon.Dungeon == 44 and firstMob and firstMob then
+                        local healthPercent = _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties:FindFirstChild('MaxHealth') and 
+                            (_healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value * 100) or 100
+                        -- Press E key (0x45)
+                        if healthPercent < 70 then
+                            pcall(function()
+                                keypress(0x45)
+                                wait(0.1)
+                                keyrelease(0x45)
+                            end)
+                        end
+                    end 
+                    
+                    wait(0.01) -- Small delay between keys
                 end
                 task.wait()
             end
