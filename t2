@@ -4683,7 +4683,7 @@ do
         end
     end)
 end
-local ee = Vector3.new(2000, 2000, 2000)
+local ee = Vector3.new(0, 20, 10)
 local ef = Vector3.new()
 local eg;
 local eh;
@@ -4857,11 +4857,8 @@ do
 
                     if _currentDungeon and _currentDungeon.Dungeon == 44 and firstMob then
 
-                        eh = CFrame.new(er.Position +
-                                        (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (ef))) -
-                             er.CFrame.lookVector * 2;
-                        local healthPercent = _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties:FindFirstChild('MaxHealth') and (_healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value * 100) or 100
-                        local heightOffset = healthPercent < 70 and -15 or -10
+                        -- local healthPercent = _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties:FindFirstChild('MaxHealth') and (_healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value * 100) or 100
+                        -- local heightOffset = healthPercent < 70 and -15 or -10
                         _humanoid.CFrame = eh --firstMob * CFrame.new(0, heightOffset, 5)
                     else
                         if not firstMob then
