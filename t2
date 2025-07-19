@@ -4859,7 +4859,7 @@ do
                         local healthPercent = _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties:FindFirstChild('MaxHealth') and 
                             (_healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value * 100) or 100
                         
-                        local heightOffset = healthPercent < 70 and 15 or 15
+                        local heightOffset = healthPercent < 70 and 8 or 8
                         _humanoid.CFrame = CFrame.new(firstMob.Position + Vector3.new(0, heightOffset, 0))
                     else
                         if not firstMob then
