@@ -4855,22 +4855,21 @@ do
                                         (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) +
                              er.CFrame.lookVector * 2;
 
-
-                    if _currentDungeon and _currentDungeon.Dungeon == 44  and firstMob and firstMob then
-                        SmartPlayerTp(CFrame.new(firstMob.Position + Vector3.new(0, 20, 0)))
+                    if _currentDungeon and _currentDungeon.Dungeon == 44 and firstMob and firstMob then
+                        local healthPercent = _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties:FindFirstChild('MaxHealth') and 
+                            (_healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value * 100) or 100
+                        
+                        local heightOffset = healthPercent < 30 and 50 or 20
+                        _humanoid.CFrame = CFrame.new(firstMob.Position + Vector3.new(0, heightOffset, 0))
                     else
-
                         if not firstMob then
                             firstMob = eh
-
                             local pos = firstMob.Position
                             pos = Vector3.new(pos.X, pos.Y + 20, pos.Z)
-
                             if cd then
                                 cd.Position = pos
                             end
                         end
-
                         SmartPlayerTp(eh, er)
                     end
 
