@@ -586,7 +586,7 @@ local _dungeonId = "TowerFinished"
 local al;
 local am = {21, 23, 27, 29, 34, 43}
 local _nms = {1005, 1006, 1007}
-local ao;
+local _activeMissiong;
 local ap = {5862275930, 4526768266}
 local aq = table.find(ap, game.PlaceId)
 local ar;
@@ -656,7 +656,7 @@ else
 end
 
 if _replicatedStorage:FindFirstChild("ActiveMission") then
-    ao = true;
+    _activeMissiong = true;
     ai = game:GetService("Workspace"):WaitForChild("MissionObjects")
     aj = _replicatedStorage:WaitForChild("MissionScripts")
     _dungeonId = _replicatedStorage:WaitForChild("ActiveMission").Value;
@@ -928,7 +928,7 @@ _shared.Missions.MissionStart.OnClientEvent:Once(function()
     b_ = tick()
 end)
 _Load()
-if not ao then
+if not _activeMissiong then
     if _currentDungeon.Kicked and _currentDungeon.WasInDungeon or _currentDungeon.RejoinLastDungeon and tick() - _currentDungeon.Timestamp <= _currentDungeon.RejoinLastDungeonThreshold and
         _currentDungeon.CameFromMenu or _currentDungeon.WasInDungeon and _currentDungeon.Dungeon and table.find(am, _currentDungeon.Dungeon) and _currentDungeon.ForceRestartLastTower then
         _currentDungeon.CameFromMenu = false;
@@ -950,7 +950,7 @@ if not ao then
         _currentDungeon.WasInDungeon = false;
         _Save()
     end
-elseif ao then
+elseif _activeMissiong then
     bW = _GetPlrGuild()
     _currentDungeon.WasInDungeon = true;
     _currentDungeon.Dungeon = _dungeonId;
@@ -3316,7 +3316,7 @@ do
         Text = 'Offset',
         Default = cv() and 50 or 6,
         Min = 0,
-        Max = ao and (cv() and 75 or 25) or 75,
+        Max = _activeMissiong and (cv() and 75 or 25) or 75,
         Rounding = 1,
         Compact = true
     })
@@ -3380,7 +3380,7 @@ do
     cE:AddButton({
         Text = 'Restart Dungeon',
         Func = function()
-            if ao then
+            if _activeMissiong then
                 StartRaid(_dungeonId, al)
             end
         end,
@@ -3509,7 +3509,7 @@ do
         Compact = true
     })
     task.spawn(function()
-        while ao do
+        while _activeMissiong do
             if #_players:GetPlayers() >= Options.playerCountKick.Value then
                 task.wait(0.5)
                 _localplayer:Kick('Someone might have joined your mission!')
@@ -4409,7 +4409,7 @@ do
     cN:AddButton({
         Text = 'Discover Dungeons (BLATANT)',
         Func = function()
-            if _Alive() and not ao then
+            if _Alive() and not _activeMissiong then
                 local dG = _workspace.PhysicalDungeonLocations;
                 for B, C in pairs(dG:GetChildren()) do
                     _shared.Teleport.WaystoneTeleport:FireServer(1)
@@ -4859,7 +4859,7 @@ do
                         local healthPercent = _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties:FindFirstChild('MaxHealth') and 
                             (_healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value * 100) or 100
                         
-                        local heightOffset = healthPercent < 30 and 50 or 10
+                        local heightOffset = healthPercent < 70 and 50 or 10
                         _humanoid.CFrame = CFrame.new(firstMob.Position + Vector3.new(0, heightOffset, 0))
                     else
                         if not firstMob then
@@ -5132,7 +5132,7 @@ ez = ez .. ex(101, 0, 0)
 ez = ez .. ex(97, 0, 0)
 ez = ez .. ex(108, 0, 0)
 do
-    if ao then
+    if _activeMissiong then
         if aj:FindFirstChild(6) then
             task.spawn(function()
                 local eA, eB, eC = _workspace:WaitForChild('Pillar1'), _workspace:WaitForChild('Pillar2'),
@@ -5697,13 +5697,13 @@ end
 Toggles.Autofarm:OnChanged(function(fx)
     a5 = tick()
     _inHeal = false;
-    if fx and ConfigAutoLoaded and ao then
+    if fx and ConfigAutoLoaded and _activeMissiong then
         local dF = tick()
         while (bi < 2 or bh < 2 or bj < 2) and Toggles.Autofarm.Value and tick() - dF < 3 do
             task.wait()
         end
     end
-    if fx and au and ao then
+    if fx and au and _activeMissiong then
         for ds, cV in _workspace:GetChildren() do
             for B, C in fw do
                 if cV.Name == B and cV:IsA(C) then
@@ -5712,7 +5712,7 @@ Toggles.Autofarm:OnChanged(function(fx)
             end
         end
     end
-    local fy = fx and ao and (ar and Options.dungeonStartTimer.Value or (at or av) and Options.towerStartTimer.Value)
+    local fy = fx and _activeMissiong and (ar and Options.dungeonStartTimer.Value or (at or av) and Options.towerStartTimer.Value)
     if fy and fy > 0 then
         local dF = tick()
         local fz;
@@ -5744,7 +5744,7 @@ Toggles.Autofarm:OnChanged(function(fx)
             SmartPlayerTp(CFrame.new(fA + Vector3.new(0, 5, 0)))
         end
     end
-    if ao and Toggles.Autofarm.Value then
+    if _activeMissiong and Toggles.Autofarm.Value then
         if not fu then
             local fC = Instance.new("Part")
             fC.Anchored = true;
@@ -5820,9 +5820,9 @@ Toggles.Autofarm:OnChanged(function(fx)
             end
         end)
     end
-    if at and Toggles.Autofarm.Value and ao then
+    if at and Toggles.Autofarm.Value and _activeMissiong then
     end
-    if fx and as and ao then
+    if fx and as and _activeMissiong then
         local fJ;
         local fK;
         local fL;
@@ -5938,7 +5938,7 @@ Toggles.Autofarm:OnChanged(function(fx)
             end
         end)
     end
-    if (au or av) and Toggles.Autofarm.Value and ao then
+    if (au or av) and Toggles.Autofarm.Value and _activeMissiong then
         MobTeleport()
         local fQ = game:GetService("Workspace").LobbyTeleport.Interaction;
         local fR = game:GetService("Workspace").Boss_Gate.Interactions.Bounds;
@@ -6165,7 +6165,7 @@ Toggles.Killaura:OnChanged(function(cU)
     bj = bj + 1;
     local gq = b2[ey][ez]
     a5 = tick()
-    if ao and a_(ey) and cU then
+    if _activeMissiong and a_(ey) and cU then
         local gr;
         for dM, p in pairs(c5) do
             if _dungeonId == p.Id and p.ignoreMob then
@@ -6226,7 +6226,7 @@ Toggles.Killaura:OnChanged(function(cU)
         end
     end
     task.spawn(function()
-        while Toggles.Killaura.Value and ao do
+        while Toggles.Killaura.Value and _activeMissiong do
             if Toggles.PerkSwitcher.Value and ca[aZ].Offhand and X then
                 local gs = bY()
                 if a1 and not gs then
@@ -6264,7 +6264,7 @@ Toggles.Killaura:OnChanged(function(cU)
     }
 
 task.spawn(function()
-    while Toggles.Killaura.Value and ao do
+    while Toggles.Killaura.Value and _activeMissiong do
         -- Get the nearest mob
         X, Y, Z, _, a0, a1, a2 = getClosestMob(bV)
         if _Alive() and not _Mounted() and X and not table.find(bl, aZ) then
@@ -6304,7 +6304,7 @@ task.spawn(function()
 end)
 
 
-    if ao and not aj:FindFirstChild(36) and ao then
+    if _activeMissiong and not aj:FindFirstChild(36) and _activeMissiong then
         task.spawn(function()
             while Toggles.Killaura.Value do
                 for B, C in pairs(ai:GetChildren()) do
@@ -6318,7 +6318,7 @@ end)
             end
         end)
     end
-    if a_(ey) and Toggles.Killaura.Value and bloodBindingEnabled and ao then
+    if a_(ey) and Toggles.Killaura.Value and bloodBindingEnabled and _activeMissiong then
         task.spawn(function()
             while Toggles.Killaura.Value do
                 if a_(ey) then
@@ -6357,7 +6357,7 @@ end)
             end
         end)
     end
-    if a_('MageOfLight') and Toggles.Killaura.Value and ao then
+    if a_('MageOfLight') and Toggles.Killaura.Value and _activeMissiong then
         task.spawn(function()
             while Toggles.Killaura.Value do
                 if a_('MageOfLight') then
@@ -6383,7 +6383,7 @@ end)
             end
         end)
     end
-    if ao then
+    if _activeMissiong then
         task.spawn(function()
             while Toggles.Killaura.Value and not aC do
                 if Toggles.Autofarm.Value and not _inHeal then
@@ -6497,7 +6497,7 @@ cf:SetFolder('MyScriptHub')
 cg:SetFolder('MyScriptHub')
 cg:BuildConfigSection(cA['Settings'])
 cf:ApplyToTab(cA['Settings'])
-if ao then
+if _activeMissiong then
     cg:LoadAutoloadConfig()
     if _dungeonId and aj:FindFirstChild(24) then
         if Options.Offset.Value > 45 then
