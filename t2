@@ -520,7 +520,7 @@ local V;
 local W = false;
 local X, Y, Z, _, a0, a1, a2;
 local a3 = false;
-local a4 = isfile and readfile and writefile;
+local _ifCanDoFile = isfile and readfile and writefile;
 local a5;
 pcall(function()
     W = game:GetService("MarketplaceService"):UserOwnsGamePassAsync(_userid, 8136250)
@@ -1134,7 +1134,7 @@ local _priorityMobTable = {
     }
 }
 local c6 = 15;
-local c7 = {
+local _worldOrdered = {
     World1 = {
         Name = 'World 1',
         Id = 13,
@@ -1211,9 +1211,9 @@ local c7 = {
         OrderId = 15
     }
 }
-local c8 = {1, 3, 2, 4, 6, 11, 12, 13, 7, 14, 15, 16, 20, 19, 18, 24, 35, 21, 25, 36, 23, 26, 37, 27, 30, 31, 29, 32,
+local _dungeonIds = {1, 3, 2, 4, 6, 11, 12, 13, 7, 14, 15, 16, 20, 19, 18, 24, 35, 21, 25, 36, 23, 26, 37, 27, 30, 31, 29, 32,
             33, 34, 41, 42, 43, 39, 1005, 1006, 1007, 38}
-local c9 = {{
+local _worlds = {{
     Id = 1,
     Name = "Crabby Crusade",
     World = 1,
@@ -1465,7 +1465,7 @@ local c9 = {{
     Special = true,
     Code = 'Event Raid'
 }}
-local ca = {
+local _classSkillsAndCooltime = {
     Assassin = {
         DisplayName = 'Shadowblade',
         Range = 10.5,
@@ -3206,7 +3206,7 @@ end
 local ce = 'https://raw.githubusercontent.com/maihoangphi2531/infscriptv2/main/'
 local cf;
 local cg;
-if a4 then
+if _ifCanDoFile then
     local function ch(ci, cj)
         local ck, cl = pcall(function()
             return readfile(cj)
@@ -3257,7 +3257,7 @@ local function cu()
     H.Overlay.Text = ''
 end
 local function cv()
-    return ca[aZ] and ca[aZ].Type == 'Ranged'
+    return _classSkillsAndCooltime[aZ] and _classSkillsAndCooltime[aZ].Type == 'Ranged'
 end
 local cw = game:GetService('GuiService')
 local cx;
@@ -3317,6 +3317,14 @@ do
         Default = cv() and 50 or 6,
         Min = 0,
         Max = _activeMissiong and (cv() and 75 or 25) or 75,
+        Rounding = 1,
+        Compact = true
+    })
+    cE:AddSlider('OffsetZ', {
+        Text = 'OffsetZ',
+        Default = cv() and 50 or 6,
+        Min = 0,
+        Max = _activeMissiong and (cv() and 75 or 25) or 25,
         Rounding = 1,
         Compact = true
     })
@@ -4633,7 +4641,7 @@ do
 end
 do
     for B = 1, c6 do
-        for dM, ea in pairs(c7) do
+        for dM, ea in pairs(_worldOrdered) do
             if ea.OrderId == B then
                 cR:AddButton({
                     Text = ea.Name,
@@ -5239,7 +5247,7 @@ do
             local eK = Options.dungeonHook.Value;
             local eL = g > 600 and _TimeElapsed(g) or math.round(g / 0.1) / 10 .. 's'
             local eM = 'Code: `' .. codeStr .. '\nMission: ' .. missionName .. '\nTime: ' .. eL ..
-                           '`\nClass: ' .. '' .. ca[aZ].DisplayName .. ''
+                           '`\nClass: ' .. '' .. _classSkillsAndCooltime[aZ].DisplayName .. ''
             if au then
                 local bs = _Mobs:GetChildren()[1]
                 local eN = bs and Mob(bs.Name)
@@ -5248,7 +5256,7 @@ do
                     eM = eM .. '\nBoss: `' .. eo .. ''
                 end
             end
-            if a4 then
+            if _ifCanDoFile then
                 if _currentDungeon.LastDungeonCompletion then
                     eM = eM .. '\nTime Since Last Completion: `' .. math.round((c0 - _currentDungeon.LastDungeonCompletion) / 0.1) /
                              10 .. 's`'
@@ -5358,7 +5366,7 @@ do
                     end
                     StartRaid(eX, al)
                 elseif Toggles.NextDungeon.Value and not au then
-                    local eY = _NextInTbl(c8, _dungeonId)
+                    local eY = _NextInTbl(_dungeonIds, _dungeonId)
                     local eZ = table.find(ac, eY)
                     local e_ = aO.Level.Value >= bI(eY) and (al == 5 or at or au or av)
                     local f0 = e_ and eY or _dungeonId;
@@ -5994,7 +6002,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                             task.spawn(function()
                                 local fV = '## Floor: `' .. fT.Value .. '' .. '\nTime: ' ..
                                                _TimeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' ..
-                                               ca[aZ].DisplayName .. '`'
+                                               _classSkillsAndCooltime[aZ].DisplayName .. '`'
                                 fV = fV .. '\nGold Gain: `' .. _FormatNumberWithCommas(aR - aQ) .. ''
                                 if not Toggles.anonHook.Value then
                                     fV = fV .. '\n' .. plrLink
@@ -6019,7 +6027,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                     if fT.Value > fS and fT.Value % 5 == 0 and fT.Value ~= fv then
                         fv = fT.Value;
                         local fV = '## Floor: `' .. fT.Value .. '' .. '\nTime: ' ..
-                                       _TimeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' .. ca[aZ].DisplayName ..
+                                       _TimeElapsed(tick() - sessionTick) .. '`\nClass: ' .. '' .. _classSkillsAndCooltime[aZ].DisplayName ..
                                        '`'
                         fV = fV .. '\nGold Gain: `' .. _FormatNumberWithCommas(aR - aQ) .. ''
                         if not Toggles.anonHook.Value then
@@ -6229,7 +6237,7 @@ Toggles.Killaura:OnChanged(function(cU)
     end
     task.spawn(function()
         while Toggles.Killaura.Value and _activeMissiong do
-            if Toggles.PerkSwitcher.Value and ca[aZ].Offhand and X then
+            if Toggles.PerkSwitcher.Value and _classSkillsAndCooltime[aZ].Offhand and X then
                 local gs = bY()
                 if a1 and not gs then
                     SwitchOffhandPerks(true)
@@ -6270,8 +6278,8 @@ task.spawn(function()
         -- Get the nearest mob
         X, Y, Z, _, a0, a1, a2 = getClosestMob(bV)
         if _Alive() and not _Mounted() and X and not table.find(bl, aZ) then
-            for _, gx in pairs(ca[aZ].Skills) do
-                local gy = gx.MeleeOnBoss and a1 and 'Melee' or gx.Type or ca[aZ].Type
+            for _, gx in pairs(_classSkillsAndCooltime[aZ].Skills) do
+                local gy = gx.MeleeOnBoss and a1 and 'Melee' or gx.Type or _classSkillsAndCooltime[aZ].Type
                 local gB = gx.Cooldown + Options.KillauraDelay.Value
                 local gD, ge = gy == 'Ranged' and a1 and Z or Y, gy == 'Ranged' and a0 or _
                 
