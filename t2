@@ -4683,8 +4683,8 @@ do
         end
     end)
 end
-local ee = Vector3.new(0, 20, -15)
-local ef = Vector3.new(0, 0, -15)
+local _healPosition = Vector3.new(0, 20, 55)
+local _normalPosition = Vector3.new(0, 0, 55)
 local eg;
 local eh;
 do
@@ -4720,7 +4720,7 @@ do
                             if _inHeal then
                                 eg = eg + 30
                             end
-                            eh = CFrame.new(X.Position + (table.find(aE, C) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) + X.CFrame.lookVector * 2;
+                            eh = CFrame.new(X.Position + (table.find(aE, C) and _normalPosition or Vector3.new(0, eg, 0) + (_inHeal and _healPosition or _normalPosition))) + X.CFrame.lookVector * 2;
 
                             
                             
@@ -4770,8 +4770,8 @@ do
                                 end
                                 eg = (X.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                                 eh = CFrame.new(X.Position +
-                                                    (table.find(aE, C) and ef or Vector3.new(0, eg, 0) +
-                                                        (_inHeal and ee or ef))) + X.CFrame.lookVector * 2;
+                                                    (table.find(aE, C) and _normalPosition or Vector3.new(0, eg, 0) +
+                                                        (_inHeal and _healPosition or _normalPosition))) + X.CFrame.lookVector * 2;
                                 SmartPlayerTp(eh, X)
                                 bX:Wait()
                             end
@@ -4852,7 +4852,7 @@ do
                     end
                     eg = (er.Size.Y / 2 + Options.Offset.Value) * (cv() and 1 or -1)
                     eh = CFrame.new(er.Position +
-                                        (table.find(aE, en) and ef or Vector3.new(0, eg, 0) + (_inHeal and ee or ef))) -
+                                        (table.find(aE, en) and _normalPosition or Vector3.new(0, eg, 0) + (_inHeal and _healPosition or _normalPosition))) -
                              er.CFrame.lookVector * 2;
 
                     if _currentDungeon and _currentDungeon.Dungeon == 44 and firstMob then
@@ -5843,7 +5843,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                         if tick() - dF >= 0.4 then
                                             break
                                         end
-                                        local fO = _inHeal and ee or Vector3.new()
+                                        local fO = _inHeal and _healPosition or Vector3.new()
                                         SmartPlayerTp(CFrame.new(X.Position + Vector3.new(0, 40, 0) + fO) +
                                                           X.CFrame.lookVector * 30, X)
                                         bX:Wait()
@@ -5881,7 +5881,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                     fL = true
                                 end
                                 local eg = 5 + Options.Offset.Value;
-                                local fO = _inHeal and ee or Vector3.new()
+                                local fO = _inHeal and _healPosition or Vector3.new()
                                 if _inHeal then
                                     _ResetCamera()
                                 else
@@ -5921,7 +5921,7 @@ Toggles.Autofarm:OnChanged(function(fx)
                                 if not fJ then
                                     fJ = true
                                 end
-                                local fO = _inHeal and ee or Vector3.new()
+                                local fO = _inHeal and _healPosition or Vector3.new()
                                 if _Alive() and (_humanoid.Position - C.Base.Position).magnitude > 10 then
                                     SmartPlayerTp(CFrame.new(C.Base.Position + Vector3.new(0, 3, 0) + fO))
                                 end
