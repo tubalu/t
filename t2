@@ -4692,7 +4692,7 @@ do
         end
     end)
 end
-local _healPosition = Vector3.new(0, 100, 0)
+local _healPosition = Vector3.new(0, 30, 0)
 local _normalPosition = Vector3.new(0, 0, -1)
 local eg;
 local eh;
