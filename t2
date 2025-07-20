@@ -5138,9 +5138,9 @@ do
                 local eA, eB, eC = _workspace:WaitForChild('Pillar1'), _workspace:WaitForChild('Pillar2'),
                     _workspace:WaitForChild('Pillar3')
                 eC:WaitForChild('HealthProperties')
-                eA.Name = 'Pillar'
-                eB.Name = 'Pillar'
-                eC.Name = 'Pillar'
+                eA.Name = 'Pillar1'
+                eB.Name = 'Pillar2'
+                eC.Name = 'Pillar3'
                 eA.Parent = _Mobs;
                 eB.Parent = _Mobs;
                 eC.Parent = _Mobs
