@@ -4856,7 +4856,7 @@ do
                              er.CFrame.lookVector * 2;
 
                     if _currentDungeon and _currentDungeon.Dungeon == 44 and firstMob then
-                        eh = CFrame.new(er.Position + Vector3.new(0, eg, 0)) - er.CFrame.lookVector * 10;
+                        eh = CFrame.new(er.Position + Vector3.new(0, eg, 0)) - er.CFrame.lookVector * 15;
 
                         -- local healthPercent = _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties:FindFirstChild('MaxHealth') and (_healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value * 100) or 100
                         -- local heightOffset = healthPercent < 70 and -15 or -10
