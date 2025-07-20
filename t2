@@ -4868,7 +4868,7 @@ do
                         eh = CFrame.new(er.Position + Vector3.new(0, eg, 0)) - er.CFrame.lookVector * ( Options.OffsetZ and Options.OffsetZ.value or 20 );
 
                         local healthPercent = _healthyProperties and _healthyProperties:FindFirstChild('Health') and _healthyProperties:FindFirstChild('MaxHealth') and (_healthyProperties.Health.Value / _healthyProperties.MaxHealth.Value * 100) or 100
-                        if healthPercent < 70 then
+                        if _inHeal then
                             eh = CFrame.new(er.Position +
                                                 (table.find(aE, en) and _normalPosition or Vector3.new(0, eg, 0) + (_inHeal and _healPosition or _normalPosition))) +
                                     er.CFrame.lookVector * 2;
