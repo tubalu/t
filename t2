@@ -1108,7 +1108,8 @@ local _priorityMobTable = {
     },
     VaneEvent = {
         Id = 44,
-        priorityTbl = {'EVENTBOSSVane', 'BOSSDarkriseDarkDragon'}
+        -- priorityTbl = {'EVENTBOSSVane', 'BOSSDarkriseDarkDragon'}
+        priorityTbl = {'BabyIgnis', 'BabyWinterfall', 'BOSSDarkriseDarkDragon'}
     },
     AetherTower = {
         Id = 34,
