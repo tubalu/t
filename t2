@@ -4683,8 +4683,8 @@ do
         end
     end)
 end
-local ee = Vector3.new(0, 20, -10)
-local ef = Vector3.new(0, 0, -10)
+local ee = Vector3.new(0, 20, -15)
+local ef = Vector3.new(0, 0, -15)
 local eg;
 local eh;
 do
