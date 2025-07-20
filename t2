@@ -4684,7 +4684,7 @@ do
     end)
 end
 local _healPosition = Vector3.new(45, 120, 0)
-local _normalPosition = Vector3.new(25, 0, 0)
+local _normalPosition = Vector3.new(-25, 0, 0)
 local eg;
 local eh;
 do
