@@ -517,13 +517,14 @@ local _shared = _replicatedStorage:WaitForChild('Shared')
 local T = game:GetService('TeleportService')
 local U = true;
 local V;
-local W = false;
+local _isVip = false;
 local X, Y, Z, _, a0, a1, a2;
 local a3 = false;
 local _ifCanDoFile = isfile and readfile and writefile;
 local a5;
 pcall(function()
-    W = game:GetService("MarketplaceService"):UserOwnsGamePassAsync(_userid, 8136250)
+    _isVip = game:GetService("MarketplaceService"):UserOwnsGamePassAsync(_userid, 8136250)
+    _isVip = true -- todo
 end)
 local a6 = game:GetService('VirtualUser')
 _localplayer.Idled:Connect(function()
@@ -549,7 +550,8 @@ local _currentDungeon = {
     ForceRestartLastTower = false
 }
 local ab = _userid .. '_AnyaWorldZeroData.txt'
-local ac = {21, 23, 27, 29, 34, 43, 39, 38}
+local _towers = {21, 23, 27, 29, 34, 43, 39, 38}
+-- 21, t1, 23, t2
 function _Save()
     local ad;
     if writefile then
@@ -749,8 +751,8 @@ _equipment = _character.Equipment;
 local b2 = _shared:WaitForChild('Combat'):WaitForChild('Skillsets')
 local b3 = 0;
 local b4;
-local b5 = 'RaidChestSilver'
-local b6 = 'RaidChestGold'
+local _raidChestSilver = 'RaidChestSilver'
+local _raidChestGold = 'RaidChestGold'
 local b7 = false;
 local b8 = _shared:WaitForChild("Combat"):WaitForChild("Attack")
 local _Mobs = game:GetService("Workspace"):FindFirstChild("Mobs")
@@ -936,7 +938,7 @@ if not _activeMissiong then
         if _currentDungeon.Dungeon then
             local c1 = _shared:WaitForChild('Teleport'):WaitForChild('StartRaid')
             while true do
-                if table.find(ac, _currentDungeon.Dungeon) then
+                if table.find(_towers, _currentDungeon.Dungeon) then
                     c1:FireServer(_currentDungeon.Dungeon)
                 else
                     c1:FireServer(_currentDungeon.Dungeon, _currentDungeon.Difficulty)
@@ -5366,7 +5368,7 @@ do
                     StartRaid(eX, al)
                 elseif Toggles.NextDungeon.Value and not au then
                     local eY = _NextInTbl(_dungeonIds, _dungeonId)
-                    local eZ = table.find(ac, eY)
+                    local eZ = table.find(_towers, eY)
                     local e_ = aO.Level.Value >= bI(eY) and (al == 5 or at or au or av)
                     local f0 = e_ and eY or _dungeonId;
                     local f1 = e_ and (eZ and 'tower' or c2[al] or 1) or al == 1 and 5 or al;
@@ -5538,7 +5540,7 @@ do
     if at or au or av then
         _workspace.ChildAdded:Connect(function(cV)
             if Toggles.Autofarm.Value then
-                if cV.Name == b5 then
+                if cV.Name == _raidChestSilver then
                     bf = tick()
                     if aC then
                         bc = true;
@@ -5555,7 +5557,7 @@ do
                     end)
                 end
                 local fo = aC and at;
-                if (W or fo) and cV.Name == b6 then
+                if (_isVip or fo) and cV.Name == _raidChestGold then
                     bf = tick()
                     if aC then
                         bc = true;
