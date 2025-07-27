@@ -1087,7 +1087,8 @@ local _priorityMobTable = {
     } or {
         Id = 25,
         priorityTbl = {'KrakenArm'},
-        -- mobWaitTime = 4
+        mobWaitTbl = {'DavyJones'},
+        mobWaitTime = 4
     }
     ,
     VolcanosShadow = {
