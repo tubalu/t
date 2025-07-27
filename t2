@@ -1083,11 +1083,11 @@ local _priorityMobTable = {
     },
     RoughWaters = {
         Id = 25,
-        ignoreMob = 'DavyJones'
+        -- ignoreMob = 'DavyJones'
     } or {
         Id = 25,
         priorityTbl = {'KrakenArm'},
-        mobWaitTime = 4
+        -- mobWaitTime = 4
     }
     ,
     VolcanosShadow = {
