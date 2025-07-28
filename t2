@@ -1078,7 +1078,7 @@ local _priorityMobTable = {
     } or {
         Id = 6,
         priorityTbl = {'Pillar', 'Pillar1', 'Pillar2', 'Pillar3', 'BOSSTreeEnt'},
-        mobWaitTbl = {'BOSSTreeEnt'},
+        -- mobWaitTbl = {'BOSSTreeEnt'},
         mobWaitTime = 3
     },
     RoughWaters = {
