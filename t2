@@ -1072,20 +1072,19 @@ local _priorityMobTable = {
         ignoreMob = 'BOSSKingCrab'
     },
     GravetowerDungeon = a_('Demon') and {
+        
         Id = 6,
-        priorityTbl = {'Pillar', 'Pillar1', 'Pillar2', 'Pillar3'},
-        ignoreMob = 'BOSSTreeEnt',
+        priorityTbl = {'Pillar', 'Pillar1', 'Pillar2', 'Pillar3', 'BOSSTreeEnt'},
+        mobWaitTbl = {'BOSSTreeEnt'},
+        mobWaitTime = 3
     },
     RoughWaters = {
         Id = 25,
+        priorityTbl = {'KrakenArm','DavyJones'},
         -- ignoreMob = 'DavyJones'
-    } or {
-        Id = 25,
-        priorityTbl = {'KrakenArm'},
         mobWaitTbl = {'DavyJones'},
-        mobWaitTime = 4
-    }
-    ,
+        mobWaitTime = 3
+    },
     VolcanosShadow = {
         Id = 13,
         ignoreMob = 'BOSSCerberus'
