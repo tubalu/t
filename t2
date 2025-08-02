@@ -893,7 +893,7 @@ do
 end
 local bD;
 local bE = 8136250;
-local bF = aO:WaitForChild('Inventory'):WaitForChild('Items')
+local _inventoryItems = aO:WaitForChild('Inventory'):WaitForChild('Items')
 local bG = aO:WaitForChild('Inventory'):WaitForChild('Cosmetics')
 local bH = require(_shared.Missions.MissionData)
 local function bI(bJ)
@@ -3614,19 +3614,54 @@ do
     })
     cG:AddButton({
         Text = 'Sell All',
-        Tooltip = 'Sells all weapons and armors of selected tiers',
+        Tooltip = 'Sells all weapons and armors of selected tiers. Also uses Smart T5 Sell if enabled.',
         Func = function()
             local cZ = {}
-            for B, C in pairs(bF:GetChildren()) do
+            for B, C in pairs(_inventoryItems:GetChildren()) do
                 local c_ = bL[C.Name]
-                if (c_.Type == 'Weapon' or c_.Type == 'Armor') and Options.AutoSellTbl.Value[bZ:GetItemTier(C)] and
-                    not C:FindFirstChild('Locked') then
-                    table.insert(cZ, C)
+                if (c_.Type == 'Weapon' or c_.Type == 'Armor') and not C:FindFirstChild('Locked') then
+                    local itemTier = bZ:GetItemTier(C)
+                    
+                    if itemTier == 5 then
+                        -- Handle T5 items
+                        if Toggles.smartPerkSell.Value then
+                            local hasGoodPerk = false
+                            pcall(function()
+                                C:WaitForChild('Perk1'):WaitForChild('PerkValue')
+                                C:WaitForChild('Perk2'):WaitForChild('PerkValue')
+                                C:WaitForChild('Perk3'):WaitForChild('PerkValue')
+                                for _, perk in pairs(C:GetChildren()) do
+                                    if string.find(perk.Name, "Perk") and Options[perk.Value] then
+                                        local perkValue = math.round(perk.PerkValue.Value * 100)
+                                        local sliderValue = Options[perk.Value].Value
+                                        local isSliderSet = sliderValue > math.round(bK[perk.Value].StatRange[1] * 100)
+                                        
+                                        if isSliderSet and perkValue >= sliderValue then
+                                            hasGoodPerk = true
+                                            break
+                                        end
+                                    end
+                                end
+                            end)
+                            
+                            if not hasGoodPerk then
+                                table.insert(cZ, C)
+                            end
+                        elseif Options.AutoSellTbl.Value[itemTier] then
+                            -- Sell T5 if smart sell is off but T5 is checked in dropdown
+                            table.insert(cZ, C)
+                        end
+                    elseif Options.AutoSellTbl.Value[itemTier] then
+                        -- Sell T1-T4 if checked in dropdown
+                        table.insert(cZ, C)
+                    end
                 end
             end
             if #cZ > 0 then
                 msgbox('Sold ' .. #cZ .. ' items')
                 _shared.Drops.SellItems:InvokeServer(cZ)
+            else
+                msgbox('No items to sell based on current settings.')
             end
         end,
         DoubleClick = true
@@ -3639,7 +3674,7 @@ do
     Toggles.autoSellAll:OnChanged(function(cU)
         if cU then
             local cZ = {}
-            for B, C in pairs(bF:GetChildren()) do
+            for B, C in pairs(_inventoryItems:GetChildren()) do
                 local c_ = bL[C.Name]
                 if (c_.Type == 'Weapon' or c_.Type == 'Armor') and Options.AutoSellTbl.Value[bZ:GetItemTier(C)] and
                     not C:FindFirstChild('Locked') then
@@ -4303,7 +4338,7 @@ do
                 end
             end
         end)
-        bF.ChildAdded:Connect(function(C)
+        _inventoryItems.ChildAdded:Connect(function(C)
             if Toggles.autoSellEggs.Value then
                 local dp = bL[C.Name]
                 if dp.Type == 'Egg' then
@@ -5307,8 +5342,8 @@ do
                 local eT = eO[eP].name;
                 local eU = game:GetService("ReplicatedStorage").Shared.LeaderboardHookup.GetScore:InvokeServer(eS, 1)
                 eM = eM .. '\n' .. eT .. ' Raids Completed: `' .. eU[1] .. ' / ' .. eU[2] .. ''
-                if bF:FindFirstChild(eQ) and bF[eQ]:FindFirstChild('Count') then
-                    eM = eM .. '\n' .. eR .. ': `' .. bF[eQ].Count.Value .. ''
+                if _inventoryItems:FindFirstChild(eQ) and _inventoryItems[eQ]:FindFirstChild('Count') then
+                    eM = eM .. '\n' .. eR .. ': `' .. _inventoryItems[eQ].Count.Value .. ''
                 end
             elseif au or av then
                 eM = eM .. '\nFloor: **' .. _replicatedStorage.ReplicateTowerFloor.Value .. '**'
@@ -5407,9 +5442,9 @@ do
                     print("Mission completed, showing green message")
                 end
             end)
-            bF.ChildAdded:Connect(function(cV)
+            _inventoryItems.ChildAdded:Connect(function(cV)
                 local f7 = bL[cV.Name]
-                local f8 = bZ:GetItemTier(cV)
+                local itemTier = bZ:GetItemTier(cV)
                 local f9;
                 if f7.Type == 'Weapon' or f7.Type == 'Armor' then
                     if bc then
@@ -5417,14 +5452,14 @@ do
                         be = tick()
                     end
                     cV:WaitForChild('Level')
-                    if f8 < 6 then
-                        if Options.AutoSellTbl.Value[f8] and Toggles.Autofarm.Value then
-                            msgbox('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
+                    if itemTier < 6 then
+                        if Options.AutoSellTbl.Value[itemTier] and Toggles.Autofarm.Value then
+                            msgbox('Sold a Lvl ' .. cV.Level.Value .. ' T' .. itemTier .. ' ' .. f7.DisplayKey)
                             _Sell({cV})
                             f9 = true
                         end
                     end
-                    if f8 == 5 and not Options.AutoSellTbl.Value[5] then
+                    if itemTier == 5 and not Options.AutoSellTbl.Value[5] then
                         cV:WaitForChild('Perk1')
                         cV:WaitForChild('Perk2')
                         cV:WaitForChild('Perk3')
@@ -5462,7 +5497,7 @@ do
                             end
                         end
                         if not fa and Toggles.smartPerkSell.Value and Toggles.Autofarm.Value then
-                            msgbox('Sold a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey)
+                            msgbox('Sold a Lvl ' .. cV.Level.Value .. ' T' .. itemTier .. ' ' .. f7.DisplayKey)
                             _Sell({cV})
                             f9 = true
                         end
@@ -5489,7 +5524,7 @@ do
                         end
                     end
                     if not f9 then
-                        msgbox('Got a Lvl ' .. cV.Level.Value .. ' T' .. f8 .. ' ' .. f7.DisplayKey .. '!')
+                        msgbox('Got a Lvl ' .. cV.Level.Value .. ' T' .. itemTier .. ' ' .. f7.DisplayKey .. '!')
                     end
                     if bc then
                         bd = true;
@@ -5578,7 +5613,7 @@ do
                 end
             end
         end)
-        bF.ChildAdded:Connect(function(cV)
+        _inventoryItems.ChildAdded:Connect(function(cV)
             local f7 = bL[cV.Name]
             local f8 = bZ:GetItemTier(cV)
             local f9;
@@ -6161,7 +6196,7 @@ do
         return gi, g9, Z, gh, gj, a1, gk
     end
     function _EquipWepWithId(gn, go)
-        for B, C in pairs(bF:GetChildren()) do
+        for B, C in pairs(_inventoryItems:GetChildren()) do
             if C:FindFirstChild('ID') and C.ID.Value and C.ID.Value == gn then
                 bN:FireServer(C, aT)
                 msgbox('Equipped ' .. bL[C.Name].DisplayKey .. ' for' .. go)
@@ -6440,7 +6475,7 @@ Toggles.autoEquipBestwWep:OnChanged(function(cU)
             if gS then
                 gO = bM:GetItemStats(gS)['Defense'] or 0
             end
-            for B, C in bF:GetChildren() do
+            for B, C in _inventoryItems:GetChildren() do
                 if C:FindFirstChild('Level') and C.Level.Value <= aO.Level.Value then
                     local gT = bL[C.Name]
                     local gU, gV = gT.Type == 'Weapon', gT.Type == 'Armor'
