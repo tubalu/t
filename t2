@@ -524,7 +524,6 @@ local _ifCanDoFile = isfile and readfile and writefile;
 local a5;
 pcall(function()
     _isVip = game:GetService("MarketplaceService"):UserOwnsGamePassAsync(_userid, 8136250)
-    _isVip = true -- todo
 end)
 local a6 = game:GetService('VirtualUser')
 _localplayer.Idled:Connect(function()
@@ -532,7 +531,7 @@ _localplayer.Idled:Connect(function()
     a6:ClickButton2(Vector2.new())
 end)
 local a7 = _localplayer.Name;
-local a8 = 2727067538;
+local _mainMenu = 2727067538;
 local a9 = false;
 local _currentDungeon = {
     Kicked = false,
@@ -547,10 +546,12 @@ local _currentDungeon = {
     LastDungeonCompletion = false,
     CrossSessionTimestamp = false,
     CrossSessionGold = false,
-    ForceRestartLastTower = false
+    ForceRestartLastTower = false,
+    InTower = false
 }
 local ab = _userid .. '_AnyaWorldZeroData.txt'
 local _towers = {21, 23, 27, 29, 34, 43, 39, 38}
+
 -- 21, t1, 23, t2
 function _Save()
     local ad;
@@ -564,7 +565,7 @@ function _Load()
         _currentDungeon = _httpservice:JSONDecode(readfile(ab))
     end
 end
-if game.PlaceId == a8 then
+if game.PlaceId == _mainMenu then
     _Load()
     if _currentDungeon.Kicked or _currentDungeon.RejoinLastDungeon and tick() - _currentDungeon.Timestamp <= _currentDungeon.RejoinLastDungeonThreshold then
         _currentDungeon.Kicked = false;
@@ -1028,7 +1029,7 @@ if _dungeonId ~= nil then
         end
     end
 else
-    warn("ak (ActiveMission) chưa tồn tại, có thể đang ở menu.")
+    warn("ak (ActiveMission) does not exist, you may be in the menu.")
 end
 
 -- If BossDoorTrigger has not been added, check periodically
@@ -1218,7 +1219,7 @@ local _worldOrdered = {
     }
 }
 local _dungeonIds = {1, 3, 2, 4, 6, 11, 12, 13, 7, 14, 15, 16, 20, 19, 18, 24, 35, 21, 25, 36, 23, 26, 37, 27, 30, 31, 29, 32,
-            33, 34, 41, 42} --, 43, 39, 1005, 1006, 1007, 38} -- skip t6, Celestial, inf, nm
+            33, 34, 41, 42, 39} --, 43, 39, 1005, 1006, 1007, 38} -- skip t6, Celestial, inf, nm
 local _worlds = {{
     Id = 1,
     Name = "Crabby Crusade",
